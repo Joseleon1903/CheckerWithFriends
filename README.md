@@ -1,2 +1,2 @@
-# CheckerWithFriends
-Unity Checker Online game
+# ChessAndChecker
+Unity Game for WebGL and Android
