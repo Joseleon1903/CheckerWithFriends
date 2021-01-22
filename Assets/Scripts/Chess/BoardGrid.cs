@@ -21,8 +21,6 @@ namespace Assets.Scripts.Chess
 		private Vector3 tileSize;
 		private Vector3 size;
 
-		private bool piecesSpawned;
-
 		public int Rows
 		{
 			get { return rows; }
@@ -162,8 +160,6 @@ namespace Assets.Scripts.Chess
 			SpawnPiece(new GridCoords(0, 6), ChessBoarderManager.Instance.SpwanChess(3, 6, 0, quaterionWhite), p1T); //p1 rect
 			SpawnPiece(new GridCoords(7, 1), ChessBoarderManager.Instance.SpwanChess(9, 1, 7, quaterionBlack), p2T); //p2 rect
 			SpawnPiece(new GridCoords(7, 6), ChessBoarderManager.Instance.SpwanChess(9, 6, 7, quaterionBlack), p2T); //p2 rect
-
-			piecesSpawned = true;
 
 			yield return null;
 		}

@@ -16,7 +16,7 @@ namespace Assets.Scripts.Intro
             Instantiate(guestProfile);
 
             LoggerFile.Instance.DEBUG_LINE("Load main scene");
-            SceneManager.LoadScene("MainMenu");
+            SceneManager.LoadScene("ProfileCustomizationScene");
         
         }
 

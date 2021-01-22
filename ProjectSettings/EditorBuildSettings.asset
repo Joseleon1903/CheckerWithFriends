@@ -21,21 +21,15 @@ EditorBuildSettings:
     path: Assets/Scenes/ChessMultiplayerScene.unity
     guid: 3ef56428f234ff1499bfa1aee1b21ac8
   - enabled: 1
-    path: Assets/Scenes/ChessParkDayGameScene.unity
-    guid: 391d4dbb4e62279458da0ab264d15512
-  - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 7378ae439d256724b95949c04e33098d
-  - enabled: 1
-    path: Assets/Scenes/MultiplayerScene.unity
-    guid: 139d28008c6059945a6e6e6804367bec
-  - enabled: 1
-    path: Assets/Scenes/OutlineShaderTest.unity
-    guid: 32396cbf7a356e541b717cba25ef1e05
   - enabled: 1
     path: Assets/Scenes/CheckerCityDayScene.unity
     guid: e97d9624d23803d40b3a6f019890b638
   - enabled: 1
     path: Assets/Scenes/CheckerCityNightScene.unity
     guid: c89da0dbaad18d84a9483644951432e0
+  - enabled: 1
+    path: Assets/Scenes/ProfileCustomizationScene.unity
+    guid: e67d642d5b0668b4a83dde9a13c77915
   m_configObjects: {}

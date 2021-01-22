@@ -9,16 +9,21 @@ public class FacebookBehavour : Singleton<FacebookBehavour>
 
     private void Awake()
     {
-        if (!FB.IsInitialized)
-        {
-            // Initialize the Facebook SDK
-            FB.Init(InitCallback, OnHideUnity);
+
+        if (Application.platform == RuntimePlatform.WebGLPlayer) {
+
+            if (!FB.IsInitialized)
+            {
+                // Initialize the Facebook SDK
+                FB.Init(InitCallback, OnHideUnity);
+            }
+            else
+            {
+                // Already initialized, signal an app activation App Event
+                FB.ActivateApp();
+            }
         }
-        else
-        {
-            // Already initialized, signal an app activation App Event
-            FB.ActivateApp();
-        }
+       
     }
 
     private void InitCallback()

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 #if UNITY_EDITOR
 using UnityEditor;
 using System.Collections.Generic;
@@ -122,7 +123,7 @@ public class SceneLoader : MonoBehaviour
 
 			if (GUI.Button(new Rect(ox, oy + 30 + i * h, 120, 20), scene))
 			{
-				Application.LoadLevel(scene);
+				SceneManager.LoadScene(scene);
 			}
 		}
 	}

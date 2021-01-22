@@ -1,7 +1,8 @@
-﻿using Assets.Scripts.Utils;
+﻿using Assets.Scripts.Profile;
+using Assets.Scripts.Utils;
 using UnityEngine;
 
-public class GuestProfile : MonoBehaviour
+public class GuestProfile : BaseProfile
 {
     public string profileName { get; private set; }
     public string profileId { get; private set; }

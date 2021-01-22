@@ -69,12 +69,6 @@ namespace Assets.Scripts.WebSocket
                        int.Parse(dataResp.endPosX), int.Parse(dataResp.endPosY));
                 }
 
-                if (GameType.CHESS.ToString().ToUpper().Equals(dataResp.gameType.ToUpper()))
-                {
-                    ChessBoarderManager.Instance.isWhiteTurn = !ChessBoarderManager.Instance.isWhiteTurn;
-                    ChessBoarderManager.Instance.TryOnlinePlayerMove(dataResp);
-                }
-
                 return;
             }
 
@@ -137,56 +131,8 @@ namespace Assets.Scripts.WebSocket
                 var NewState = new ChessboardState { isGameOver = true, gameOverType = GameOverType.CHECKMATE, playerWin = plType };
                 ChessBoarderManager.Instance.ChessboardState = NewState;
                 ChessBoarderManager.Instance.ValidatePlayerVictory();
-            }
-
-            ChessPromotedPieceResp respP = new ChessPromotedPieceResp(msg);
-
-            if (string.Equals("102PLPROMOTED", respP.operationCode))
-            {
-                Debug.Log("Recived promoted price client request");
-
-                SpawnPosition spawnPos = new SpawnPosition();
-                spawnPos.PosX = respP.piecePosX;
-                spawnPos.PosY = respP.piecePosY;
-                PlayerType pType = (string.Equals(respP.player, PlayerType.P1.ToString().ToUpper())) ? PlayerType.P1 : PlayerType.P2;
-                ChessBoarderManager.Instance.ChessBoardPromotedPiece(pType, respP.pieceType, spawnPos);
-            }
-
-            ChessValidateCheckMoveResp vCheck = new ChessValidateCheckMoveResp(msg);
-
-            if (string.Equals("102PLCHECK", vCheck.operationCode))
-            {
-                Debug.Log("Validation mover for check player");
-                ChessBoarderManager.Instance.ValidateUncheckPlayerMove(vCheck);
-            }
-
-            ChessEndValidateCheckMoveResp rCheck = new ChessEndValidateCheckMoveResp(msg);
-
-            if (string.Equals("102PLCHECKRESP", rCheck.operationCode)) {
-
-                if (rCheck.isValidMove.Equals(EnumHelper.TRUE)) {
-                    Debug.Log("Is valid move");
-                    DataMessageResp datamesage = new DataMessageResp();
-                    datamesage.gameType = rCheck.gameType;
-                    datamesage.checketdMove = EnumHelper.FALSE;
-                    datamesage.startPosX = rCheck.startPosX.ToString();
-                    datamesage.startPosY = rCheck.startPosY.ToString();
-                    datamesage.endPosX = rCheck.endPosX.ToString();
-                    datamesage.endPosY = rCheck.endPosY.ToString();
-                    ChessBoarderManager.Instance.TryOnlinePlayerMove(datamesage);
-
-                    CanvasManagerUI.Instance.ShowAlertText("It's player P1 turn");
-
-                    BoardHightLight.Intance.HideHightLightKingChecked();
-                }
-
-                if (rCheck.isValidMove.Equals(EnumHelper.FALSE))
-                {
-                    Debug.Log("Is no valid move player is checked");
-                    CanvasManagerUI.Instance.ShowAlertText("Player is check");
-                }
-
-            }
+            }       
+           
 
         }
 

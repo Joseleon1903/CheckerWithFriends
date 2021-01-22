@@ -301,83 +301,83 @@ public class ChessBoarderManager : MonoBehaviour
 
     }
 
-    public void ValidateUncheckPlayerMove(ChessValidateCheckMoveResp vCheck)
-    {
-        Debug.Log("Entering in method ValidateUncheckPlayerMove");
+    //public void ValidateUncheckPlayerMove(ChessValidateCheckMoveResp vCheck)
+    //{
+    //    Debug.Log("Entering in method ValidateUncheckPlayerMove");
 
-        ClientWSBehavour client = FindObjectOfType<ClientWSBehavour>();
+    //    ClientWSBehavour client = FindObjectOfType<ClientWSBehavour>();
 
-        Node tNode = BoardGrid.Instance.GetNodeAt(vCheck.endPosY, vCheck.endPosX);
+    //    Node tNode = BoardGrid.Instance.GetNodeAt(vCheck.endPosY, vCheck.endPosX);
 
-        Piece cPiece = BoardGrid.Instance.GetNodeAt(vCheck.startPosY, vCheck.startPosX).Piece;
+    //    Piece cPiece = BoardGrid.Instance.GetNodeAt(vCheck.startPosY, vCheck.startPosX).Piece;
 
-        Piece tPiece = (tNode != null && tNode.Piece != null) ? tNode.Piece : null;
+    //    Piece tPiece = (tNode != null && tNode.Piece != null) ? tNode.Piece : null;
 
-        GCPlayer player = GameManager.Instance.CurrentPlayer;
+    //    GCPlayer player = GameManager.Instance.CurrentPlayer;
 
 
-        if (tPiece == null || cPiece.IsPossibleMove(tNode))
-        {
-            if (cPiece.IsPossibleMove(tNode))
-            {
-                if (Rules.IsCheckMove(player, cPiece, tNode, true))
-                {
-                    Debug.Log("Move checked"); // do nothing
-                    Debug.Log("Response Invalid Player Move");
-                    // send P2 is invalid move notification player is check
-                    ChessEndValidateCheckMoveReq message = MessageUtils.ConvertFromMessage(vCheck, false);
-                    client.Send(message.GetMessageText());
-                }
-                else 
-                {
-                    Debug.Log("Response valid player Move");
-                    // send P2 is valid move en proced to done
-                    ChessEndValidateCheckMoveReq message = MessageUtils.ConvertFromMessage(vCheck, true);
-                    client.Send(message.GetMessageText());
+    //    if (tPiece == null || cPiece.IsPossibleMove(tNode))
+    //    {
+    //        if (cPiece.IsPossibleMove(tNode))
+    //        {
+    //            if (Rules.IsCheckMove(player, cPiece, tNode, true))
+    //            {
+    //                Debug.Log("Move checked"); // do nothing
+    //                Debug.Log("Response Invalid Player Move");
+    //                // send P2 is invalid move notification player is check
+    //                ChessEndValidateCheckMoveReq message = MessageUtils.ConvertFromMessage(vCheck, false);
+    //                client.Send(message.GetMessageText());
+    //            }
+    //            else 
+    //            {
+    //                Debug.Log("Response valid player Move");
+    //                // send P2 is valid move en proced to done
+    //                ChessEndValidateCheckMoveReq message = MessageUtils.ConvertFromMessage(vCheck, true);
+    //                client.Send(message.GetMessageText());
 
-                    BoardHightLight.Intance.HideHightLightKingChecked();
+    //                BoardHightLight.Intance.HideHightLightKingChecked();
 
-                    cPiece.MoveToXZ(tNode);
-                    cPiece.Drop();
-                    cPiece.Compute();
-                    OnlinePlayerMovement movement = new OnlinePlayerMovement(vCheck.startPosX, vCheck.startPosY, vCheck.endPosX, vCheck.endPosY);
-                    InputManager.Instance.ChessBoardMovementeApply(movement, true);
-                }
-            }
-        }
-        else
-        {
-            if (cPiece.IsPossibleEat(tNode))
-            {
-                if (Rules.IsCheckEat(player, cPiece, tNode, true))
-                {
-                    Debug.Log("Eat checked"); // do nothing
-                    Debug.Log("Move checked"); // do nothing
-                    Debug.Log("Response Invalid Player Move");
-                    // send P2 is invalid move notification player is check
-                    ChessEndValidateCheckMoveReq message = MessageUtils.ConvertFromMessage(vCheck, false);
-                    client.Send(message.GetMessageText());
-                }
-                else
-                {
-                    Debug.Log("Response valid player Move");
-                    // send P2 is valid move en proced to done
-                    //apply move to current player
-                    ChessEndValidateCheckMoveReq message = MessageUtils.ConvertFromMessage(vCheck, true);
-                    client.Send(message.GetMessageText());
+    //                cPiece.MoveToXZ(tNode);
+    //                cPiece.Drop();
+    //                cPiece.Compute();
+    //                OnlinePlayerMovement movement = new OnlinePlayerMovement(vCheck.startPosX, vCheck.startPosY, vCheck.endPosX, vCheck.endPosY);
+    //                InputManager.Instance.ChessBoardMovementeApply(movement, true);
+    //            }
+    //        }
+    //    }
+    //    else
+    //    {
+    //        if (cPiece.IsPossibleEat(tNode))
+    //        {
+    //            if (Rules.IsCheckEat(player, cPiece, tNode, true))
+    //            {
+    //                Debug.Log("Eat checked"); // do nothing
+    //                Debug.Log("Move checked"); // do nothing
+    //                Debug.Log("Response Invalid Player Move");
+    //                // send P2 is invalid move notification player is check
+    //                ChessEndValidateCheckMoveReq message = MessageUtils.ConvertFromMessage(vCheck, false);
+    //                client.Send(message.GetMessageText());
+    //            }
+    //            else
+    //            {
+    //                Debug.Log("Response valid player Move");
+    //                // send P2 is valid move en proced to done
+    //                //apply move to current player
+    //                ChessEndValidateCheckMoveReq message = MessageUtils.ConvertFromMessage(vCheck, true);
+    //                client.Send(message.GetMessageText());
 
-                    BoardHightLight.Intance.HideHightLightKingChecked();
+    //                BoardHightLight.Intance.HideHightLightKingChecked();
 
-                    cPiece.MoveToXZ(tNode);
-                    cPiece.Drop();
-                    cPiece.Compute();
-                    OnlinePlayerMovement movement = new OnlinePlayerMovement(vCheck.startPosX, vCheck.startPosY, vCheck.endPosX, vCheck.endPosY);
-                    InputManager.Instance.ChessBoardMovementeApply(movement, true);
-                }
-            }
-        }
+    //                cPiece.MoveToXZ(tNode);
+    //                cPiece.Drop();
+    //                cPiece.Compute();
+    //                OnlinePlayerMovement movement = new OnlinePlayerMovement(vCheck.startPosX, vCheck.startPosY, vCheck.endPosX, vCheck.endPosY);
+    //                InputManager.Instance.ChessBoardMovementeApply(movement, true);
+    //            }
+    //        }
+    //    }
 
-    }
+    //}
 
     public void ValidatePlayerVictory()
     {
@@ -533,19 +533,19 @@ public class ChessBoarderManager : MonoBehaviour
             Instance.SpwanChess(prefabIndex, spawnPos.PosX, spawnPos.PosY, orientation),
             currentPlayer.Type);
 
-        if (OnlinePlayerBehavour.Instance.isOnlineGame && pType == OnlinePlayerBehavour.Instance.playerType)
-        {
-            Debug.Log("Send promote Piece message to P2 player");
-            ClientWSBehavour client = FindObjectOfType<ClientWSBehavour>();
+        //if (OnlinePlayerBehavour.Instance.isOnlineGame && pType == OnlinePlayerBehavour.Instance.playerType)
+        //{
+        //    Debug.Log("Send promote Piece message to P2 player");
+        //    ClientWSBehavour client = FindObjectOfType<ClientWSBehavour>();
 
-            string lobbyCode = client.profile.lobbyCode;
+        //    string lobbyCode = client.profile.lobbyCode;
 
-            ChessPromotedPieceReq dataReq = new ChessPromotedPieceReq(lobbyCode, GameType.CHESS.ToString().ToUpper(),
-                OnlinePlayerBehavour.Instance.playerType.ToString().ToUpper(),
-                prefabIndex, spawnPos.PosX.ToString(), spawnPos.PosX.ToString());
+        //    ChessPromotedPieceReq dataReq = new ChessPromotedPieceReq(lobbyCode, GameType.CHESS.ToString().ToUpper(),
+        //        OnlinePlayerBehavour.Instance.playerType.ToString().ToUpper(),
+        //        prefabIndex, spawnPos.PosX.ToString(), spawnPos.PosX.ToString());
 
-            client.Send(dataReq.GetMessageText());
-        }
+        //    client.Send(dataReq.GetMessageText());
+        //}
     }
 
 }

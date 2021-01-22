@@ -1,8 +1,6 @@
 ﻿using Assets.Scripts.General;
 using Assets.Scripts.Utils;
 using Assets.Scripts.WebSocket;
-using Assets.Scripts.WebSocket.Message;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -177,13 +175,13 @@ namespace Assets.Scripts.Chess
 					{
 						ClientWSBehavour client = GameObject.FindObjectOfType<ClientWSBehavour>();
 
-						if (client != null) {
-							string lobbyCode = client.profile.lobbyCode;
-							string playerType = OnlinePlayerBehavour.Instance.playerType.ToString().ToUpper();
-							ChessValidateCheckMoveReq move = new ChessValidateCheckMoveReq(lobbyCode, GameType.CHESS.ToString().ToUpper(),
-								playerType, select.CurrentX.ToString(), select.CurrentY.ToString(), tNode.col.ToString(), tNode.row.ToString());
-							client.Send(move.GetMessageText());
-						}
+						//if (client != null) {
+						//	string lobbyCode = client.profile.lobbyCode;
+						//	string playerType = OnlinePlayerBehavour.Instance.playerType.ToString().ToUpper();
+						//	ChessValidateCheckMoveReq move = new ChessValidateCheckMoveReq(lobbyCode, GameType.CHESS.ToString().ToUpper(),
+						//		playerType, select.CurrentX.ToString(), select.CurrentY.ToString(), tNode.col.ToString(), tNode.row.ToString());
+						//	client.Send(move.GetMessageText());
+						//}
 
 						InputManager.Instance.InvokeInputEvent(InputActionType.CANCEL_PIECE);
 					}
