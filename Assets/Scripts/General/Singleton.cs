@@ -25,7 +25,7 @@ namespace Assets.Scripts.General
 					Destroy(foundObject);
 				}
 
-				//if (!_destroyOnLoad) DontDestroyOnLoad(foundObject);
+				if (!_destroyOnLoad) DontDestroyOnLoad(foundObject);
 				return instance;
 			}
 		}

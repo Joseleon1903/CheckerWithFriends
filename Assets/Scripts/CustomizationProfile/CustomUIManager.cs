@@ -1,11 +1,13 @@
-﻿using Assets.Scripts.Utils;
-using System;
+﻿using Assets.Scripts.Network.Model;
+using Assets.Scripts.Network.Service;
+using Assets.Scripts.Profile;
+using Assets.Scripts.Utils;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class CustomUIManager : MonoBehaviour
 {
-
     public enum FrameKey
     {
         FRAME_GREEN = 2,
@@ -47,11 +49,8 @@ public class CustomUIManager : MonoBehaviour
     [SerializeField]
     private GameObject frameSprite;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField]
+    private GameObject prefabGuestProfile;
 
     public void PressFrameButton(GameObject objectClick) {
 
@@ -169,7 +168,6 @@ public class CustomUIManager : MonoBehaviour
 
     }
 
-
     private void ModifyUserSelectionAvatar(Sprite sprite, UserSelection selection ) {
 
         if (selection.Equals(UserSelection.FRAME)) {
@@ -188,5 +186,60 @@ public class CustomUIManager : MonoBehaviour
 
     }
 
+    public void PressContinueButton() {
+
+        Debug.Log("Entering in method PressContinueButton");
+        ProfileModel profileM = new ProfileModel();
+        if (EnumHelper.TRUE.Equals(PlayerPrefs.GetString(PlayerPreferenceKey.GUEST_PROFILE_KEY)))
+        {
+            Debug.Log("Create guest profile");
+
+            string name = ProfileUtil.GenerateGuestName(5);
+            string guestid = "GUEST-"+ ProfileUtil.GenerateRandomCode(9);
+
+            string profilePic = ProfilePictureString(avatarSprite, frameSprite);
+
+            profileM = new ProfileModel(0, name, "","", guestid, profilePic, GameType.CHECKER.ToString().ToUpper(), "Dominican Republic",EnumHelper.TRUE);
+
+        }
+        else if(EnumHelper.FALSE.Equals(PlayerPrefs.GetString(PlayerPreferenceKey.GUEST_PROFILE_KEY)))
+        {
+            Debug.Log("Create facebook profile");
+
+        }
+
+        //send Post request
+        string api = RestClientBehavour.Instance.ApiBaseUrl + ProfileService.CreateProfilePath;
+
+        ProfileService serviceVersion = new ProfileService();
+
+        serviceVersion.PostProfile(api, profileM).Then(response => {
+
+            Debug.Log("Registration fetch to local profile");
+
+            GameObject profile = Finder.FindGameProfile();
+
+            if (profile == null)
+            {
+                profile = Instantiate(prefabGuestProfile);
+            }
+
+            profile = BaseProfile.FetchFromModel(profile, profileM );
+
+            profile.GetComponent<GuestProfile>().ProfileAvatarSprite = avatarSprite.GetComponent<Image>().sprite;
+            profile.GetComponent<GuestProfile>().ProfileFrameSprite = frameSprite.GetComponent<Image>().sprite;
+
+        });
+
+        //fordware next scene
+        SceneManager.LoadScene("MainMenu");
+
+    }
+
+    private string ProfilePictureString(GameObject avatar , GameObject frame) {
+        string avatarSprite = avatar.GetComponent<Image>().sprite.name;
+        string frameSprite = frame.GetComponent<Image>().sprite.name;
+        return frameSprite + "%"+ avatarSprite;
+    }
 
 }

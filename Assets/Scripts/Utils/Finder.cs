@@ -1,11 +1,12 @@
 ﻿using Assets.Scripts.Chess;
 using Assets.Scripts.General;
+using Assets.Scripts.Profile;
 using System;
 using UnityEngine;
 
 namespace Assets.Scripts.Utils
 {
-    class Finder
+    public class Finder
     {
 		public static GameObject RayHitFromScreen(Vector3 hitPosition)
 		{
@@ -55,6 +56,17 @@ namespace Assets.Scripts.Utils
 			}
 
 			return null;
+		}
+
+
+		public static GameObject FindGameProfile()
+		{
+			GameObject objectG = null;
+			if (GameObject.FindObjectOfType<BaseProfile>() != null) {
+
+				objectG = GameObject.FindObjectOfType<BaseProfile>().gameObject;
+			}
+			return objectG;
 		}
 	}
 }

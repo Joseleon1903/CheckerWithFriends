@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Utils;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.Intro
@@ -16,6 +17,9 @@ namespace Assets.Scripts.Intro
             Instantiate(guestProfile);
 
             LoggerFile.Instance.DEBUG_LINE("Load main scene");
+
+            PlayerPrefs.SetString(PlayerPreferenceKey.GUEST_PROFILE_KEY, EnumHelper.TRUE);
+
             SceneManager.LoadScene("ProfileCustomizationScene");
         
         }

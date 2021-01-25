@@ -97,21 +97,21 @@ class PublicGameBehavour: MonoBehaviour
 
         SocketConfig config = FindObjectOfType<SocketConfig>();
 
-        var api = RestClientImpl.GetPublicMatchRestPath(config.LobbyType, 10);
+        //var api = RestClientImpl.GetPublicMatchRestPath(config.LobbyType, 10);
 
-        OnRequestError errorHandler = new OnRequestError(HandlerRequestError);
+        //OnRequestError errorHandler = new OnRequestError(HandlerRequestError);
 
-        RestClient.GetArray<PublicAvaliableGameObject>(api ).Then(reponse => {
+        //RestClient.GetArray<PublicAvaliableGameObject>(api ).Then(reponse => {
 
-            Debug.Log("Response list size:"+reponse.Length);
+        //    Debug.Log("Response list size:"+reponse.Length);
 
-            foreach (var item in reponse) {
-                PublicGameList.Add(item);
-            }
+        //    foreach (var item in reponse) {
+        //        PublicGameList.Add(item);
+        //    }
 
-            RefreshPanelView();
+        //    RefreshPanelView();
 
-        }).Catch(err => errorHandler(err));
+        //}).Catch(err => errorHandler(err));
     }
 
     public delegate void OnRequestError(Exception var);

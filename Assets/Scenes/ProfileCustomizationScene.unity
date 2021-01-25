@@ -1086,6 +1086,8 @@ MonoBehaviour:
     - {fileID: 21300000, guid: ad976e7039c4fde49ad38a3700fb9945, type: 3}
   avatarSprite: {fileID: 2074634025}
   frameSprite: {fileID: 824809185}
+  prefabGuestProfile: {fileID: 8222137865034057296, guid: 2d5fb145268cf0b4b8ee5c9218475a99,
+    type: 3}
 --- !u!1 &468687299
 GameObject:
   m_ObjectHideFlags: 0
@@ -3566,7 +3568,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1691739158}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 436253672}
+        m_MethodName: PressContinueButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1691739158
 MonoBehaviour:
   m_ObjectHideFlags: 0

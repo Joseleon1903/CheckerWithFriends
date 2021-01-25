@@ -52,9 +52,9 @@ namespace Assets.Scripts.WebSocket
 
             GuestProfile client = FindObjectOfType<GuestProfile>();
 
-            string playerName= client.profileName;
-            string playerId = client.profileId;
-            string playerNationality= client.profileNationality;
+            string playerName= client._profileName;
+            string playerId = client._profileId;
+            string playerNationality= client._profileNationality;
 
             ConnectToLobbyReq request = new ConnectToLobbyReq(LobbyType, lobbyCode, playerCode,  playerName, playerId, playerNationality);
 
