@@ -3,6 +3,7 @@ using Assets.Scripts.Network.Service;
 using Assets.Scripts.Profile;
 using Assets.Scripts.Utils;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -184,6 +185,12 @@ public class CustomUIManager : MonoBehaviour
             image.sprite = sprite;
         }
 
+    }
+
+    private void Awake()
+    {
+        //Validation Scene
+        Assert.IsNotNull(RestClientBehavour.Instance, "RestClientBehavour Instance is not present in the scene");
     }
 
     public void PressContinueButton() {

@@ -76,7 +76,7 @@ public class HostMatchGameBehavour : MonoBehaviour
 
         Debug.Log("Lobby Code Generated: " + lobbyCode);
 
-        string gameType = GameTypeUtil.GetGameConfigType().ToString().ToUpper();
+        string gameType = "CHECKER";
 
         HostGameTypeSelection = gameType;
 

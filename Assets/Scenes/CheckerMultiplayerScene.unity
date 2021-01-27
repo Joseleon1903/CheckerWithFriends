@@ -247,7 +247,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 389876436}
   m_HandleRect: {fileID: 389876435}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -528,75 +528,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 215709578}
   m_CullTransparentMesh: 0
---- !u!1001 &263953502
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1969700786636208686, guid: 36c139de468bc5148b377925d9b1e1a7,
-        type: 3}
-      propertyPath: m_Name
-      value: LoggerObject
-      objectReference: {fileID: 0}
-    - target: {fileID: 6386549222281118989, guid: 36c139de468bc5148b377925d9b1e1a7,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 6386549222281118989, guid: 36c139de468bc5148b377925d9b1e1a7,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6386549222281118989, guid: 36c139de468bc5148b377925d9b1e1a7,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6386549222281118989, guid: 36c139de468bc5148b377925d9b1e1a7,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 6386549222281118989, guid: 36c139de468bc5148b377925d9b1e1a7,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6386549222281118989, guid: 36c139de468bc5148b377925d9b1e1a7,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6386549222281118989, guid: 36c139de468bc5148b377925d9b1e1a7,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6386549222281118989, guid: 36c139de468bc5148b377925d9b1e1a7,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6386549222281118989, guid: 36c139de468bc5148b377925d9b1e1a7,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6386549222281118989, guid: 36c139de468bc5148b377925d9b1e1a7,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6386549222281118989, guid: 36c139de468bc5148b377925d9b1e1a7,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 36c139de468bc5148b377925d9b1e1a7, type: 3}
 --- !u!1001 &266030984
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1539,7 +1470,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3.7, y: 240.7}
+  m_AnchoredPosition: {x: 3.7, y: 212}
   m_SizeDelta: {x: 900, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &725112014
@@ -2797,7 +2728,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6dc5b1b4e991e740973de5790b5880d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  connectionType: 1
+  connectionType: 0
   _lobbyType: 1
 --- !u!4 &1022274959
 Transform:
@@ -2811,7 +2742,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1050614368
 GameObject:
@@ -3266,8 +3197,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3.7, y: -29.5}
-  m_SizeDelta: {x: 900, y: 465.4}
+  m_AnchoredPosition: {x: 3.7, y: -28.7}
+  m_SizeDelta: {x: 900, y: 409.34763}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1203209294
 MonoBehaviour:
