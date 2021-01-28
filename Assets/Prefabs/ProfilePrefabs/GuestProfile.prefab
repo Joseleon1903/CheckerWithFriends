@@ -43,4 +43,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 690075fa6f678534885c8e683735c811, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  profilePicture: {fileID: 21300000, guid: ca09c445225d0da43894bb3dba7b32dd, type: 3}
+  id: 0
+  _email: 
+  _nameProfile: 
+  _facebookUserId: 
+  _guestUserId: 
+  _lastTokenInfoString: 
+  _profilePicture: 
+  _cretionDate: 
+  _totalCheckerGame: 0
+  _totalCheckerGameWin: 0
+  _language: 
+  _nationality: 
+  _isGuest: 1
+  _profileName: 
+  _profileId: 
+  _profileNationality: 
+  _profileAvatarSprite: {fileID: 21300000, guid: ca09c445225d0da43894bb3dba7b32dd,
+    type: 3}
+  _profileframeSprite: {fileID: 21300000, guid: ca09c445225d0da43894bb3dba7b32dd,
+    type: 3}

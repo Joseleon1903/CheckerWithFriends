@@ -23,12 +23,16 @@ public class ProfileOptionBehavour : MonoBehaviour
 
     [SerializeField] private Text TotalCheckerGameWin;
 
-    private void Awake()
+    // Start is called before the first frame update
+    void Start()
     {
-        if (Finder.FindGameProfile() != null) {
+        if (Finder.FindGameProfile() != null)
+        {
 
             SetUpProfileInformation();
         }
+
+        LeanTween.scale(optionPanel, new Vector3(0.8f, 0.8f, 0.8f), 1.5f).setEaseOutBounce();
     }
 
     private void SetUpProfileInformation()
@@ -63,12 +67,6 @@ public class ProfileOptionBehavour : MonoBehaviour
         nationality.text = nation;
         TotalCheckerGame.text = totChecker;
         TotalCheckerGameWin.text = totCheckerWin;
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        LeanTween.scale(optionPanel, new Vector3(0.8f, 0.8f, 0.8f), 1.5f).setEaseOutBounce();
     }
 
     public void PressCloseBtn()

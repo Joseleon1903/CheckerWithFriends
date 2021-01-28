@@ -1,9 +1,30 @@
-﻿using Assets.Scripts.WebSocket;
+﻿using Assets.Scripts.Utils;
+using Assets.Scripts.WebSocket;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class ProfileMultiplayerBehavour : MonoBehaviour
 {
+
+    [SerializeField] private GameObject profileAvatarImage;
+
+    [SerializeField] private GameObject profileFrameImage;
+
+    private GameObject profile;
+
+    private void Awake()
+    {
+        Debug.Log("Entering awake in profile Multiplayer canvas behavour");
+
+        profile = Finder.FindGameProfile();
+    }
+
+    private void Start()
+    {
+        ProfileUtil.SetUpProfileImage(profile, profileAvatarImage, profileFrameImage);
+    }
+
+
     public void PressBackButton() {
 
         LoggerFile.Instance.DEBUG_LINE("Press Back Button");

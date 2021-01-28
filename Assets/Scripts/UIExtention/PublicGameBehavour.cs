@@ -1,7 +1,5 @@
 ﻿using Assets.Script.WebSocket;
 using Assets.Scripts.Utils;
-using Proyecto26;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -97,30 +95,21 @@ class PublicGameBehavour: MonoBehaviour
 
         SocketConfig config = FindObjectOfType<SocketConfig>();
 
-        //var api = RestClientImpl.GetPublicMatchRestPath(config.LobbyType, 10);
+        var api = RestClientBehavour.Instance.ApiBaseUrl +PublicLobbyService.GetPublicLobbyPath;
 
-        //OnRequestError errorHandler = new OnRequestError(HandlerRequestError);
+        PublicLobbyService serviceLobby = new PublicLobbyService();
 
-        //RestClient.GetArray<PublicAvaliableGameObject>(api ).Then(reponse => {
+        serviceLobby.GetPublicLobbys(api, 10).Then(response => {
 
-        //    Debug.Log("Response list size:"+reponse.Length);
+            Debug.Log("Response list size:" + response.Length);
 
-        //    foreach (var item in reponse) {
-        //        PublicGameList.Add(item);
-        //    }
+            foreach (var item in response)
+            {
+                PublicGameList.Add(item);
+            }
 
-        //    RefreshPanelView();
-
-        //}).Catch(err => errorHandler(err));
-    }
-
-    public delegate void OnRequestError(Exception var);
-
-
-    public void HandlerRequestError(Exception response) {
-        Debug.Log("Error" + response.Message + "Ok");
-
-        RefreshPanelView();
+            RefreshPanelView();
+        });
     }
 
 }

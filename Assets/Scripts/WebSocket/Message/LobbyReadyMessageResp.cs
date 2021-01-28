@@ -33,15 +33,17 @@
                         code = eData[3],
                         playerId = eData[5],
                         name = eData[4],
-                        nationality = eData[6]
+                        nationality = eData[6],
+                        picture = eData[7]
                     };
 
                     PlayerInfo playerTwoRef = new PlayerInfo
                     {
-                        code = eData[7],
-                        playerId = eData[9],
-                        name = eData[8],
-                        nationality = eData[10]
+                        code = eData[8],
+                        playerId = eData[10],
+                        name = eData[9],
+                        nationality = eData[11],
+                        picture = eData[12]
                     };
                     playerOne = playerOneRef;
                     playerTwo = playerTwoRef;
@@ -57,5 +59,6 @@
         public string name;
         public string playerId;
         public string nationality;
+        public string picture;
     }
 }

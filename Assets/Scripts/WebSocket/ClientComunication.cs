@@ -86,7 +86,7 @@ namespace Assets.Scripts.WebSocket
                 else
                 {
                     FindObjectOfType<MultiplayerButtonActionBehavour>().HidePublicGamePanel();
-                    FindObjectOfType<MultiplayerButtonActionBehavour>().ShowJoinPrivateGamePanel(respR.playerOne, respR.playerTwo);
+                    FindObjectOfType<MultiplayerButtonActionBehavour>().ShowJoinPrivateGamePanel(respR.playerOne);
                 }
 
                 return;

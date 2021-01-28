@@ -12,14 +12,14 @@ namespace Assets.Scripts.General
 		protected Color origColor;
 		protected Color origEmission;
 		protected Material origMaterial;
-		protected new Renderer renderer;
+		protected Renderer renderer;
 
 		protected virtual void Start()
 		{
-			//renderer = GetComponent<Renderer>();
-			//origMaterial = GetComponent<Renderer>().material;
-			//origColor = origMaterial.GetColor("_Color");
-			//origEmission = origMaterial.GetColor("_EmissionColor");
+			renderer = GetComponent<Renderer>();
+			origMaterial = GetComponent<Renderer>().material;
+			origColor = origMaterial.GetColor("_Color");
+			origEmission = origMaterial.GetColor("_EmissionColor");
 		}
 
 		public bool IsReady

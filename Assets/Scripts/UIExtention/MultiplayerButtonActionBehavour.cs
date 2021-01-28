@@ -92,7 +92,7 @@ public class MultiplayerButtonActionBehavour : MonoBehaviour
         panelPublicGame.SetActive(false);
     }
 
-    public void ShowJoinPrivateGamePanel(PlayerInfo playerOnInfo, PlayerInfo playerTwoInfo) {
+    public void ShowJoinPrivateGamePanel(PlayerInfo playerOnInfo) {
 
         LoggerFile.Instance.DEBUG_LINE("Show client Join private game panel");
 
@@ -100,7 +100,7 @@ public class MultiplayerButtonActionBehavour : MonoBehaviour
 
         clientMatchJoinPanel = Instantiate(clientMatchJoinPanel);
 
-        clientMatchJoinPanel.GetComponent<HostMatchJoinBehavour>().SetUpView(playerOnInfo, playerTwoInfo);
+        clientMatchJoinPanel.GetComponent<HostMatchJoinBehavour>().SetUpView(playerOnInfo);
     }
 
     public void StartGame(string map, string time, string gameType) {
@@ -139,42 +139,6 @@ public class MultiplayerButtonActionBehavour : MonoBehaviour
             LoggerFile.Instance.DEBUG_LINE("Start game after delay Map: CheckerCityNightScene"); 
 
             StartCoroutine(LauncherNewSceneAfterTime("CheckerCityNightScene", 5.0f));
-        }
-
-        // Game In Scene Chess - Park - Day
-        else if (string.Equals(map.ToUpper(), Map.Park.ToString().ToUpper()) && string.Equals(time.ToUpper(), Time.Day.ToString().ToUpper())
-            && string.Equals(gameType.ToUpper(), GameType.CHESS.ToString().ToUpper()))
-        {
-            LoggerFile.Instance.DEBUG_LINE("Start game after delay Map: CheckerCityNightScene");
-
-            StartCoroutine(LauncherNewSceneAfterTime("ChessParkDayGameScene", 5.0f));
-        }
-
-        // Game In Scene Chess - City - Day
-        else if (string.Equals(map.ToUpper(), Map.City.ToString().ToUpper()) && string.Equals(time.ToUpper(), Time.Day.ToString().ToUpper())
-            && string.Equals(gameType.ToUpper(), GameType.CHESS.ToString().ToUpper()))
-        {
-            LoggerFile.Instance.DEBUG_LINE("Start game after delay Map: CheckerCityNightScene");
-
-            StartCoroutine(LauncherNewSceneAfterTime("ChessParkDayGameScene", 5.0f));
-        }
-
-        // Game In Scene Chess - Park - Night
-        else if (string.Equals(map.ToUpper(), Map.Park.ToString().ToUpper()) && string.Equals(time.ToUpper(), Time.Night.ToString().ToUpper())
-            && string.Equals(gameType.ToUpper(), GameType.CHESS.ToString().ToUpper()))
-        {
-            LoggerFile.Instance.DEBUG_LINE("Start game after delay Map: CheckerCityNightScene");
-
-            StartCoroutine(LauncherNewSceneAfterTime("ChessParkDayGameScene", 5.0f));
-        }
-
-        // Game In Scene Chess - City - Night
-        else if (string.Equals(map.ToUpper(), Map.City.ToString().ToUpper()) && string.Equals(time.ToUpper(), Time.Night.ToString().ToUpper())
-            && string.Equals(gameType.ToUpper(), GameType.CHESS.ToString().ToUpper()))
-        {
-            LoggerFile.Instance.DEBUG_LINE("Start game after delay Map: CheckerCityNightScene");
-
-            StartCoroutine(LauncherNewSceneAfterTime("ChessParkDayGameScene", 5.0f));
         }
 
     }

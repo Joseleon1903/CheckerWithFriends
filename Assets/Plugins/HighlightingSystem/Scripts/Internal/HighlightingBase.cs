@@ -449,30 +449,11 @@ namespace HighlightingSystem
 		// 
 		protected virtual bool CheckSupported()
 		{
-			// Image Effects supported?
-			if (!SystemInfo.supportsImageEffects)
-			{
-				Debug.LogError("HighlightingSystem : Image effects is not supported on this platform!");
-				return false;
-			}
-			
-			// Render Textures supported?
-			if (!SystemInfo.supportsRenderTextures)
-			{
-				Debug.LogError("HighlightingSystem : RenderTextures is not supported on this platform!");
-				return false;
-			}
 			
 			// Required Render Texture Format supported?
 			if (!SystemInfo.SupportsRenderTextureFormat(RenderTextureFormat.ARGB32))
 			{
 				Debug.LogError("HighlightingSystem : RenderTextureFormat.ARGB32 is not supported on this platform!");
-				return false;
-			}
-
-			if (SystemInfo.supportsStencil < 1)
-			{
-				Debug.LogError("HighlightingSystem : Stencil buffer is not supported on this platform!");
 				return false;
 			}
 			

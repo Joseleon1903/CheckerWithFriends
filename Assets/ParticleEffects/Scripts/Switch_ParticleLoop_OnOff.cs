@@ -11,23 +11,5 @@ using UnityEngine;
 
 public class Switch_ParticleLoop_OnOff : MonoBehaviour {
 	
-	public bool LoopControler = true;
 	
-	void Awake(){
-		loopEffectControl(LoopControler);
-	}
-	
-	private void loopEffectControl(bool setLoop)
-	{
-		foreach (Transform child in transform)
-		{
-			ParticleSystem[] systems;
-			systems = child.GetComponentsInChildren<ParticleSystem>(true);
-			
-			foreach(ParticleSystem ps in systems)
-			{
-				ps.loop = setLoop;
-			}
-		}
-	}
 }

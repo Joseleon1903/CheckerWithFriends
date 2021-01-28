@@ -32,11 +32,6 @@ namespace Assets.Scripts.Chess
 
 		public GameState gameState;
 
-		private bool whiteTurn;
-		//END of EXPERIMENT_TIMER
-
-		public bool ready;
-
 		public GCPlayer PlayerOponent
 		{
 			get
@@ -75,11 +70,6 @@ namespace Assets.Scripts.Chess
 			get { return p2; }
 		}
 
-		public bool IsReady
-		{
-			get { return ready; }
-		}
-
 		public BoardGrid Grid
 		{
 			get { return grid; }
@@ -105,10 +95,6 @@ namespace Assets.Scripts.Chess
 
 			
 			SwitchPlayer(); //if null current player = p1
-			
-
-			//all objects are now ready
-			ready = true;
 
 			yield return null;
 		}
@@ -135,7 +121,6 @@ namespace Assets.Scripts.Chess
 			}
 #endif
 
-			if (!ready) return;
 			if (gameState.IsGameOver) return;
 		}
 
@@ -150,7 +135,6 @@ namespace Assets.Scripts.Chess
 			if (currentPlayer == p2)
 			{
 				currentPlayer = p1;
-				whiteTurn = true;
 				//mainCamera.GetComponent<SwitchAngle>().SwitchCamera(PlayerType.P1);
 				Debug.Log("Change campera point of view for opponent player 1");
 
@@ -158,14 +142,12 @@ namespace Assets.Scripts.Chess
 			else if (currentPlayer == p1)
 			{
 				currentPlayer = p2;
-				whiteTurn = false;
 				//mainCamera.GetComponent<SwitchAngle>().SwitchCamera(PlayerType.P2);
 				Debug.Log("Change campera point of view for opponent player 2");
 			}
 			else
 			{
 				currentPlayer = p1;
-				whiteTurn = true;
 			}
 
 			//IF checkmate

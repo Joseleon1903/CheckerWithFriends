@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Multiplayer;
+﻿using Assets.Script.WebSocket;
+using Assets.Scripts.Profile;
 using Assets.Scripts.Utils;
 using Assets.Scripts.WebSocket.Message;
 using System.Collections.Generic;
@@ -50,11 +51,11 @@ namespace Assets.Scripts.WebSocket
 
             string LobbyType = (type.Equals("Private")) ? LobbyCodeGenerator.LOBBY_PRIVATE : LobbyCodeGenerator.LOBBY_PUBLIC;
 
-            GuestProfile client = FindObjectOfType<GuestProfile>();
+            BaseProfile profile = FindObjectOfType<BaseProfile>();
 
-            string playerName= client._profileName;
-            string playerId = client._profileId;
-            string playerNationality= client._profileNationality;
+            string playerName= profile._nameProfile;
+            string playerId = (profile._isGuest) ? profile._guestUserId : profile._facebookUserId;
+            string playerNationality= profile._nationality;
 
             ConnectToLobbyReq request = new ConnectToLobbyReq(LobbyType, lobbyCode, playerCode,  playerName, playerId, playerNationality);
 

@@ -1,4 +1,8 @@
-﻿namespace Assets.Scripts.Utils
+﻿using Assets.Scripts.Profile;
+using UnityEngine;
+using UnityEngine.UI;
+
+namespace Assets.Scripts.Utils
 {
     class ProfileUtil
     {
@@ -30,6 +34,32 @@
             return code;
         }
 
+        public static void SetUpProfileImage(GameObject profile, GameObject profileAvatar, GameObject profileFrame)
+        {
+            Debug.Log("Entering in SetUpProfileImage");
+
+            BaseProfile profileBase = profile.GetComponent<BaseProfile>();
+            if (profileBase._isGuest)
+            {
+                profileAvatar.GetComponent<Image>().sprite = profile.GetComponent<GuestProfile>().ProfileAvatarSprite;
+                profileFrame.GetComponent<Image>().sprite = profile.GetComponent<GuestProfile>().ProfileFrameSprite;
+            }
+            else
+            {
+                profileAvatar.GetComponent<Image>().sprite = profile.GetComponent<FacebookProfile>().ProfileAvatarSprite;
+                profileFrame.GetComponent<Image>().sprite = profile.GetComponent<FacebookProfile>().ProfileFrameSprite;
+            }
+
+        }
+
+        public static void SetupProfileImageFromResources(string avatarkey, string framekey , GameObject profileAvatar, GameObject profileFrame) {
+
+            Sprite avatar = Resources.Load<Sprite>("Sprites/Profile/"+ avatarkey);
+            Sprite frame = Resources.Load<Sprite>("Sprites/Profile/" + framekey);
+
+            profileAvatar.GetComponent<Image>().sprite = avatar;
+            profileFrame.GetComponent<Image>().sprite = frame;
+        }
 
     }
 }

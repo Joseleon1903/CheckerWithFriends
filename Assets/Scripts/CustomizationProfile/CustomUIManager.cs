@@ -206,7 +206,7 @@ public class CustomUIManager : MonoBehaviour
 
             string profilePic = ProfilePictureString(avatarSprite, frameSprite);
 
-            profileM = new ProfileModel(0, name, "","", guestid, profilePic, GameType.CHECKER.ToString().ToUpper(), "Dominican Republic",EnumHelper.TRUE);
+            profileM = new ProfileModel(0, name, "","", guestid,"", profilePic, "Dominican Republic",EnumHelper.TRUE);
 
         }
         else if(EnumHelper.FALSE.Equals(PlayerPrefs.GetString(PlayerPreferenceKey.GUEST_PROFILE_KEY)))
@@ -231,7 +231,7 @@ public class CustomUIManager : MonoBehaviour
                 profile = Instantiate(prefabGuestProfile);
             }
 
-            profile = BaseProfile.FetchFromModel(profile, profileM );
+            profile = BaseProfile.FetchFromModel(profile, profileM);
 
             profile.GetComponent<GuestProfile>().ProfileAvatarSprite = avatarSprite.GetComponent<Image>().sprite;
             profile.GetComponent<GuestProfile>().ProfileFrameSprite = frameSprite.GetComponent<Image>().sprite;
@@ -239,7 +239,7 @@ public class CustomUIManager : MonoBehaviour
         });
 
         //fordware next scene
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadSceneAsync("MainMenu");
 
     }
 

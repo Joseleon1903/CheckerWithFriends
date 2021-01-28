@@ -12,8 +12,6 @@ namespace Assets.Scripts.Network.Service
 
         public static string CreateProfilePath = "/user/profile/create";
 
-        public delegate void OnRequestError(Exception var);
-
         public override IPromise<string> Get(string api)
         {
             throw new NotImplementedException();
@@ -34,17 +32,6 @@ namespace Assets.Scripts.Network.Service
                 }).Catch(error => errorHandler(error)); ;
 
             return promise;
-        }
-
-        /// <summary>
-        /// 
-        /// default request error handler
-        /// 
-        /// </summary>
-        /// <param name="response"></param>
-        public void HandlerDefaultRequestError(Exception response)
-        {
-            Debug.Log("Error" + response.Message);
         }
 
     }

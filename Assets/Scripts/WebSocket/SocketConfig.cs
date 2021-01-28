@@ -2,6 +2,15 @@
 
 namespace Assets.Script.WebSocket
 {
+
+    public class GameClient
+    {
+        public string name;
+        public bool isHost;
+        public string lobbyCode;
+
+    }
+
     public enum ConnectionConfiguration { 
         LOCAL,
         INTERNET,

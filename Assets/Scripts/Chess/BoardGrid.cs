@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.Utils;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -181,7 +180,7 @@ namespace Assets.Scripts.Chess
 			}
 			player.AddPieces(piece.GetComponent<Piece>());
 
-			piece.GetComponent<Piece>().PieceMovement = Creator.CreatePieceMovement(piece.GetComponent<Piece>().MovementType, player, piece.GetComponent<Piece>());
+			//piece.GetComponent<Piece>().PieceMovement = Creator.CreatePieceMovement(piece.GetComponent<Piece>().MovementType, player, piece.GetComponent<Piece>());
 
 			piece.GetComponent<Piece>().UpdateNode(pieceNode);
 

@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Utils;
+﻿using Assets.Scripts.Profile;
+using Assets.Scripts.Utils;
 using Assets.Scripts.WebSocket;
 using Assets.Scripts.WebSocket.Message;
 using System.Collections;
@@ -122,6 +123,26 @@ public class HostMatchGameBehavour : MonoBehaviour
 
         var playerNationality = ComponentChildrenUtil.FindComponentInChildWithName<Text>(MatchPanelPrefab, "PlayerNation");
         playerNationality.text = playerTwoInfo.nationality;
+
+        var playerframe = ComponentChildrenUtil.FindComponentInChildWithName<Image>(MatchPanelPrefab, "ProfileFrame");
+
+        var playerAvatar = ComponentChildrenUtil.FindComponentInChildWithName<Image>(MatchPanelPrefab, "ProfileAvatar");
+
+        string[] sprite = playerTwoInfo.picture.Split('%');
+        string frameRoot = sprite[0];
+        string avatarRoot = sprite[1];
+
+        ProfileUtil.SetupProfileImageFromResources(avatarRoot, frameRoot, playerAvatar.gameObject, playerframe.gameObject);
+
+        //set preference
+        BaseProfile baseProfile = Finder.FindGameProfile().GetComponent<BaseProfile>();
+        string[] sprites = baseProfile._profilePicture.Split('%');
+  
+        PlayerPrefs.SetString(PlayerPreferenceKey.PROFILE_ONE_KEY_AVATAR, sprites[1]);
+        PlayerPrefs.SetString(PlayerPreferenceKey.PROFILE_ONE_KEY_FRAME, sprites[0]);
+
+        PlayerPrefs.SetString(PlayerPreferenceKey.PROFILE_TWO_KEY_AVATAR, avatarRoot);
+        PlayerPrefs.SetString(PlayerPreferenceKey.PROFILE_TWO_KEY_FRAME, frameRoot);
 
     }
 
