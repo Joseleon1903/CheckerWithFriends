@@ -37,17 +37,17 @@ namespace Assets.Scripts.CameraManager
 			inputManager = InputManager.Instance;
 		}
 
-		public void EnableInput()
-		{
-			InputManager.InputEvent += OnInputEvent;
-		}
+        public void EnableInput()
+        {
+            InputManager.InputEvent += OnInputEvent;
+        }
 
-		public void DisableInput()
-		{
-			InputManager.InputEvent -= OnInputEvent;
-		}
+        public void DisableInput()
+        {
+            InputManager.InputEvent -= OnInputEvent;
+        }
 
-		void OnDisable()
+        void OnDisable()
 		{
 			DisableInput();
 		}

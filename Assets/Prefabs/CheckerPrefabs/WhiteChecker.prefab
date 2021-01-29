@@ -11,8 +11,6 @@ GameObject:
   - component: {fileID: 3734317919805678004}
   - component: {fileID: 3734317919804383636}
   - component: {fileID: 3734317919803384660}
-  - component: {fileID: 2252194119391231971}
-  - component: {fileID: -4326248494896021975}
   - component: {fileID: 1885174684601107661}
   m_Layer: 0
   m_Name: WhiteChecker
@@ -57,6 +55,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -82,32 +81,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &2252194119391231971
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3734317919805586836}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0bce1215c33564a4496aa3a6f7afe74e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  seeThrough: 1
-  color: {r: 0, g: 0.88579154, b: 1, a: 1}
---- !u!114 &-4326248494896021975
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3734317919805586836}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67d4de287b46eb34e83a61e4f9115070, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1885174684601107661
 MonoBehaviour:
   m_ObjectHideFlags: 0

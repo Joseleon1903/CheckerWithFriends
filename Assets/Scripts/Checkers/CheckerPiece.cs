@@ -1,5 +1,4 @@
-﻿using HighlightingSystem;
-using System;
+﻿using System;
 using UnityEngine;
 
 namespace Assets.Scripts.Checkers
@@ -11,25 +10,8 @@ namespace Assets.Scripts.Checkers
 
     public class CheckerPiece : MonoBehaviour
     {
-        private Highlighter highlighter;
-
         public bool isWhite;
         public bool isKing;
-
-        private void Awake()
-        {
-            highlighter = GetComponent<Highlighter>();
-        }
-
-        private void Update()
-        {
-            highlighter.ConstantOff();
-        }
-
-        public void EnableHightLight() {
-
-            highlighter.On(Color.blue);
-        }
 
         public bool IsForceToMove(CheckerPiece[,] board, int x , int y ) {
 
@@ -103,6 +85,93 @@ namespace Assets.Scripts.Checkers
             }
 
             return false;
+        }
+
+        public bool[,] PossibleEatMove(CheckerPiece[,] board, int x, int y)
+        {
+            bool[,] tiles = new bool[8, 8];
+
+            Position posNextL;
+            Position posNextR;
+
+            //posible capture move for white piece
+            if (isWhite || isKing)
+            {
+
+                posNextL.x = x + 1;
+                posNextL.y = y + 1;
+
+                posNextR.x = x - 1;
+                posNextR.y = y + 1;
+
+                if (posNextL.x < 8 && posNextL.x > -1 && posNextL.y < 8 && posNextL.y > -1)
+                {
+                    bool r = (board[posNextL.x, posNextL.y] != null && board[posNextL.x, posNextL.y].isWhite != isWhite) ? true : false;
+
+                    int captureX, captureY;
+                    captureX = posNextL.x + 1;
+                    captureY = posNextL.y + 1;
+
+                    if (r && captureX < 8 && captureX > -1 && captureY < 8 && captureY > -1 && board[captureX, captureY] == null)
+                    {
+                        tiles[captureX, captureY] = r;
+                    }
+                }
+
+                if (posNextR.x < 8 && posNextR.x > -1 && posNextR.y < 8 && posNextR.y > -1)
+                {
+                    bool r = (board[posNextR.x, posNextR.y] != null && board[posNextR.x, posNextR.y].isWhite != isWhite) ? true : false;
+
+                    int captureX, captureY;
+                    captureX = posNextR.x - 1;
+                    captureY = posNextR.y + 1;
+
+                    if (r && captureX < 8 && captureX > -1 && captureY < 8 && captureY > -1 && board[captureX, captureY] == null)
+                    {
+                        tiles[captureX, captureY] = r;
+                    }
+                }
+            }
+
+            //posible capture move for black piece
+            if (!isWhite || isKing)
+            {
+
+                posNextL.x = x + 1;
+                posNextL.y = y - 1;
+
+                posNextR.x = x - 1;
+                posNextR.y = y - 1;
+
+                if (posNextL.x < 8 && posNextL.x > -1 && posNextL.y < 8 && posNextL.y > -1)
+                {
+                    bool r = (board[posNextL.x, posNextL.y] != null && board[posNextL.x, posNextL.y].isWhite != isWhite) ? true : false;
+
+                    int captureX, captureY;
+                    captureX = posNextL.x + 1;
+                    captureY = posNextL.y - 1;
+
+                    if (r && captureX < 8 && captureX > -1 && captureY < 8 && captureY > -1 && board[captureX, captureY] == null)
+                    {
+                        tiles[captureX, captureY] = r;
+                    }
+                }
+
+                if (posNextR.x < 8 && posNextR.x > -1 && posNextR.y < 8 && posNextR.y > -1)
+                {
+                    bool r = (board[posNextR.x, posNextR.y] != null && board[posNextR.x, posNextR.y].isWhite != isWhite) ? true : false;
+
+                    int captureX, captureY;
+
+                    captureX = posNextR.x - 1;
+                    captureY = posNextL.y - 1;
+                    if (r && captureX < 8 && captureX > -1 && captureY < 8 && captureY > -1 && board[captureX, captureY] == null)
+                    {
+                        tiles[captureX, captureY] = r;
+                    }
+                }
+            }
+            return tiles;
         }
 
         public bool[,] PossibleMove(CheckerPiece[,] board, int x, int y)
@@ -237,9 +306,6 @@ namespace Assets.Scripts.Checkers
         public bool[,] ValidCapturePiece(CheckerPiece[,] board, int x, int y)
         {
             bool[,] tiles = new bool[8, 8];
-
-            Debug.Log("Curretn piece X: " + x);
-            Debug.Log("Curretn piece Y: " + y);
 
             Position posNextL;
             Position posNextR;

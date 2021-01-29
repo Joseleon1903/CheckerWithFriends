@@ -22,8 +22,8 @@ public class Converter
 		return (char)iCol;
 	}
 
-	public static Ray ScreenPointToRay(Vector3 pointPosition)
-	{
-		return GameManager.Instance.MainCamera.ScreenPointToRay(pointPosition);
-	}
+	//public static Ray ScreenPointToRay(Vector3 pointPosition)
+	//{
+	//	return GameManager.Instance.MainCamera.ScreenPointToRay(pointPosition);
+	//}
 }

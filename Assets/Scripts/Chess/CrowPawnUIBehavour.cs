@@ -1,7 +1,4 @@
-﻿using Assets.Scripts.Utils;
-using Assets.Scripts.WebSocket;
-using Assets.Scripts.WebSocket.Message;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Scripts.Chess
 {
@@ -20,8 +17,6 @@ namespace Assets.Scripts.Chess
 
     class CrowPawnUIBehavour : MonoBehaviour
     {
-
-        public GCPlayer Player { get; set; }
         public SpawnPosition SpawnPositionPiece {get;set;}
 
         public bool IsWhitePlayer { get; set; }

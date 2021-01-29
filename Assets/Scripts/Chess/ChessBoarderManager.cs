@@ -58,248 +58,248 @@ public class ChessBoarderManager : MonoBehaviour
         }
     }
 
-    public void MoveChess(int x, int y, bool onlineMovement)
-    {
-        int previonsX = selectedChess.CurrentX;
-        int previonsY = selectedChess.CurrentY;
+    //public void MoveChess(int x, int y, bool onlineMovement)
+    //{
+    //    int previonsX = selectedChess.CurrentX;
+    //    int previonsY = selectedChess.CurrentY;
 
-        if (allowedMoves[x,y])
-        {
-            ChessBehaviour c = ChessTable[x, y];
-            if (c != null && c.isWhite  != isWhiteTurn ) 
-            {
-                //Capture a piece
-                Debug.Log("Capture a piece");
+    //    if (allowedMoves[x,y])
+    //    {
+    //        ChessBehaviour c = ChessTable[x, y];
+    //        if (c != null && c.isWhite  != isWhiteTurn ) 
+    //        {
+    //            //Capture a piece
+    //            Debug.Log("Capture a piece");
 
-                if (!isWhiteTurn)
-                    CapturedBoardBlack.Instance.AddCaturePiece(c.gameObject);
-                else
-                    CapturedBoardWhite.Instance.AddCaturePiece(c.gameObject);
+    //            if (!isWhiteTurn)
+    //                CapturedBoardBlack.Instance.AddCaturePiece(c.gameObject);
+    //            else
+    //                CapturedBoardWhite.Instance.AddCaturePiece(c.gameObject);
 
-                //destroy chess 
-                activeChees.Remove(c.gameObject);
-                Destroy(c.gameObject);
-            }
+    //            //destroy chess 
+    //            activeChees.Remove(c.gameObject);
+    //            Destroy(c.gameObject);
+    //        }
           
 
          
-            if (selectedChess.GetType() == typeof(PawnChess)) {
+    //        if (selectedChess.GetType() == typeof(PawnChess)) {
 
-                // crown a pawn Logic
-                SpawnPosition pos = new SpawnPosition { PosX = x, PosY = y };
+    //            // crown a pawn Logic
+    //            SpawnPosition pos = new SpawnPosition { PosX = x, PosY = y };
 
-                if (isWhiteTurn && y == 7) {
+    //            if (isWhiteTurn && y == 7) {
 
-                    Debug.Log("White Pawn crow new piece");
-                    CanvasManagerUI.Instance.ShowUI(true, pos, isWhiteTurn);
-                }
-                else if (!isWhiteTurn && y == 0)
-                {
+    //                Debug.Log("White Pawn crow new piece");
+    //                CanvasManagerUI.Instance.ShowUI(true, pos, isWhiteTurn);
+    //            }
+    //            else if (!isWhiteTurn && y == 0)
+    //            {
 
-                    Debug.Log("Black Pawn crow new piece");
-                    CanvasManagerUI.Instance.ShowUI(true, pos, isWhiteTurn);
+    //                Debug.Log("Black Pawn crow new piece");
+    //                CanvasManagerUI.Instance.ShowUI(true, pos, isWhiteTurn);
 
-                }
+    //            }
 
-            }
+    //        }
 
-            //validate enpassant move
-            int moveDiff = Math.Abs(selectedChess.CurrentY - y);
-            if (selectedChess.GetType() == typeof(PawnChess)) {
-                PawnChess pa = (PawnChess)selectedChess;
+    //        //validate enpassant move
+    //        int moveDiff = Math.Abs(selectedChess.CurrentY - y);
+    //        if (selectedChess.GetType() == typeof(PawnChess)) {
+    //            PawnChess pa = (PawnChess)selectedChess;
 
-                //eat piece passant move white
-                if (pa.EnPassantMove[0] != -1 && pa.EnPassantMove[1] != -1 && selectedChess.isWhite && x < 7 && x >=0)
-                {
-                    //capture pawn 
-                    ChessBehaviour capPawn = ChessTable[x, y - 1];
-                    if (capPawn.isWhite != selectedChess.isWhite) {
-                        CapturedBoardWhite.Instance.AddCaturePiece(capPawn.gameObject);
-                        activeChees.Remove(capPawn.gameObject);
-                        Destroy(capPawn.gameObject);
-                    }
-                }
+    //            //eat piece passant move white
+    //            if (pa.EnPassantMove[0] != -1 && pa.EnPassantMove[1] != -1 && selectedChess.isWhite && x < 7 && x >=0)
+    //            {
+    //                //capture pawn 
+    //                ChessBehaviour capPawn = ChessTable[x, y - 1];
+    //                if (capPawn.isWhite != selectedChess.isWhite) {
+    //                    CapturedBoardWhite.Instance.AddCaturePiece(capPawn.gameObject);
+    //                    activeChees.Remove(capPawn.gameObject);
+    //                    Destroy(capPawn.gameObject);
+    //                }
+    //            }
 
-                //eat piece passant move black
-                if (pa.EnPassantMove[0] != -1 && pa.EnPassantMove[1] != -1 && !selectedChess.isWhite && x < 7 && x >= 0)
-                {
-                    //capture pawn 
-                    ChessBehaviour capPawn = ChessTable[x, y + 1];
-                    if (capPawn.isWhite != selectedChess.isWhite)
-                    {
-                        CapturedBoardBlack.Instance.AddCaturePiece(capPawn.gameObject);
-                        activeChees.Remove(capPawn.gameObject);
-                        Destroy(capPawn.gameObject);
-                    }
-                }
+    //            //eat piece passant move black
+    //            if (pa.EnPassantMove[0] != -1 && pa.EnPassantMove[1] != -1 && !selectedChess.isWhite && x < 7 && x >= 0)
+    //            {
+    //                //capture pawn 
+    //                ChessBehaviour capPawn = ChessTable[x, y + 1];
+    //                if (capPawn.isWhite != selectedChess.isWhite)
+    //                {
+    //                    CapturedBoardBlack.Instance.AddCaturePiece(capPawn.gameObject);
+    //                    activeChees.Remove(capPawn.gameObject);
+    //                    Destroy(capPawn.gameObject);
+    //                }
+    //            }
 
-                if (moveDiff == 2 && (x - 1) >= 0 && (x + 1) <= 7) {
-                    Debug.Log("moveDiff: " + moveDiff);
+    //            if (moveDiff == 2 && (x - 1) >= 0 && (x + 1) <= 7) {
+    //                Debug.Log("moveDiff: " + moveDiff);
 
-                    PawnChess cs = null;
+    //                PawnChess cs = null;
 
                     
-                    cs = (PawnChess)ChessTable[x - 1, y];
+    //                cs = (PawnChess)ChessTable[x - 1, y];
                     
-                    if (cs != null && cs.isWhite && cs.isWhite != selectedChess.isWhite)
-                    {
+    //                if (cs != null && cs.isWhite && cs.isWhite != selectedChess.isWhite)
+    //                {
 
-                        cs.EnPassantMove[0] = x;
-                        cs.EnPassantMove[1] = y + 1;
-                    }
+    //                    cs.EnPassantMove[0] = x;
+    //                    cs.EnPassantMove[1] = y + 1;
+    //                }
 
-                    //passant left white
-                    cs = (PawnChess)ChessTable[x + 1, y];
-                    if (cs != null && cs.isWhite && cs.isWhite != selectedChess.isWhite)
-                    {
-                        cs.EnPassantMove[0] = x;
-                        cs.EnPassantMove[1] = y + 1;
-                    }
+    //                //passant left white
+    //                cs = (PawnChess)ChessTable[x + 1, y];
+    //                if (cs != null && cs.isWhite && cs.isWhite != selectedChess.isWhite)
+    //                {
+    //                    cs.EnPassantMove[0] = x;
+    //                    cs.EnPassantMove[1] = y + 1;
+    //                }
                     
-                    //passant black
-                    cs = (PawnChess)ChessTable[x -1, y];
-                    if (cs != null && !cs.isWhite && cs.isWhite != selectedChess.isWhite)
-                    {
-                        cs.EnPassantMove[0] = x;
-                        cs.EnPassantMove[1] = y - 1;
-                    }
+    //                //passant black
+    //                cs = (PawnChess)ChessTable[x -1, y];
+    //                if (cs != null && !cs.isWhite && cs.isWhite != selectedChess.isWhite)
+    //                {
+    //                    cs.EnPassantMove[0] = x;
+    //                    cs.EnPassantMove[1] = y - 1;
+    //                }
 
-                    cs = (PawnChess)ChessTable[x + 1, y];
-                    if (cs != null && !cs.isWhite && cs.isWhite != selectedChess.isWhite)
-                    {
-                        cs.EnPassantMove[0] = x;
-                        cs.EnPassantMove[1] = y - 1;
-                    }
+    //                cs = (PawnChess)ChessTable[x + 1, y];
+    //                if (cs != null && !cs.isWhite && cs.isWhite != selectedChess.isWhite)
+    //                {
+    //                    cs.EnPassantMove[0] = x;
+    //                    cs.EnPassantMove[1] = y - 1;
+    //                }
 
 
-                }
-                pa.EnPassantMove[0] = -1;
-                pa.EnPassantMove[1] = -1;
-            }
+    //            }
+    //            pa.EnPassantMove[0] = -1;
+    //            pa.EnPassantMove[1] = -1;
+    //        }
 
-            //castiling move logic 
-            if (selectedChess.GetType() == typeof(RookChess)) {
-                RookChess rock = (RookChess) selectedChess;
-                rock.IsHasMove = true;
-            }
+    //        //castiling move logic 
+    //        if (selectedChess.GetType() == typeof(RookChess)) {
+    //            RookChess rock = (RookChess) selectedChess;
+    //            rock.IsHasMove = true;
+    //        }
 
-            if (selectedChess.GetType() == typeof(KingChess))
-            {
-                KingChess king = (KingChess)selectedChess;
-                king.IsFirstMove = false;
+    //        if (selectedChess.GetType() == typeof(KingChess))
+    //        {
+    //            KingChess king = (KingChess)selectedChess;
+    //            king.IsFirstMove = false;
 
-                if (king.isCastlingMove[0] == x && king.isCastlingMove[1] == y && selectedChess.isWhite) {
+    //            if (king.isCastlingMove[0] == x && king.isCastlingMove[1] == y && selectedChess.isWhite) {
 
-                    ChessBehaviour rookChess;
-                    int NextRookPosX, NextRookPosY, NextKingPosX, NextKingPosY;
+    //                ChessBehaviour rookChess;
+    //                int NextRookPosX, NextRookPosY, NextKingPosX, NextKingPosY;
 
-                    if (x < selectedChess.CurrentX) 
-                    {
-                        rookChess = ChessTable[0, 0];
-                        NextRookPosX = 2;
-                        NextRookPosY = 0;
-                        NextKingPosX = 1;
-                        NextKingPosY = 0;
-                    }
-                    else
-                    {
-                        rookChess = ChessTable[7, 0];
-                        NextRookPosX = 5;
-                        NextRookPosY = 0;
-                        NextKingPosX = 6;
-                        NextKingPosY = 0; 
-                    }
+    //                if (x < selectedChess.CurrentX) 
+    //                {
+    //                    rookChess = ChessTable[0, 0];
+    //                    NextRookPosX = 2;
+    //                    NextRookPosY = 0;
+    //                    NextKingPosX = 1;
+    //                    NextKingPosY = 0;
+    //                }
+    //                else
+    //                {
+    //                    rookChess = ChessTable[7, 0];
+    //                    NextRookPosX = 5;
+    //                    NextRookPosY = 0;
+    //                    NextKingPosX = 6;
+    //                    NextKingPosY = 0; 
+    //                }
 
-                    ChessTable[rookChess.CurrentX, rookChess.CurrentY] = null;
-                    ChessTable[NextRookPosX, NextRookPosY] = rookChess;
-                    rookChess.transform.position = TilesUtils.GetTileCenter(NextRookPosX, NextRookPosY);
-                    rookChess.SetPosition(NextRookPosX, NextRookPosY);
+    //                ChessTable[rookChess.CurrentX, rookChess.CurrentY] = null;
+    //                ChessTable[NextRookPosX, NextRookPosY] = rookChess;
+    //                rookChess.transform.position = TilesUtils.GetTileCenter(NextRookPosX, NextRookPosY);
+    //                rookChess.SetPosition(NextRookPosX, NextRookPosY);
 
-                    ChessTable[selectedChess.CurrentX, selectedChess.CurrentY] = null;
-                    selectedChess.transform.position = TilesUtils.GetTileCenter(NextKingPosX, NextKingPosY);
-                    selectedChess.SetPosition(NextKingPosX, NextKingPosY);
-                    ChessTable[NextKingPosX, NextKingPosY] = selectedChess;
+    //                ChessTable[selectedChess.CurrentX, selectedChess.CurrentY] = null;
+    //                selectedChess.transform.position = TilesUtils.GetTileCenter(NextKingPosX, NextKingPosY);
+    //                selectedChess.SetPosition(NextKingPosX, NextKingPosY);
+    //                ChessTable[NextKingPosX, NextKingPosY] = selectedChess;
 
-                    isWhiteTurn = !isWhiteTurn;
+    //                isWhiteTurn = !isWhiteTurn;
 
-                    isSpecialMove = true;
-                }
+    //                isSpecialMove = true;
+    //            }
 
-                if (king.isCastlingMove[0] == x && king.isCastlingMove[1] == y && !selectedChess.isWhite)
-                {
+    //            if (king.isCastlingMove[0] == x && king.isCastlingMove[1] == y && !selectedChess.isWhite)
+    //            {
 
-                    ChessBehaviour rookChess;
-                    int NextRookPosX, NextRookPosY, NextKingPosX, NextKingPosY;
+    //                ChessBehaviour rookChess;
+    //                int NextRookPosX, NextRookPosY, NextKingPosX, NextKingPosY;
 
-                    if (x < selectedChess.CurrentX)
-                    {
-                        rookChess = ChessTable[0, 7];
-                        NextRookPosX = 2;
-                        NextRookPosY = 7;
-                        NextKingPosX = 1;
-                        NextKingPosY = 7;
-                    }
-                    else
-                    {
-                        rookChess = ChessTable[7, 7];
-                        NextRookPosX = 5;
-                        NextRookPosY = 7;
-                        NextKingPosX = 6;
-                        NextKingPosY = 7;
-                    }
+    //                if (x < selectedChess.CurrentX)
+    //                {
+    //                    rookChess = ChessTable[0, 7];
+    //                    NextRookPosX = 2;
+    //                    NextRookPosY = 7;
+    //                    NextKingPosX = 1;
+    //                    NextKingPosY = 7;
+    //                }
+    //                else
+    //                {
+    //                    rookChess = ChessTable[7, 7];
+    //                    NextRookPosX = 5;
+    //                    NextRookPosY = 7;
+    //                    NextKingPosX = 6;
+    //                    NextKingPosY = 7;
+    //                }
 
-                    ChessTable[rookChess.CurrentX, rookChess.CurrentY] = null;
-                    ChessTable[NextRookPosX, NextRookPosY] = rookChess;
-                    rookChess.transform.position = TilesUtils.GetTileCenter(NextRookPosX, NextRookPosY);
-                    rookChess.SetPosition(NextRookPosX, NextRookPosY);
+    //                ChessTable[rookChess.CurrentX, rookChess.CurrentY] = null;
+    //                ChessTable[NextRookPosX, NextRookPosY] = rookChess;
+    //                rookChess.transform.position = TilesUtils.GetTileCenter(NextRookPosX, NextRookPosY);
+    //                rookChess.SetPosition(NextRookPosX, NextRookPosY);
 
-                    ChessTable[selectedChess.CurrentX, selectedChess.CurrentY] = null;
-                    selectedChess.transform.position = TilesUtils.GetTileCenter(NextKingPosX, NextKingPosY);
-                    selectedChess.SetPosition(NextKingPosX, NextKingPosY);
-                    ChessTable[NextKingPosX, NextKingPosY] = selectedChess;
+    //                ChessTable[selectedChess.CurrentX, selectedChess.CurrentY] = null;
+    //                selectedChess.transform.position = TilesUtils.GetTileCenter(NextKingPosX, NextKingPosY);
+    //                selectedChess.SetPosition(NextKingPosX, NextKingPosY);
+    //                ChessTable[NextKingPosX, NextKingPosY] = selectedChess;
 
-                    isWhiteTurn = !isWhiteTurn;
+    //                isWhiteTurn = !isWhiteTurn;
 
-                    isSpecialMove = true;
-                }
+    //                isSpecialMove = true;
+    //            }
 
-            }
+    //        }
 
-            if (!isSpecialMove) {
-                ChessTable[selectedChess.CurrentX, selectedChess.CurrentY] = null;
-                selectedChess.transform.position = TilesUtils.GetTileCenter(x, y);
-                selectedChess.SetPosition(x, y);
-                ChessTable[x, y] = selectedChess;
+    //        if (!isSpecialMove) {
+    //            ChessTable[selectedChess.CurrentX, selectedChess.CurrentY] = null;
+    //            selectedChess.transform.position = TilesUtils.GetTileCenter(x, y);
+    //            selectedChess.SetPosition(x, y);
+    //            ChessTable[x, y] = selectedChess;
 
-                isWhiteTurn = !isWhiteTurn; 
-            }
+    //            isWhiteTurn = !isWhiteTurn; 
+    //        }
 
-        }
+    //    }
 
-        //Send Movement to the server
-        if (client != null && OnlinePlayerBehavour.Instance.isOnlineGame && onlineMovement)
-        {
+    //    //Send Movement to the server
+    //    if (client != null && OnlinePlayerBehavour.Instance.isOnlineGame && onlineMovement)
+    //    {
 
-            string lobbyCode = client.profile.lobbyCode;
-            string boolean = (GameManager.Instance.CurrentPlayer.IsChecked) ? EnumHelper.TRUE : EnumHelper.FALSE;
+    //        //string lobbyCode = client.profile.lobbyCode;
+    //        //string boolean = (GameManager.Instance.CurrentPlayer.IsChecked) ? EnumHelper.TRUE : EnumHelper.FALSE;
 
-            DataMessageReq dataReq = new DataMessageReq(lobbyCode, GameType.CHESS.ToString().ToUpper(), boolean,
-                previonsX.ToString(), previonsY.ToString(), x.ToString(), y.ToString());
+    //        //DataMessageReq dataReq = new DataMessageReq(lobbyCode, GameType.CHESS.ToString().ToUpper(), boolean,
+    //        //    previonsX.ToString(), previonsY.ToString(), x.ToString(), y.ToString());
 
-            client.Send(dataReq.GetMessageText());
+    //        //client.Send(dataReq.GetMessageText());
 
             
-        }
+    //    }
 
-        isSpecialMove = false;
+    //    isSpecialMove = false;
 
-        //remove piece selector
-        SelectorBehavour.Instance.RemoveSelectedPiece();
+    //    //remove piece selector
+    //    SelectorBehavour.Instance.RemoveSelectedPiece();
 
-        //validate victory 
-        ValidatePlayerVictory();
+    //    //validate victory 
+    //    ValidatePlayerVictory();
 
-    }
+    //}
 
     //public void ValidateUncheckPlayerMove(ChessValidateCheckMoveResp vCheck)
     //{
@@ -399,64 +399,64 @@ public class ChessBoarderManager : MonoBehaviour
 
     }
 
-    public void PlayerCheckedHightLight(GCPlayer currentPlayer)
-    {
-        KingChess[] kings = FindObjectsOfType<KingChess>();
+    //public void PlayerCheckedHightLight(GCPlayer currentPlayer)
+    //{
+    //    KingChess[] kings = FindObjectsOfType<KingChess>();
 
-        foreach (KingChess ki in kings) {
+    //    foreach (KingChess ki in kings) {
 
-            if (currentPlayer.Type == PlayerType.P1 && ki.isWhite == true)
-            {
-                BoardHightLight.Intance.HightLightKingChecked(ki.CurrentX, ki.CurrentY);
-            }
+    //        if (currentPlayer.Type == PlayerType.P1 && ki.isWhite == true)
+    //        {
+    //            BoardHightLight.Intance.HightLightKingChecked(ki.CurrentX, ki.CurrentY);
+    //        }
 
-            if (currentPlayer.Type == PlayerType.P2 && ki.isWhite == false)
-            {
-                BoardHightLight.Intance.HightLightKingChecked(ki.CurrentX, ki.CurrentY);
-            }
+    //        if (currentPlayer.Type == PlayerType.P2 && ki.isWhite == false)
+    //        {
+    //            BoardHightLight.Intance.HightLightKingChecked(ki.CurrentX, ki.CurrentY);
+    //        }
 
-        }
-    }
+    //    }
+    //}
 
-    public void MoveChessMethod(int row, int col, bool onlineMove)
-    {
-        MoveChess(row, col, onlineMove);
-    }
+    //public void MoveChessMethod(int row, int col, bool onlineMove)
+    //{
+    //    MoveChess(row, col, onlineMove);
+    //}
 
-    public void TryOnlinePlayerMove(DataMessageResp message) {
-        int startPosX = int.Parse(message.startPosX);
-        int startPosY = int.Parse(message.startPosY);
-        int endPosX = int.Parse(message.endPosX);
-        int endPosY = int.Parse(message.endPosY);
-        OnlinePlayerMovement onlinePlayer = new OnlinePlayerMovement(startPosX, startPosY, endPosX, endPosY);
-        OnlinePlayerBehavour.Instance.PlayerMovement = onlinePlayer;
-        InputManager.Instance.InvokeInputEvent();
+    //public void TryOnlinePlayerMove(DataMessageResp message) {
+    //    int startPosX = int.Parse(message.startPosX);
+    //    int startPosY = int.Parse(message.startPosY);
+    //    int endPosX = int.Parse(message.endPosX);
+    //    int endPosY = int.Parse(message.endPosY);
+    //    OnlinePlayerMovement onlinePlayer = new OnlinePlayerMovement(startPosX, startPosY, endPosX, endPosY);
+    //    OnlinePlayerBehavour.Instance.PlayerMovement = onlinePlayer;
+    //    //InputManager.Instance.InvokeInputEvent();
 
-        if (string.Equals(message.checketdMove, EnumHelper.TRUE))
-        {
-            PlayerType typeP = (OnlinePlayerBehavour.Instance.playerType == PlayerType.P1) ? PlayerType.P2 : PlayerType.P1;
-            GameObject[] kings = GameObject.FindGameObjectsWithTag("King");
+    //    if (string.Equals(message.checketdMove, EnumHelper.TRUE))
+    //    {
+    //        PlayerType typeP = (OnlinePlayerBehavour.Instance.playerType == PlayerType.P1) ? PlayerType.P2 : PlayerType.P1;
+    //        GameObject[] kings = GameObject.FindGameObjectsWithTag("King");
 
-            foreach (GameObject chess in kings) {
+    //        foreach (GameObject chess in kings) {
 
-                ChessBehaviour piece = chess.GetComponent<ChessBehaviour>();
+    //            ChessBehaviour piece = chess.GetComponent<ChessBehaviour>();
 
-                if (typeP == PlayerType.P1 && !piece.isWhite)
-                {
-                    Node nPiece = chess.GetComponent<Piece>().Node;
-                    chess.GetComponent<KingChess>().IsCheck = true;
-                    BoardHightLight.Intance.HightLightKingChecked(nPiece.col, nPiece.row);
-                }
-                if (typeP == PlayerType.P2 && piece.isWhite)
-                {
-                    Node nPiece = chess.GetComponent<Piece>().Node;
-                    chess.GetComponent<KingChess>().IsCheck = true;
-                    BoardHightLight.Intance.HightLightKingChecked(nPiece.col, nPiece.row);
-                }
-            }
-        }
+    //            if (typeP == PlayerType.P1 && !piece.isWhite)
+    //            {
+    //                Node nPiece = chess.GetComponent<Piece>().Node;
+    //                chess.GetComponent<KingChess>().IsCheck = true;
+    //                BoardHightLight.Intance.HightLightKingChecked(nPiece.col, nPiece.row);
+    //            }
+    //            if (typeP == PlayerType.P2 && piece.isWhite)
+    //            {
+    //                Node nPiece = chess.GetComponent<Piece>().Node;
+    //                chess.GetComponent<KingChess>().IsCheck = true;
+    //                BoardHightLight.Intance.HightLightKingChecked(nPiece.col, nPiece.row);
+    //            }
+    //        }
+    //    }
 
-    }
+    //}
 
     public void SelectChess(int x, int y , bool isOnlinePlayer)
     {
@@ -520,18 +520,18 @@ public class ChessBoarderManager : MonoBehaviour
         Instance.ChessTable[spawnPos.PosX, spawnPos.PosY] = null;
         Piece pawn = piece.GetComponent<Piece>();
 
-        GCPlayer currentPlayer = GameManager.Instance.Opponent(GameManager.Instance.CurrentPlayer);
-        currentPlayer.RemovePiece(pawn);
+        //GCPlayer currentPlayer = GameManager.Instance.Opponent(GameManager.Instance.CurrentPlayer);
+        //currentPlayer.RemovePiece(pawn);
 
         Destroy(piece.gameObject);
 
         //spawn selected piece 
 
-        GridCoords grid = new GridCoords(spawnPos.PosY, spawnPos.PosX);
+        //GridCoords grid = new GridCoords(spawnPos.PosY, spawnPos.PosX);
         
-        BoardGrid.Instance.SpawnPiece(grid,
-            Instance.SpwanChess(prefabIndex, spawnPos.PosX, spawnPos.PosY, orientation),
-            currentPlayer.Type);
+        //BoardGrid.Instance.SpawnPiece(grid,
+        //    Instance.SpwanChess(prefabIndex, spawnPos.PosX, spawnPos.PosY, orientation),
+        //    currentPlayer.Type);
 
         //if (OnlinePlayerBehavour.Instance.isOnlineGame && pType == OnlinePlayerBehavour.Instance.playerType)
         //{

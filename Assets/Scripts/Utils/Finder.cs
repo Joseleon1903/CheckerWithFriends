@@ -1,13 +1,37 @@
-﻿using Assets.Scripts.Chess;
-using Assets.Scripts.General;
-using Assets.Scripts.Profile;
-using System;
+﻿using Assets.Scripts.Profile;
 using UnityEngine;
 
 namespace Assets.Scripts.Utils
 {
-    public class Finder
+	public struct HitPoint {
+		public HitPoint(int x, int y)
+		{
+			positionX = x;
+			positionY = y;
+		}
+
+		public int positionX { get; }
+		public int positionY { get; }
+
+		public override string ToString() => $"({positionX}, {positionY})";
+	}
+
+	public class Finder
     {
+
+		public static HitPoint RayHitPointFromScreen(Vector3 hitPosition)
+		{
+			RaycastHit hit;
+
+			if (Physics.Raycast(Camera.main.ScreenPointToRay(hitPosition), out hit, 50.0f, LayerMask.GetMask("CheesPlane")))
+			{
+				int x = (int)hit.point.x;
+				int y = (int)hit.point.z;
+				return new HitPoint(x, y);
+			}
+			return new HitPoint(-1, -1); ;
+		}
+
 		public static GameObject RayHitFromScreen(Vector3 hitPosition)
 		{
 			RaycastHit hit;
@@ -23,41 +47,6 @@ namespace Assets.Scripts.Utils
 			}
 			return null;
 		}
-
-		public static Node RayHitNodeFromScreen(Vector3 hitPosition)
-		{
-			RaycastHit hit;
-
-			if (Physics.Raycast(Camera.main.ScreenPointToRay(hitPosition), out hit, 50.0f, LayerMask.GetMask("CheesPlane")))
-			{
-				int x = (int)hit.point.x;
-				int y = (int)hit.point.z;
-				return BoardGrid.Instance.GetNodeAt(y, x);
-			}
-			return null;
-		}
-
-		public static T RayHitFromScreen<T>(Vector3 hitPosition)
-		{
-			GameObject go = RayHitFromScreen(hitPosition);
-			if (go == null) return default(T);
-			object o = go.GetComponentInChildren(typeof(T));
-			if (o == null) return default(T);
-			return (T)Convert.ChangeType(o, typeof(T));
-		}
-
-		public static IClickable IClickableRayHitFromScreen(Vector3 hitPosition)
-		{
-			Ray ray = Converter.ScreenPointToRay(hitPosition);
-			RaycastHit hit;
-			if (Physics.Raycast(ray, out hit, float.PositiveInfinity, GameManager.Instance.CLickableMask))
-			{
-				return hit.transform.gameObject.GetComponent(typeof(IClickable)) as IClickable;
-			}
-
-			return null;
-		}
-
 
 		public static GameObject FindGameProfile()
 		{

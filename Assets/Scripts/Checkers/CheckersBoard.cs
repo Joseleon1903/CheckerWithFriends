@@ -1,106 +1,101 @@
 ﻿using Assets.Scripts.Checkers;
-using Assets.Scripts.Chess;
+using Assets.Scripts.General;
 using Assets.Scripts.Utils;
 using Assets.Scripts.WebSocket;
-using Assets.Scripts.WebSocket.Message;
 using System.Collections.Generic;
 using UnityEngine;
 
-class CheckersBoard : MonoBehaviour
+class CheckersBoard : Singleton<CheckersBoard>
 {
-    public static CheckersBoard Instance;
 
     public CheckerPiece[,] pieces = new CheckerPiece[8, 8];
-    public GameObject whitePiecePrefab;
-    public GameObject blackPiecePrefab;
+
+    [Tooltip("Player White Piece")]
+    [SerializeField] private GameObject whitePiecePrefab;
+
+    [Tooltip("Player Black Piece")]
+    [SerializeField] private GameObject blackPiecePrefab;
+
+    [Tooltip("Player White Queen Piece")]
+    [SerializeField] private GameObject whiteQueenPiecePrefab;
+
+    [Tooltip("Player Black Queen Piece")]
+    [SerializeField] private GameObject blackQueenPiecePrefab;
 
     public Vector3 pieceOffSet = new Vector3(0.5f, 0.1f, 0.5f);
 
-    private Vector2 mouseover;
-    private Vector2 startDrag;
-    private Vector2 endDrag;
-
-    private bool isWhiteTurn;
+    public bool isWhiteTurn;
     public bool isWhite;
 
-    private CheckerPiece selectedPiece;
+    public CheckerPiece SelectedPiece { get; set; }
+
     private List<CheckerPiece> forcedPieces;
-    private bool haskilled;
 
     private ClientWSBehavour client;
 
     private void Start()
     {
-        Instance = this;
-
         client = FindObjectOfType<ClientWSBehavour>();
         isWhite = (client != null) ? client.profile.isHost : true;
 
         isWhiteTurn = true;
         forcedPieces = new List<CheckerPiece>();
         GeneratedBoard();
-
     }
 
     private void Update()
     {
-        DrawDebugBoard();
+        //DrawDebugBoard();
 
-        UpdateMouseOver();
+        //UpdateMouseOver();
 
-        // if it is my turn 
-        if((isWhite) ? isWhiteTurn : !isWhiteTurn)
-        {
-            int x = (int)mouseover.x;
-            int y = (int)mouseover.y;
+        //// if it is my turn 
+        //if((isWhite) ? isWhiteTurn : !isWhiteTurn)
+        //{
+        //    int x = (int)mouseover.x;
+        //    int y = (int)mouseover.y;
 
-            if (selectedPiece != null) 
-            {
-                UpdatePieceDrag(selectedPiece);
-            }
+        //    if (selectedPiece != null) 
+        //    {
+        //        UpdatePieceDrag(selectedPiece);
+        //    }
 
 
-            if (Input.GetMouseButtonDown(0)) 
-            {
-                // Debug.Log($"Down x:{x} y: {y}");
+        //    if (Input.GetMouseButtonDown(0)) 
+        //    {
+        //        // Debug.Log($"Down x:{x} y: {y}");
 
-                SelectPiece(x, y);
-            }
+        //        SelectPiece(x, y);
+        //    }
 
-            if (Input.GetMouseButtonUp(0)) 
-            {
-                // Debug.Log($"Up x:{x} y: {y}");
+        //    if (Input.GetMouseButtonUp(0)) 
+        //    {
+        //        // Debug.Log($"Up x:{x} y: {y}");
 
-                TryMove((int)startDrag.x, (int)startDrag.y, x, y);
-            }
+        //        TryMove((int)startDrag.x, (int)startDrag.y, x, y);
+        //    }
 
-            if (selectedPiece !=  null) {
-                // highLight CheckerPiece
-                selectedPiece.EnableHightLight();
-            }
-        }
+        //    if (selectedPiece !=  null) {
+        //        // highLight CheckerPiece
+        //        selectedPiece.EnableHightLight();
+        //    }
+        //}
     }
 
-    private void SelectPiece(int x, int y)
+    public void SelectPiece(int x, int y)
     {
-        //out of bound
-        if (x < 0 || x >= pieces.Length || y < 0 || y >= pieces.Length)
-        {
-            return;
-        }
-
         CheckerPiece p = pieces[x, y];
 
         if (p != null && p.isWhite == isWhite)
         {
+            forcedPieces = ScanForPossibleMove(x,y);
+
             if (forcedPieces.Count == 0)
             {
-                selectedPiece = p;
-               
-                startDrag = mouseover;
+                SelectedPiece = p;
 
                 //hightlight piece posible move 
-                bool[,] lightTiles = selectedPiece.PossibleMove(pieces, x, y);
+                bool[,] lightTiles = SelectedPiece.PossibleMove(pieces, x, y);
 
                 HightLightTiled.Instance.HightLight(lightTiles);
 
@@ -111,221 +106,149 @@ class CheckersBoard : MonoBehaviour
                 if (forcedPieces.Find(fp=> fp == p ) ==  null)
                     return;
 
-                selectedPiece = p;
-                startDrag = mouseover;
+                SelectedPiece = p;
             }              
         }
     }
 
-    public void TryMove(int x1, int y1, int x2, int y2)
+    public bool TryMove(int x1, int y1, int x2, int y2)
     {
-        forcedPieces = ScanForPossibleMove();
-
         //multiplayer support
-        startDrag = new Vector2(x1, y1);
-        endDrag = new Vector2(x2, y2);
-        selectedPiece = pieces[x1, y1];
+        SelectedPiece = pieces[x1, y1];
 
-        if (x2< 0 || x2>= pieces.Length || y2 < 0 || y2 >= pieces.Length ) 
+        if (SelectedPiece == null) 
         {
-            if (selectedPiece != null) 
-            {
-                MovePiece(selectedPiece.gameObject, x1, y2);
-                
-            }
-            startDrag = Vector2.zero;
-            selectedPiece = null;
-            HightLightTiled.Instance.HideHightLight();
-            return;
+            return false;
         }
 
-        if (selectedPiece != null) 
+        MovePiece(SelectedPiece.gameObject, x2, y2);
+        pieces[x1, y1] = null;
+        pieces[x2, y2] = SelectedPiece;
+        HightLightTiled.Instance.HideHightLight();
+
+        //if this is a jump
+        if (Mathf.Abs(x2 - x1) == 2)
         {
-            //if is has not moved
-            if (endDrag == startDrag) {
-                MovePiece(selectedPiece.gameObject, x1, y1);
-                startDrag = Vector2.zero;
-                selectedPiece = null;
-                HightLightTiled.Instance.HideHightLight();
-                return;
-            }
-
-            //check if its a valid move
-            if (selectedPiece.ValidMove(pieces, x1, y1, x2, y2))
+            CheckerPiece p = pieces[(x1 + x2) / 2, (y1 + y2) / 2];
+            if (p != null)
             {
-                //did we kill anithing
-
-                //if this is a jump
-                if (Mathf.Abs(x2 - x1) == 2)
-                {
-                    CheckerPiece p = pieces[(x1 + x2) / 2, (y1 + y2) / 2];
-                    if (p != null)
-                    {
-                        pieces[(x1 + x2) / 2, (y1 + y2) / 2] = null;
-                        DestroyImmediate(p.gameObject);
-                        haskilled = true;
-                    }
-
-                }
-
-                // were we supused to kill anything?
-                if (forcedPieces.Count != 0 && !haskilled) {
-
-                    MovePiece(selectedPiece.gameObject, x1, y1);
-                    startDrag = Vector2.zero;
-                    selectedPiece = null;
-                    HightLightTiled.Instance.HideHightLight();
-                    return;
-                }
-
-
-                pieces[x2, y2] = selectedPiece;
-                pieces[x1, y1] = null;
-                MovePiece(selectedPiece.gameObject, x2, y2);
-                HightLightTiled.Instance.HideHightLight();
-                EndTurn();
+                pieces[(x1 + x2) / 2, (y1 + y2) / 2] = null;
+                DestroyImmediate(p.gameObject);
             }
-            else 
+            HightLightTiled.Instance.HideCaptureHightLight();
+            // validate if player can stil eat
+            forcedPieces = ScanForPossibleMove();
+        }
+
+        //promotion piece 
+        if (SelectedPiece != null)
+        {
+            if (SelectedPiece.isWhite && !SelectedPiece.isKing && y2 == 7)
             {
-                MovePiece(selectedPiece.gameObject, x1, y1);
-                startDrag = Vector2.zero;
-                selectedPiece = null;
-                HightLightTiled.Instance.HideHightLight();
-                return;
+                DestroyImmediate(SelectedPiece.gameObject);
+                GeneratePiece(whiteQueenPiecePrefab, x2, y2);
+            }
+            else if (!SelectedPiece.isWhite && !SelectedPiece.isKing && y2 == 0)
+            {
+                DestroyImmediate(SelectedPiece.gameObject);
+                GeneratePiece(blackQueenPiecePrefab, x2, y2);
             }
         }
+       
+        Debug.Log("forcedPieces Count " + forcedPieces.Count);
+        if (forcedPieces.Count > 0)
+        {
+            return false;
+        }
+
+        SelectedPiece = null;
+
+        return true;
     }
 
     private void EndTurn()
     {
-        int x = (int)endDrag.x;
-        int y = (int)endDrag.y;
 
-        //promotion piece 
-        if (selectedPiece != null) {
-
-            if (selectedPiece.isWhite && !selectedPiece.isKing && y == 7) {
-                selectedPiece.isKing = true;
-                selectedPiece.transform.Rotate(Vector3.right * 180);
-            } else if (!selectedPiece.isWhite && !selectedPiece.isKing && y == 0) 
-            {
-                selectedPiece.isKing = true;
-                selectedPiece.transform.Rotate(Vector3.right * 180);
-            }
-        }
+        
 
         //send movment to the server
         if (client != null) 
         {
             string lobbyCode = client.profile.lobbyCode;
             string boolean = EnumHelper.FALSE;
-            DataMessageReq dataReq = new DataMessageReq(lobbyCode, GameType.CHECKER.ToString().ToUpper(), boolean, 
-                startDrag.x.ToString(), startDrag.y.ToString(), endDrag.x.ToString(),endDrag.y.ToString());
+            //DataMessageReq dataReq = new DataMessageReq(lobbyCode, GameType.CHECKER.ToString().ToUpper(), boolean, 
+            //    startDrag.x.ToString(), startDrag.y.ToString(), endDrag.x.ToString(),endDrag.y.ToString());
 
-            client.Send(dataReq.GetMessageText());
+            //client.Send(dataReq.GetMessageText());
         }
 
         HightLightTiled.Instance.HideCaptureHightLight();
 
-        if (ScanForPossibleMove(x, y).Count != 0 && haskilled)
-        {
-            HightLightTiled.Instance.CaptureHightLight(selectedPiece.ValidCapturePiece(pieces, (int)endDrag.x, (int)endDrag.y));
-            selectedPiece = null;
-            return;
-        }
+        //if (ScanForPossibleMove(x, y).Count != 0 && haskilled)
+        //{
+        //    HightLightTiled.Instance.CaptureHightLight(selectedPiece.ValidCapturePiece(pieces, (int)endDrag.x, (int)endDrag.y));
+        //    selectedPiece = null;
+        //    return;
+        //}
 
-        selectedPiece = null;
-        startDrag = Vector2.zero;
+        SelectedPiece = null;
 
         isWhiteTurn = !isWhiteTurn;
         
         //only for offline mode
       //  isWhite = !isWhite;
 
-        haskilled = false;
         //check for teh victory of player
-        bool v = CheckVictory();
+        //bool v = CheckVictory();
 
-        if (!v)
-        {
-            //for hight light piece
-            ScanForPossibleMove();
+        //if (!v)
+        //{
+        //    //for hight light piece
+        //    ScanForPossibleMove();
 
-            //show alert for change player turn information
-            ShowAlertPlayerTurn(isWhite);
-        }
+        //    //show alert for change player turn information
+        //    ShowAlertPlayerTurn(PlayerType.P1);
+        //}
     }
 
-    private bool CheckVictory()
+    public void CheckVictory()
     {
-        bool hasVictory = false;
         var ps = FindObjectsOfType<CheckerPiece>();
-        bool hasWhite = false, hasBlack = false;
+        bool hasWhite = true, hasBlack = true;
+
+        // validate player white win
         for (int i =0; i < ps.Length; i++) {
-            if (ps[i].isWhite)
-                hasWhite = true;
-            else
-                hasBlack = true;
-        }
 
-        //validate all opponent piece can make a move
-
-        bool whiteWin = true;
-        bool blackWin = true;
-        //black piece cant make a move
-        foreach (CheckerPiece p in ps) {
-
-            if (!p.isWhite && p.HasValidMove(pieces) ) {
-                whiteWin = false;
-            }
-        }
-
-        //white piece cant make a move
-        foreach (CheckerPiece p in ps)
-        {
-
-            if (p.isWhite && p.HasValidMove(pieces))
+            if (ps[i].isWhite && ps[i].HasValidMove(pieces)) 
             {
-                blackWin = false;
+                hasWhite = false;
             }
         }
 
-        if (!hasWhite || blackWin)
+        if (hasWhite) {
+            CheckerGameManager.Instance.GameState.Checkmate(PlayerType.P2);
+        }
+
+        // validate player black win
+        for (int i = 0; i < ps.Length; i++)
         {
-            hasVictory = false;
-            Victory(false);
+
+            if (!ps[i].isWhite && ps[i].HasValidMove(pieces))
+            {
+                hasBlack = false;
+            }
         }
 
-        if (!hasBlack || whiteWin) 
+        if (hasBlack)
         {
-            hasVictory = true;
-            Victory(true);
+            CheckerGameManager.Instance.GameState.Checkmate(PlayerType.P1);
         }
-        return hasVictory;
-    }
-
-    private void Victory(bool white) {
-
-        if (white) { 
-            Debug.Log("White team has wont");
-            CanvasManagerUI.Instance.ShowGameOverCanvas();
-        }
-        else 
-        { 
-            Debug.Log("black team has wont");
-            CanvasManagerUI.Instance.ShowGameOverCanvas();
-        }
-
     }
 
     private List<CheckerPiece> ScanForPossibleMove(int x, int y) {
-        forcedPieces = new List<CheckerPiece>();
-
-        //check all pieces   
-        if (pieces[x, y].IsForceToMove(pieces, x, y)) {
-            forcedPieces.Add(pieces[x, y]);
-        }
-        return forcedPieces;
+        bool[,]  tiles = pieces[x, y].PossibleEatMove(pieces, x, y);
+        HightLightTiled.Instance.HightLight(tiles);
+        return ScanForPossibleMove();
     }
 
     private List<CheckerPiece> ScanForPossibleMove() {
@@ -339,6 +262,7 @@ class CheckersBoard : MonoBehaviour
                 if (pieces[i,j] != null && pieces[i, j].isWhite == isWhiteTurn) 
                 {
                     if (pieces[i, j].IsForceToMove(pieces, i, j)) {
+
                         HightLightTiled.Instance.CaptureHightLight(pieces[i, j].ValidCapturePiece(pieces, i,j));
                         forcedPieces.Add(pieces[i, j]);
                     }
@@ -346,48 +270,6 @@ class CheckersBoard : MonoBehaviour
             }
         }
         return forcedPieces;
-    }
-
-    private void UpdateMouseOver() {
-
-        //if its my turn 
-
-        if (!Camera.main) 
-        {
-            Debug.Log("unable to find main camera");
-        }
-
-        RaycastHit hit;
-
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 50.0f, LayerMask.GetMask("CheesPlane")))
-        {
-            mouseover.x = (int)hit.point.x;
-            mouseover.y = (int)hit.point.z;
-        }
-        else
-        {
-            mouseover.x = -1;
-            mouseover.y = -1;
-        }
-
-    }
-
-    private void UpdatePieceDrag(CheckerPiece piece) {
-
-        //if its my turn 
-
-        if (!Camera.main)
-        {
-            Debug.Log("unable to find main camera");
-        }
-
-        RaycastHit hit;
-
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 50.0f, LayerMask.GetMask("CheesPlane")))
-        {
-            piece.transform.position = hit.point + Vector3.up;
-        }
-
     }
 
     private void GeneratedBoard() {
@@ -430,9 +312,18 @@ class CheckersBoard : MonoBehaviour
         MovePiece(go, x, y);
     }
 
-    private void ShowAlertPlayerTurn(bool turn) {
+    private void GeneratePiece(GameObject prefab, int x, int y)
+    {
+        GameObject go = Instantiate(prefab);
+        go.transform.SetParent(transform);
+        CheckerPiece p = go.GetComponent<CheckerPiece>();
+        pieces[x, y] = p;
+        MovePiece(go, x, y);
+    }
 
-        if (turn)
+    public void ShowAlertPlayerTurn(PlayerType type) {
+
+        if (type.Equals(PlayerType.P1))
         {
            CanvasManagerUI.Instance.ShowAlertText("It's White player turn..");
         }

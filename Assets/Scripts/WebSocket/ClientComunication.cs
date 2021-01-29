@@ -1,5 +1,4 @@
 ﻿using Assets.Script.WebSocket;
-using Assets.Scripts.Chess;
 using Assets.Scripts.Utils;
 using Assets.Scripts.WebSocket.Message;
 using System;

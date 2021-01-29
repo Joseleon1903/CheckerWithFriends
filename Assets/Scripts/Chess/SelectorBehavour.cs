@@ -65,12 +65,12 @@ public class SelectorBehavour : Singleton<SelectorBehavour>
     {
         if (selectedChess != null)
         {
-            selectedChess.GetComponent<MeshRenderer>().material = previusMat;
-            BoardHightLight.Intance.HidenHightLight();
-            selectedChess = null;
-            if (!GameManager.Instance.gameState.IsHolding) {
-                InputManager.Instance.InvokeInputEvent(InputActionType.CANCEL_PIECE);
-            }
+            //selectedChess.GetComponent<MeshRenderer>().material = previusMat;
+            //BoardHightLight.Intance.HidenHightLight();
+            //selectedChess = null;
+            //if (!GameManager.Instance.gameState.IsHolding) {
+            //    InputManager.Instance.InvokeInputEvent(InputActionType.CANCEL_PIECE);
+            //}
         }
     }
 

@@ -1,10 +1,9 @@
-﻿using Assets.Scripts.Chess;
-
-namespace Assets.Scripts.Utils
+﻿namespace Assets.Scripts.Utils
 {
 
 	public enum GameStateType
 	{
+		RAIL_CAMERA,
 		WAITING,
 		HOLDING,
 		PLACING,
@@ -14,7 +13,6 @@ namespace Assets.Scripts.Utils
 	public enum GameOverType
 	{
 		CHECKMATE,
-		STALEMATE,
 		SURRENDER,
 		OUT_OF_TIME,
 	}
@@ -24,10 +22,11 @@ namespace Assets.Scripts.Utils
 
 		private GameStateType state;
 		private GameOverType gameOverType;
+		private PlayerType playerWin;
 
 		public GameState()
 		{
-			state = GameStateType.WAITING;
+			state = GameStateType.RAIL_CAMERA;
 		}
 
 		public GameStateType State
@@ -39,9 +38,32 @@ namespace Assets.Scripts.Utils
 			}
 		}
 
+		public PlayerType PlayerWin
+		{
+			get { return playerWin; }
+			set
+			{
+				playerWin = value;
+			}
+		}
+
+		public GameOverType GameOverType
+		{
+			get { return gameOverType; }
+			set
+			{
+				gameOverType = value;
+			}
+		}
+
 		public bool IsWaiting
 		{
 			get { return state == GameStateType.WAITING; }
+		}
+
+		public bool IsRail
+		{
+			get { return state == GameStateType.RAIL_CAMERA; }
 		}
 
 		public bool IsPlacing
@@ -67,7 +89,6 @@ namespace Assets.Scripts.Utils
 		public void Release()
 		{
 			state = GameStateType.WAITING;
-			GameManager.Instance.SwitchPlayer();
 		}
 
 		public void Cancel()
@@ -75,22 +96,22 @@ namespace Assets.Scripts.Utils
 			state = GameStateType.WAITING;
 		}
 
-		public void Checkmate()
+		public void Start()
+		{
+			state = GameStateType.WAITING;
+		}
+		 
+		public void Checkmate(PlayerType type)
 		{
 			state = GameStateType.GAME_OVER;
 			gameOverType = GameOverType.CHECKMATE;
+			playerWin = type;
 		}
 
 		public void OutOfTime()
 		{
 			state = GameStateType.GAME_OVER;
 			gameOverType = GameOverType.OUT_OF_TIME;
-		}
-
-		public void Stalemate()
-		{
-			state = GameStateType.GAME_OVER;
-			gameOverType = GameOverType.STALEMATE;
 		}
 
 		public bool IsGameOver

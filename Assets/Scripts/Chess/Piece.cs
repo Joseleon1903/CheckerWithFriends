@@ -23,8 +23,7 @@ namespace Assets.Scripts.Chess
 		private PieceType pieceType;
 		[SerializeField]
 		private Node node;
-		[SerializeField]
-		private MovementType movementType;
+
 
 		private IPieceMovement pieceMovement;
 		private bool dropping;
@@ -67,11 +66,6 @@ namespace Assets.Scripts.Chess
 		public PieceType PieceType
 		{
 			get { return pieceType; }
-		}
-
-		public MovementType MovementType
-		{
-			get { return movementType; }
 		}
 
 		void Awake()

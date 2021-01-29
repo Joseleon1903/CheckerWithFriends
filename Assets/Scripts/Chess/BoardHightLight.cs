@@ -1,6 +1,4 @@
-﻿using Assets.Scripts;
-using Assets.Scripts.Chess;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BoardHightLight : MonoBehaviour
 {
@@ -39,33 +37,6 @@ public class BoardHightLight : MonoBehaviour
         ChessBehaviour king = ChessBoarderManager.Instance.ChessTable[x, y];
         previusMat = king.GetComponent<Renderer>().material;
         king.GetComponent<MeshRenderer>().material = checkedMaterial;
-    }
-
-    public void HideHightLightKingChecked()
-    {
-        KingChess[] kings = FindObjectsOfType<KingChess>();
-        if (OnlinePlayerBehavour.Instance.isOnlineGame && OnlinePlayerBehavour.Instance.playerType == PlayerType.P1) {
-            foreach (KingChess ki in kings)
-            {
-                if (previusMat != null && ki.isWhite)
-                {
-                    ChessBehaviour king = ChessBoarderManager.Instance.ChessTable[ki.CurrentX, ki.CurrentY];
-                    king.GetComponent<MeshRenderer>().material = previusMat;
-                }
-            }
-        }
-
-        if (OnlinePlayerBehavour.Instance.isOnlineGame && OnlinePlayerBehavour.Instance.playerType == PlayerType.P2)
-        {
-            foreach (KingChess ki in kings)
-            {
-                if (previusMat != null && !ki.isWhite)
-                {
-                    ChessBehaviour king = ChessBoarderManager.Instance.ChessTable[ki.CurrentX, ki.CurrentY];
-                    king.GetComponent<MeshRenderer>().material = previusMat;
-                }
-            }
-        }
     }
 
     public void HightLightAllowedMoves(bool [,] moves) 

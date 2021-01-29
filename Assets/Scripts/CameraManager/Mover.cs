@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.WebSocket;
+﻿using Assets.Scripts.Utils;
+using Assets.Scripts.WebSocket;
 using UnityEngine;
 
 public class Mover : MonoBehaviour
@@ -42,12 +43,19 @@ public class Mover : MonoBehaviour
     void Update()
     {
 
+        if (isComplete && CheckerGameManager.Instance.GameState.IsRail)
+        {
+            CheckerGameManager.Instance.GameState.Start();
+            CheckerGameManager.Instance.StartGame();
+        }
+
         if (!rail)
             return;
 
         if (!isComplete)
             Play(!isReversed);
 
+       
     }
 
     private void Play(bool foward = true)
