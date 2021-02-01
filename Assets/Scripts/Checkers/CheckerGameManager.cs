@@ -44,12 +44,15 @@ public class CheckerGameManager : Singleton<CheckerGameManager>
 
 		player = new CheckerPlayer();
 
-		if (player.Type.Equals(PlayerType.P2) || true ) {
+		if (player.Type.Equals(PlayerType.P2)) {
 
 			player.EnableInput();
 		}
 
 		CanvasManagerUI.Instance.ShowAlertText("Match Start");
+
+		CanvasManagerUI.Instance.StartGameCanvasView();
+
 	}
 
 
@@ -58,7 +61,6 @@ public class CheckerGameManager : Singleton<CheckerGameManager>
 		var client = FindObjectOfType<ClientWSBehavour>();
 		if (client != null)
 		{
-
 			SwitchPlayerOnlineGame();
 		}
 		else 
@@ -70,7 +72,31 @@ public class CheckerGameManager : Singleton<CheckerGameManager>
 
 	private void SwitchPlayerOnlineGame() {
 		Debug.Log("Entering in SwitchPlayerOnlineGame");
-	
+
+		if (player != null && player.Type == PlayerType.P1)
+		{
+			player = new CheckerPlayer(PlayerType.P2);
+		}
+		else if (player != null && player.Type == PlayerType.P2)
+		{
+
+			player = new CheckerPlayer(PlayerType.P1);
+
+		}
+
+		if (Instance.GameState.IsGameOver)
+		{
+			Invoke("GameOver", 4.0f);
+			return;
+		}
+
+		CheckersBoard.Instance.isWhiteTurn = !CheckersBoard.Instance.isWhiteTurn;
+
+		Instance.GameState.Release();
+
+		CheckersBoard.Instance.ShowAlertPlayerTurn(player.Type);
+
+		Debug.Log("Current player " + player.Type);
 	}
 
 	private void SwitchPlayerOfflineGame()
@@ -88,7 +114,7 @@ public class CheckerGameManager : Singleton<CheckerGameManager>
 		}
 
 		if (Instance.GameState.IsGameOver) {
-			GameOver();
+			Invoke("GameOver", 4.0f);
 			return;
 		}
 
@@ -103,13 +129,11 @@ public class CheckerGameManager : Singleton<CheckerGameManager>
 	}
 
 
-    public IEnumerator GameOver()
+    public void GameOver()
     {
 		GameOverType gameoverType = Instance.GameState.GameOverType;
 
 		CanvasManagerUI.Instance.ShowAlertText($"Player {Instance.GameState.PlayerWin} Win the game");
-
-		yield return new WaitForSeconds(4);
 
 		switch (gameoverType)
         {

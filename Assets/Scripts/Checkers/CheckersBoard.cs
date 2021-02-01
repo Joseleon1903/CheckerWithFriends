@@ -2,6 +2,7 @@
 using Assets.Scripts.General;
 using Assets.Scripts.Utils;
 using Assets.Scripts.WebSocket;
+using Assets.Scripts.WebSocket.Message;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -86,7 +87,7 @@ class CheckersBoard : Singleton<CheckersBoard>
     {
         CheckerPiece p = pieces[x, y];
 
-        if (p != null && p.isWhite == isWhite)
+        if (p != null && p.IsWhite == isWhite)
         {
             forcedPieces = ScanForPossibleMove(x,y);
 
@@ -99,6 +100,8 @@ class CheckersBoard : Singleton<CheckersBoard>
 
                 HightLightTiled.Instance.HightLight(lightTiles);
 
+                SelectedPiece.EnableOutline();
+
             }
             else {
                 //look for the piece under forces pieces list
@@ -107,6 +110,7 @@ class CheckersBoard : Singleton<CheckersBoard>
                     return;
 
                 SelectedPiece = p;
+                SelectedPiece.EnableOutline();
             }              
         }
     }
@@ -143,12 +147,12 @@ class CheckersBoard : Singleton<CheckersBoard>
         //promotion piece 
         if (SelectedPiece != null)
         {
-            if (SelectedPiece.isWhite && !SelectedPiece.isKing && y2 == 7)
+            if (SelectedPiece.IsWhite && !SelectedPiece.IsKing && y2 == 7)
             {
                 DestroyImmediate(SelectedPiece.gameObject);
                 GeneratePiece(whiteQueenPiecePrefab, x2, y2);
             }
-            else if (!SelectedPiece.isWhite && !SelectedPiece.isKing && y2 == 0)
+            else if (!SelectedPiece.IsWhite && !SelectedPiece.IsKing && y2 == 0)
             {
                 DestroyImmediate(SelectedPiece.gameObject);
                 GeneratePiece(blackQueenPiecePrefab, x2, y2);
@@ -161,36 +165,25 @@ class CheckersBoard : Singleton<CheckersBoard>
             return false;
         }
 
+        SelectedPiece.DisableOutline();
         SelectedPiece = null;
 
         return true;
     }
 
-    private void EndTurn()
+    public void SendMovementMessage(HitPoint initPos , HitPoint endPos)
     { 
         //send movment to the server
         if (client != null) 
         {
             string lobbyCode = client.profile.lobbyCode;
             string boolean = EnumHelper.FALSE;
-            //DataMessageReq dataReq = new DataMessageReq(lobbyCode, GameType.CHECKER.ToString().ToUpper(), boolean, 
-            //    startDrag.x.ToString(), startDrag.y.ToString(), endDrag.x.ToString(),endDrag.y.ToString());
+            DataMessageReq dataReq = new DataMessageReq(lobbyCode,GameType.CHECKER.ToString().ToUpper(), boolean,
+                initPos.positionX.ToString(), initPos.positionY.ToString(), endPos.positionX.ToString(), 
+                endPos.positionY.ToString());
 
-            //client.Send(dataReq.GetMessageText());
+            client.Send(dataReq.GetMessageText());
         }
-
-        HightLightTiled.Instance.HideCaptureHightLight();
-
-        //if (ScanForPossibleMove(x, y).Count != 0 && haskilled)
-        //{
-        //    HightLightTiled.Instance.CaptureHightLight(selectedPiece.ValidCapturePiece(pieces, (int)endDrag.x, (int)endDrag.y));
-        //    selectedPiece = null;
-        //    return;
-        //}
-
-        SelectedPiece = null;
-
-        isWhiteTurn = !isWhiteTurn;
     }
 
     public void CheckVictory()
@@ -202,7 +195,7 @@ class CheckersBoard : Singleton<CheckersBoard>
         {
             for (int j = 0; j < 8; j++)
             {
-                if (pieces[i, j] != null && pieces[i, j].isWhite && (pieces[i, j].HasValidMove(pieces) 
+                if (pieces[i, j] != null && pieces[i, j].IsWhite && (pieces[i, j].HasValidMove(pieces) 
                     || pieces[i, j].IsForceToMove(pieces, i, j)))
                 {
                     hasWhite = false;
@@ -220,7 +213,7 @@ class CheckersBoard : Singleton<CheckersBoard>
         {
             for (int j = 0; j < 8; j++)
             {
-                if (pieces[i, j] != null && !pieces[i, j].isWhite && (pieces[i, j].HasValidMove(pieces)
+                if (pieces[i, j] != null && !pieces[i, j].IsWhite && (pieces[i, j].HasValidMove(pieces)
                     || pieces[i, j].IsForceToMove(pieces, i, j)))
                 {
                     hasBlack = false;
@@ -249,7 +242,7 @@ class CheckersBoard : Singleton<CheckersBoard>
         {
             for (int j =0; j < 8; j++) 
             {
-                if (pieces[i,j] != null && pieces[i, j].isWhite == isWhiteTurn) 
+                if (pieces[i,j] != null && pieces[i, j].IsWhite == isWhiteTurn) 
                 {
                     if (pieces[i, j].IsForceToMove(pieces, i, j)) {
 

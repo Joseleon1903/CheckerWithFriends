@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.WebSocket
 {
-    class ClientComunication : MonoBehaviour
+    public class ClientComunication : MonoBehaviour
     {
 
         // Final server address
@@ -67,10 +67,8 @@ namespace Assets.Scripts.WebSocket
                     CheckersBoard.Instance.TryMove(int.Parse(dataResp.startPosX), int.Parse(dataResp.startPosY),
                        int.Parse(dataResp.endPosX), int.Parse(dataResp.endPosY));
                 }
-
                 return;
             }
-
 
             LobbyReadyMessageResp respR = new LobbyReadyMessageResp(msg);
 
@@ -105,6 +103,7 @@ namespace Assets.Scripts.WebSocket
             }
 
             LostConnectionPlayerResp respConLost = new LostConnectionPlayerResp(msg);
+
             if (string.Equals("CONNECTIONLOST", respConLost.result)) {
 
                 Debug.Log("Lost connection of player");

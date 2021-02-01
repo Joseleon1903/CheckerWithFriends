@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3734317919804383636}
   - component: {fileID: 3734317919803384660}
   - component: {fileID: 1885174684601107661}
+  - component: {fileID: 3878385138972597486}
   m_Layer: 0
   m_Name: WhiteChecker
   m_TagString: CheckerPiece
@@ -94,4 +95,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isWhite: 1
-  isKing: 0
+  isKing: 1
+--- !u!114 &3878385138972597486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3734317919805586836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 1

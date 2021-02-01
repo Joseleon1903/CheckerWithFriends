@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 154403844923414056}
   - component: {fileID: 154403844922283240}
   - component: {fileID: 7815999227197289639}
+  - component: {fileID: 5969131502891611613}
   m_Layer: 0
   m_Name: CheckerBlackQueen
   m_TagString: CheckerPiece
@@ -95,3 +96,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWhite: 0
   isKing: 1
+--- !u!114 &5969131502891611613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 154403844924541480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 1

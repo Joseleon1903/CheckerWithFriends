@@ -1,18 +1,9 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Scripts.Checkers
 {
-    public struct Position {
-        public int x;
-        public int y;
-    }
-
-    public class CheckerPiece : MonoBehaviour
+    public class CheckerPiece : Piece
     {
-        public bool isWhite;
-        public bool isKing;
-
         public bool IsForceToMove(CheckerPiece[,] board, int x , int y ) {
 
             //white team
@@ -231,76 +222,37 @@ namespace Assets.Scripts.Checkers
             return tiles;
         }
 
-        public bool ValidMove(CheckerPiece[,] board, int x1, int y1, int x2, int y2)
-        {
+        public bool ValidMove(CheckerPiece[,] board, int x1, int y1, int x2, int y2) {
 
-            //if you are on top oaf another piece
+            bool isValidMove = false;
 
-            if (board[x2, y2] != null)
+            bool[,] validMove = PossibleMove(board, x1, y1);
+
+            for (int i = 0; i < 8; i++)
             {
-                return false;
-            }
-
-            // for white piece 
-            if (isWhite)
-            {
-
-                if (y2 == (y1 + 1) && (x2 == (x1 - 1) || x2 == (x1 + 1)))
+                for (int j = 0; j < 8; j++)
                 {
-                    return true;
-                }
+                    if (validMove[i,j] == true && i == x2 && j == y2) {
 
-                int deltaMoveY = y2 - y1;
-                if (deltaMoveY == 2)
-                {
-                    CheckerPiece p = board[(x1 + x2) / 2, (y1 + y2) / 2];
-                    if (p != null && p.isWhite != isWhite)
-                    {
                         return true;
                     }
                 }
             }
 
+            validMove = PossibleEatMove(board, x1, y1);
 
-            // for black piece 
-            if (!isWhite)
+            for (int i = 0; i < 8; i++)
             {
-                if (y2 == (y1 - 1) && (x2 == (x1 - 1) || x2 == (x1 + 1)))
+                for (int j = 0; j < 8; j++)
                 {
-                    return true;
-                }
-
-                int deltaMoveY = Math.Abs(y2 - y1);
-                if (deltaMoveY == 2)
-                {
-                    CheckerPiece p = board[(x1 + x2) / 2, (y1 + y2) / 2];
-                    if (p != null && p.isWhite != isWhite)
+                    if (validMove[i, j] == true && i == x2 && j == y2)
                     {
+
                         return true;
                     }
                 }
             }
-
-            //king move
-            if (isKing)
-            {
-
-                if (y2 == (y1 + 1) || y2 == (y1 - 1) && x2 == (x1 + 1) || x2 == (x1 - 1))
-                {
-                    return true;
-                }
-
-                int deltaMoveY = Math.Abs(y2 - y1);
-                if (deltaMoveY == 2)
-                {
-                    CheckerPiece p = board[(x1 + x2) / 2, (y1 + y2) / 2];
-                    if (p != null && p.isWhite != isWhite)
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
+            return isValidMove;
         }
 
         public bool[,] ValidCapturePiece(CheckerPiece[,] board, int x, int y)

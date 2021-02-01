@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.Utils;
-using Assets.Scripts.WebSocket;
+﻿using Assets.Scripts.WebSocket;
 using UnityEngine;
 
 public class Mover : MonoBehaviour

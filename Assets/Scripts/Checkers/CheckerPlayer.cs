@@ -3,6 +3,7 @@ using Assets.Scripts.General;
 using Assets.Scripts.Profile;
 using Assets.Scripts.Utils;
 using Assets.Scripts.WebSocket;
+using Assets.Scripts.WebSocket.Message;
 using UnityEngine;
 
 public enum PlayerType
@@ -104,6 +105,7 @@ public class CheckerPlayer : IClicker, IInputReceiver
                 if (CheckersBoard.Instance.SelectedPiece != null)
                 {
                     //disable hight light piece
+                    CheckersBoard.Instance.SelectedPiece.DisableOutline();
                     CheckersBoard.Instance.SelectedPiece = null;
                     HightLightTiled.Instance.HideHightLight();
                 }
@@ -117,6 +119,7 @@ public class CheckerPlayer : IClicker, IInputReceiver
 
                 if (CheckersBoard.Instance.SelectedPiece == null || nextPoint.positionX == -1 || nextPoint.positionX == -1) {
                     CheckerGameManager.Instance.GameState.Cancel();
+                    CheckersBoard.Instance.SelectedPiece.DisableOutline();
                     CheckersBoard.Instance.SelectedPiece = null;
                     HightLightTiled.Instance.HideHightLight();
                     break;
@@ -125,6 +128,7 @@ public class CheckerPlayer : IClicker, IInputReceiver
                 if (!CheckersBoard.Instance.SelectedPiece.ValidMove(CheckersBoard.Instance.pieces, point.positionX, point.positionY, nextPoint.positionX, nextPoint.positionY))
                 {
                     CheckerGameManager.Instance.GameState.Cancel();
+                    CheckersBoard.Instance.SelectedPiece.DisableOutline();
                     CheckersBoard.Instance.SelectedPiece = null;
                     HightLightTiled.Instance.HideHightLight();
                     break;
@@ -137,7 +141,10 @@ public class CheckerPlayer : IClicker, IInputReceiver
 
                     CheckersBoard.Instance.CheckVictory();
 
+                    CheckersBoard.Instance.SendMovementMessage(point, nextPoint);
+
                     CheckerGameManager.Instance.SwitchPlayer();
+
                 }
 
                 break;

@@ -1,7 +1,7 @@
-﻿using Assets.Scripts.Chess;
+﻿using Assets.Scripts.General;
 using UnityEngine;
 
-public class CanvasManagerUI : MonoBehaviour
+public class CanvasManagerUI : Singleton<CanvasManagerUI>
 {
     private int x, y;
 
@@ -14,11 +14,9 @@ public class CanvasManagerUI : MonoBehaviour
         Knight = 3
     }
 
-    public static CanvasManagerUI Instance;
-
     [SerializeField] private GameObject AlertCanvas;
 
-    [SerializeField] private GameObject CameraControlCanvas;
+    [SerializeField] private GameObject playerControlCanvas;
 
     [SerializeField] private GameObject ProfilePlayerCanvas;
 
@@ -26,18 +24,21 @@ public class CanvasManagerUI : MonoBehaviour
 
     [SerializeField] private GameObject OptionCanvas;
 
-    [SerializeField] private GameObject canvasCrowPawn;
-
-    private void Awake()
-    {
-        Instance = this;
-    }
-
     private void Start()
     {
-        CameraControlCanvas.SetActive(true);
-        ProfilePlayerCanvas.SetActive(true);
+        playerControlCanvas.SetActive(false);
+        ProfilePlayerCanvas.SetActive(false);
         EndGameCanvas.SetActive(false);
+    }
+
+    public void StartGameCanvasView() {
+
+        Debug.Log("Initialize animation Player layout");
+
+        playerControlCanvas.SetActive(true);
+
+        ProfilePlayerCanvas.SetActive(true);
+
     }
 
 
@@ -56,13 +57,6 @@ public class CanvasManagerUI : MonoBehaviour
     public void ShowGameOptionMenu() {
         Debug.Log("Entering in method ShowGameOptionMenu");
         OptionCanvas.SetActive(true);
-    }
-
-    public void ShowUI(bool value, SpawnPosition position, bool turn)
-    {
-        canvasCrowPawn.SetActive(value);
-        canvasCrowPawn.GetComponent<CrowPawnUIBehavour>().SpawnPositionPiece = position;
-        canvasCrowPawn.GetComponent<CrowPawnUIBehavour>().IsWhitePlayer = turn;
     }
 
     public void SetPiecePosition(bool white, int Posx, int Posy)
