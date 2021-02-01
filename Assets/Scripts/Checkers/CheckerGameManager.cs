@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.General;
 using Assets.Scripts.Utils;
 using Assets.Scripts.WebSocket;
+using System.Collections;
 using UnityEngine;
 
 public class CheckerGameManager : Singleton<CheckerGameManager>
@@ -11,13 +12,6 @@ public class CheckerGameManager : Singleton<CheckerGameManager>
 
 	[SerializeField]
 	private LayerMask clickableMask;
-
-	public const string PLAYER_WHITE = "PLAYER_WHITE";
-	public const string PLAYER_BLACK = "PLAYER_BLACK";
-	public const string SCORE_MAX = "SCORE_MAX";
-	public const string GAME_MAX = "GAME_MAX";
-	public const string GAME_CURRENT = "GAME_CURRENT";
-	public const string CAMERA_VIEW = "CAMERA_VIEW";
 
 	private GameState gameState;
 
@@ -108,9 +102,14 @@ public class CheckerGameManager : Singleton<CheckerGameManager>
 		Debug.Log("Current player "+ player.Type);
 	}
 
-    public void GameOver()
+
+    public IEnumerator GameOver()
     {
 		GameOverType gameoverType = Instance.GameState.GameOverType;
+
+		CanvasManagerUI.Instance.ShowAlertText($"Player {Instance.GameState.PlayerWin} Win the game");
+
+		yield return new WaitForSeconds(4);
 
 		switch (gameoverType)
         {
@@ -140,21 +139,4 @@ public class CheckerGameManager : Singleton<CheckerGameManager>
                 break;
         }
     }
-
-    //public void End()
-    //{
-    //	Debug.Log("End Game();");
-    //}
-
-    //public void AddScore(string playerString)
-    //{
-    //	int newScore = PlayerPrefs.GetInt(playerString, 0) + 1;
-    //	PlayerPrefs.SetInt(playerString, newScore);
-
-    //	int maxScore = PlayerPrefs.GetInt(SCORE_MAX, 0);
-    //	if (newScore >= maxScore)
-    //	{
-    //		End();
-    //	}
-    //}
 }

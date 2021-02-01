@@ -33,8 +33,6 @@ public class ChessBoarderManager : MonoBehaviour
 
     public bool isWhiteTurn = true;
 
-    private bool isSpecialMove = false;
-
     public ChessBehaviour SelectedPiece { get { return selectedChess; } set { selectedChess = value; } }
 
     public ChessboardState ChessboardState { get; set; }

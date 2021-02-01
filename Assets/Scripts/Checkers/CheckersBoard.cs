@@ -167,10 +167,7 @@ class CheckersBoard : Singleton<CheckersBoard>
     }
 
     private void EndTurn()
-    {
-
-        
-
+    { 
         //send movment to the server
         if (client != null) 
         {
@@ -194,48 +191,40 @@ class CheckersBoard : Singleton<CheckersBoard>
         SelectedPiece = null;
 
         isWhiteTurn = !isWhiteTurn;
-        
-        //only for offline mode
-      //  isWhite = !isWhite;
-
-        //check for teh victory of player
-        //bool v = CheckVictory();
-
-        //if (!v)
-        //{
-        //    //for hight light piece
-        //    ScanForPossibleMove();
-
-        //    //show alert for change player turn information
-        //    ShowAlertPlayerTurn(PlayerType.P1);
-        //}
     }
 
     public void CheckVictory()
     {
-        var ps = FindObjectsOfType<CheckerPiece>();
         bool hasWhite = true, hasBlack = true;
 
-        // validate player white win
-        for (int i =0; i < ps.Length; i++) {
-
-            if (ps[i].isWhite && ps[i].HasValidMove(pieces)) 
+        //check black player 2 winner
+        for (int i = 0; i < 8; i++)
+        {
+            for (int j = 0; j < 8; j++)
             {
-                hasWhite = false;
+                if (pieces[i, j] != null && pieces[i, j].isWhite && (pieces[i, j].HasValidMove(pieces) 
+                    || pieces[i, j].IsForceToMove(pieces, i, j)))
+                {
+                    hasWhite = false;
+                }
             }
         }
 
-        if (hasWhite) {
+        if (hasWhite)
+        {
             CheckerGameManager.Instance.GameState.Checkmate(PlayerType.P2);
         }
 
-        // validate player black win
-        for (int i = 0; i < ps.Length; i++)
+        //check White player 1 winner
+        for (int i = 0; i < 8; i++)
         {
-
-            if (!ps[i].isWhite && ps[i].HasValidMove(pieces))
+            for (int j = 0; j < 8; j++)
             {
-                hasBlack = false;
+                if (pieces[i, j] != null && !pieces[i, j].isWhite && (pieces[i, j].HasValidMove(pieces)
+                    || pieces[i, j].IsForceToMove(pieces, i, j)))
+                {
+                    hasBlack = false;
+                }
             }
         }
 
@@ -243,6 +232,7 @@ class CheckersBoard : Singleton<CheckersBoard>
         {
             CheckerGameManager.Instance.GameState.Checkmate(PlayerType.P1);
         }
+
     }
 
     private List<CheckerPiece> ScanForPossibleMove(int x, int y) {
