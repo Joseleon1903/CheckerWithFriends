@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class GuestProfile : BaseProfile
 {
-    public string _profileName;
-    public string _profileId;
-    public string _profileNationality;
+    private string _profileName;
+    private string _profileId;
+    private string _profileNationality;
 
     [SerializeField] private Sprite _profileAvatarSprite;
 

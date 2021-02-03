@@ -95,7 +95,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isWhite: 1
-  isKing: 1
+  isKing: 0
 --- !u!114 &3878385138972597486
 MonoBehaviour:
   m_ObjectHideFlags: 0

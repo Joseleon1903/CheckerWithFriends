@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Utils;
+﻿using Assets.Scripts.Profile;
+using Assets.Scripts.Utils;
 using UnityEngine;
 
 public class ProfileCanvasBehavour : MonoBehaviour
@@ -17,19 +18,12 @@ public class ProfileCanvasBehavour : MonoBehaviour
     private void Awake()
     {
         Debug.Log("Entering awake in profile canvas behavour");
-
         profile = Finder.FindGameProfile();
+        string[] sprites = profile.GetComponent<BaseProfile>()._profilePicture.Split('%');
+        string avatar = sprites[1];
+        string frame = sprites[0];
+        ProfileUtil.SetupProfileImageFromResources(avatar, frame, profileAvatarImage, profileFrameImage);
 
-    }
-
-    private void Start()
-    {
-
-        Invoke("SetupProfile", 0.3f);
-    }
-
-    private void SetupProfile() {
-        ProfileUtil.SetUpProfileImage(profile, profileAvatarImage, profileFrameImage);
     }
 
     public void PressOptionMenu() {

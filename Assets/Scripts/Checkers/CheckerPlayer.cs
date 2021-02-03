@@ -13,8 +13,6 @@ public enum PlayerType
 
 public class CheckerPlayer : IClicker, IInputReceiver
 {
-    private BaseProfile playerSession;
-
     private ClientWSBehavour clientSession;
 
     private PlayerType type;
@@ -38,9 +36,6 @@ public class CheckerPlayer : IClicker, IInputReceiver
 
     private void LoadProfile() {
         Debug.Log("Load Profile");
-        if (Finder.FindGameProfile() != null) {
-            playerSession = Finder.FindGameProfile().GetComponent<BaseProfile>();
-        }
         clientSession = GameObject.FindObjectOfType<ClientWSBehavour>();
         type = PlayerType.P1;
         if (clientSession != null) {

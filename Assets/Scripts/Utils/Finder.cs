@@ -32,22 +32,6 @@ namespace Assets.Scripts.Utils
 			return new HitPoint(-1, -1); ;
 		}
 
-		public static GameObject RayHitFromScreen(Vector3 hitPosition)
-		{
-			RaycastHit hit;
-
-			if (Physics.Raycast(Camera.main.ScreenPointToRay(hitPosition), out hit, 50.0f, LayerMask.GetMask("CheesPlane")))
-			{
-				int x = (int)hit.point.x;
-				int y = (int)hit.point.z;
-				if (ChessBoarderManager.Instance.ChessTable[x, y] != null)
-				{
-					return ChessBoarderManager.Instance.ChessTable[x, y].gameObject;
-				}
-			}
-			return null;
-		}
-
 		public static GameObject FindGameProfile()
 		{
 			GameObject objectG = null;

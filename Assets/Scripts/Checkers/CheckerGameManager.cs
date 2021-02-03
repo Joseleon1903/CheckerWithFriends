@@ -1,7 +1,6 @@
 ﻿using Assets.Scripts.General;
 using Assets.Scripts.Utils;
 using Assets.Scripts.WebSocket;
-using System.Collections;
 using UnityEngine;
 
 public class CheckerGameManager : Singleton<CheckerGameManager>
@@ -36,25 +35,49 @@ public class CheckerGameManager : Singleton<CheckerGameManager>
 	{
 		_destroyOnLoad = destroyOnLoad;
 		gameState = new GameState();
+		
 	}
 
 	public void StartGame() {
 
-		Debug.Log("Entering in start game ");
+		var client = FindObjectOfType<ClientWSBehavour>();
+		if (client != null)
+		{
+			StartOnlineGame(client);
+		}
+		else
+		{
+			StartOfflineGame();
+		}
+		CheckersBoard.Instance.isWhiteTurn = true;
+		CoolDownUtil.StartCoolDownPlayer(PlayerType.P1);
+	}
+
+	private void StartOnlineGame(ClientWSBehavour client) {
 
 		player = new CheckerPlayer();
 
-		if (player.Type.Equals(PlayerType.P2)) {
-
+		if (player.Type.Equals(PlayerType.P1)) {
 			player.EnableInput();
 		}
 
 		CanvasManagerUI.Instance.ShowAlertText("Match Start");
 
 		CanvasManagerUI.Instance.StartGameCanvasView();
-
 	}
 
+	private void StartOfflineGame() {
+
+		Debug.Log("Entering in Start Offline Game ");
+
+		player = new CheckerPlayer(PlayerType.P1);
+		
+		player.EnableInput();
+
+		CanvasManagerUI.Instance.ShowAlertText("Match Start");
+
+		CanvasManagerUI.Instance.StartGameCanvasView();
+	}
 
 	public void SwitchPlayer()
 	{
@@ -71,30 +94,50 @@ public class CheckerGameManager : Singleton<CheckerGameManager>
 	}
 
 	private void SwitchPlayerOnlineGame() {
+
 		Debug.Log("Entering in SwitchPlayerOnlineGame");
-
-		if (player != null && player.Type == PlayerType.P1)
-		{
-			player = new CheckerPlayer(PlayerType.P2);
-		}
-		else if (player != null && player.Type == PlayerType.P2)
-		{
-
-			player = new CheckerPlayer(PlayerType.P1);
-
-		}
-
-		if (Instance.GameState.IsGameOver)
-		{
-			Invoke("GameOver", 4.0f);
-			return;
-		}
 
 		CheckersBoard.Instance.isWhiteTurn = !CheckersBoard.Instance.isWhiteTurn;
 
-		Instance.GameState.Release();
+		if (player.Type.Equals(PlayerType.P1) && CheckersBoard.Instance.isWhiteTurn) 
+		{
+			CheckersBoard.Instance.ShowAlertPlayerTurn(PlayerType.P1);
+			CoolDownUtil.StartCoolDownPlayer(PlayerType.P1);
+			CoolDownUtil.ResetCoolDownPlayer(PlayerType.P2);
+			player.EnableInput();
+		}
 
-		CheckersBoard.Instance.ShowAlertPlayerTurn(player.Type);
+		if (player.Type.Equals(PlayerType.P1) && !CheckersBoard.Instance.isWhiteTurn) 
+		{
+			CheckersBoard.Instance.ShowAlertPlayerTurn(PlayerType.P2);
+			CoolDownUtil.StartCoolDownPlayer(PlayerType.P2);
+			CoolDownUtil.ResetCoolDownPlayer(PlayerType.P1);
+			player.DisableInput();
+		}
+
+		if (player.Type.Equals(PlayerType.P2) && !CheckersBoard.Instance.isWhiteTurn)
+		{
+			CheckersBoard.Instance.ShowAlertPlayerTurn(PlayerType.P2);
+			CoolDownUtil.StartCoolDownPlayer(PlayerType.P2);
+			CoolDownUtil.ResetCoolDownPlayer(PlayerType.P1);
+			player.EnableInput();
+		}
+		
+		if (player.Type.Equals(PlayerType.P2) && CheckersBoard.Instance.isWhiteTurn)
+		{
+			player.DisableInput();
+			CoolDownUtil.ResetCoolDownPlayer(PlayerType.P2);
+			CoolDownUtil.StartCoolDownPlayer(PlayerType.P1);
+			CheckersBoard.Instance.ShowAlertPlayerTurn(PlayerType.P1);
+		}
+		  
+		if (Instance.GameState.IsGameOver)
+		{
+			GameOver();
+			return;
+		}
+
+		Instance.GameState.Release();
 
 		Debug.Log("Current player " + player.Type);
 	}
@@ -106,28 +149,30 @@ public class CheckerGameManager : Singleton<CheckerGameManager>
 		if (player != null && player.Type == PlayerType.P1)
 		{
 			player = new CheckerPlayer(PlayerType.P2);
+			CoolDownUtil.ResetCoolDownPlayer(PlayerType.P1);
+			CoolDownUtil.StartCoolDownPlayer(PlayerType.P2);
 		}
 		else if (player != null && player.Type == PlayerType.P2) {
-
 			player = new CheckerPlayer(PlayerType.P1);
-
+			CoolDownUtil.ResetCoolDownPlayer(PlayerType.P2);
+			CoolDownUtil.StartCoolDownPlayer(PlayerType.P1);
 		}
 
 		if (Instance.GameState.IsGameOver) {
-			Invoke("GameOver", 4.0f);
+			Invoke("GameOver", 2.0f);
 			return;
 		}
 
 		CheckersBoard.Instance.isWhiteTurn = !CheckersBoard.Instance.isWhiteTurn;
-		//only for offline mode
-		CheckersBoard.Instance.isWhite = !CheckersBoard.Instance.isWhite;
 
 		Instance.GameState.Release();
 
 		CheckersBoard.Instance.ShowAlertPlayerTurn(player.Type);
+
+		//Start player Timer
+
 		Debug.Log("Current player "+ player.Type);
 	}
-
 
     public void GameOver()
     {
@@ -155,12 +200,15 @@ public class CheckerGameManager : Singleton<CheckerGameManager>
                 if (Instance.GameState.PlayerWin == PlayerType.P1)
                 {
                     Debug.Log("OUT OF TIME: WHITE wins");
-                }
+					CanvasManagerUI.Instance.ShowGameOverCanvas();
+				}
                 else if (Instance.GameState.PlayerWin == PlayerType.P1)
                 {
                     Debug.Log("OUT OF TIME: BLACK wins");
-                }
+					CanvasManagerUI.Instance.ShowGameOverCanvas();
+				}
                 break;
         }
     }
+
 }

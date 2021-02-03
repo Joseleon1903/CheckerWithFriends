@@ -8,7 +8,6 @@ using UnityEngine;
 
 class CheckersBoard : Singleton<CheckersBoard>
 {
-
     public CheckerPiece[,] pieces = new CheckerPiece[8, 8];
 
     [Tooltip("Player White Piece")]
@@ -26,7 +25,6 @@ class CheckersBoard : Singleton<CheckersBoard>
     public Vector3 pieceOffSet = new Vector3(0.5f, 0.1f, 0.5f);
 
     public bool isWhiteTurn;
-    public bool isWhite;
 
     public CheckerPiece SelectedPiece { get; set; }
 
@@ -37,7 +35,6 @@ class CheckersBoard : Singleton<CheckersBoard>
     private void Start()
     {
         client = FindObjectOfType<ClientWSBehavour>();
-        isWhite = (client != null) ? client.profile.isHost : true;
 
         isWhiteTurn = true;
         forcedPieces = new List<CheckerPiece>();
@@ -87,7 +84,7 @@ class CheckersBoard : Singleton<CheckersBoard>
     {
         CheckerPiece p = pieces[x, y];
 
-        if (p != null && p.IsWhite == isWhite)
+        if (p != null && p.IsWhite == isWhiteTurn)
         {
             forcedPieces = ScanForPossibleMove(x,y);
 

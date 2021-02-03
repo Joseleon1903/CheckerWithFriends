@@ -28,13 +28,11 @@ public class CameraController : MonoBehaviour
 
 	[SerializeField] private OrbitAverange orbitAverange;
 
-
 	private Vector3 targetPos;
 
 	private bool mouseClickjudge;
 
 	public bool ActiveOrbitation = false;
-
 
 	private void Awake()
     {

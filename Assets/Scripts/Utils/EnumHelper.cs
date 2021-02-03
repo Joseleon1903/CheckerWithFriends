@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.Json;
+using System;
 
 namespace Assets.Scripts.Utils
 {
@@ -9,8 +10,7 @@ namespace Assets.Scripts.Utils
     }
 
     public enum GameType {
-        CHECKER,
-        CHESS 
+        CHECKER
     }
 
     public static class EnumHelper
@@ -38,6 +38,32 @@ namespace Assets.Scripts.Utils
             }
 
             return (T)Enum.ToObject(enumType, intValue);
+        }
+
+        public static string FindKeybyIdInDictionary(int intValue, AvatarJson[] array)
+        {
+            foreach (AvatarJson js in array) {
+
+                if (js.avatarId == intValue) {
+
+                    return js.avatarKey;
+                }
+            }
+            return string.Empty;
+        }
+
+        public static string FindKeybyIdInDictionary(int intValue, FrameJson[] array)
+        {
+            foreach (FrameJson js in array)
+            {
+
+                if (js.frameId == intValue)
+                {
+
+                    return js.frameKey;
+                }
+            }
+            return string.Empty;
         }
     }
 }

@@ -1,0 +1,47 @@
+[
+    {
+    "avatarId": 1,
+    "avatarKey": "Blue_Female",
+    "avatarFileName": "Blue_Female_Hero"
+    },
+    {
+    "avatarId": 2,
+    "avatarKey": "Yellow_Male",
+    "avatarFileName": "Yellow_Male_Hero"
+    },
+    {
+    "avatarId": 3,
+    "avatarKey": "Gray_Male",
+    "avatarFileName": "Gray_Male_Hero"
+    },
+    {
+    "avatarId": 4,
+    "avatarKey": "Light_Blue_Male",
+    "avatarFileName": "Light_Blue_Male_Hero"
+    },
+    {
+    "avatarId": 5,
+    "avatarKey": "Purple_Female",
+    "avatarFileName": "Purple_Female_Hero"
+    },
+    {
+    "avatarId": 6,
+    "avatarKey": "Red_Female",
+    "avatarFileName": "Red_Female_Hero"
+    },
+    {
+    "avatarId": 7,
+    "avatarKey": "Violet_Female",
+    "avatarFileName": "Violet_Female_Hero"
+    },
+    {
+    "avatarId": 8,
+    "avatarKey": "Violet_Male",
+    "avatarFileName": "Violet_Male_Hero"
+    },
+    {
+    "avatarId": 9,
+    "avatarKey": "Yellow_Female",
+    "avatarFileName": "Yellow_Female_Hero"
+    }
+]

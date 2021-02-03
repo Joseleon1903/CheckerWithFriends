@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.Chess;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Scripts.CameraManager
 {

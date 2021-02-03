@@ -108,7 +108,7 @@
 			playerWin = type;
 		}
 
-		public void OutOfTime()
+		public void OutOfTime(PlayerType type)
 		{
 			state = GameStateType.GAME_OVER;
 			gameOverType = GameOverType.OUT_OF_TIME;

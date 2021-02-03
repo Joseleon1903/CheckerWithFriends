@@ -4,7 +4,6 @@ namespace Assets.Scripts.General
 {
 	public class Singleton<T> : MonoBehaviour where T : Component
 	{
-
 		public bool destroyOnLoad;
 		protected static bool _destroyOnLoad;
 
@@ -24,11 +23,14 @@ namespace Assets.Scripts.General
 				{
 					Destroy(foundObject);
 				}
-
-				if (!_destroyOnLoad) DontDestroyOnLoad(foundObject);
 				return instance;
 			}
 		}
-	}
+
+        private void Awake()
+        {
+			if (!_destroyOnLoad) DontDestroyOnLoad(gameObject);
+		}
+    }
 
 }

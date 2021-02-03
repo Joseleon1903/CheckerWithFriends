@@ -67,6 +67,8 @@ namespace Assets.Scripts.WebSocket
                     CheckersBoard.Instance.TryMove(int.Parse(dataResp.startPosX), int.Parse(dataResp.startPosY),
                        int.Parse(dataResp.endPosX), int.Parse(dataResp.endPosY));
                 }
+
+                CheckerGameManager.Instance.SwitchPlayer();
                 return;
             }
 
@@ -118,19 +120,6 @@ namespace Assets.Scripts.WebSocket
                 Debug.Log("Recive Rematch client request");
                 FindObjectOfType<CheckerEndGameBehavour>().ReciveRematchRequest(rematchDataResp.rematchCounter);
             }
-
-
-            VictoryGameMessageResp respV = new VictoryGameMessageResp(msg);
-
-            if (string.Equals("102PL", respV.operationCode))
-            {
-                Debug.Log("Recived Victory client request");
-                PlayerType plType = (respV.playerWin.Equals(PlayerType.P1)) ? PlayerType.P1 : PlayerType.P2;
-                var NewState = new ChessboardState { isGameOver = true, gameOverType = GameOverType.CHECKMATE, playerWin = plType };
-                ChessBoarderManager.Instance.ChessboardState = NewState;
-                ChessBoarderManager.Instance.ValidatePlayerVictory();
-            }       
-           
 
         }
 

@@ -49,8 +49,6 @@ public class CanvasManagerUI : Singleton<CanvasManagerUI>
 
     public void ShowGameOverCanvas()
     {
-        //Debug.Log("Winner player "+ winner.Type);
-        //ProfilePlayerCanvas.SetActive(false);
         EndGameCanvas.SetActive(true);
     }
 
@@ -65,81 +63,4 @@ public class CanvasManagerUI : Singleton<CanvasManagerUI>
         x = Posx;
         y = Posy;
     }
-
-    public void SetSelectedPiece(int pieceOption)
-    {
-
-        Debug.Log("option : " + pieceOption);
-
-        switch (pieceOption)
-        {
-
-            case (int)PieceOption.Bishop:
-                Debug.Log("selected piece Bishop");
-
-                if (isWhite)
-                {
-                    SpawnPiece(2);
-
-                }
-                else
-                {
-                    SpawnPiece(8);
-                }
-
-                break;
-
-            case (int)PieceOption.Knight:
-                Debug.Log("selected piece Knight");
-
-
-                if (isWhite)
-                {
-                    SpawnPiece(3);
-                }
-                else
-                {
-                    SpawnPiece(9);
-                }
-                break;
-
-            case (int)PieceOption.Queen:
-                Debug.Log("selected piece Queen");
-
-                if (isWhite)
-                {
-                    SpawnPiece(2);
-                }
-                else
-                {
-                    SpawnPiece(7);
-                }
-                break;
-
-            case (int)PieceOption.Rook:
-                Debug.Log("selected piece Rook");
-
-
-                if (isWhite)
-                {
-                    SpawnPiece(4);
-                }
-                else
-                {
-                    SpawnPiece(10);
-                }
-                break;
-        }
-
-    }
-
-    private void SpawnPiece(int index)
-    {
-        ChessBehaviour c = ChessBoarderManager.Instance.ChessTable[x, y];
-        Destroy(c);
-        Quaternion quaterionWhite = Quaternion.Euler(0, 90, 0);
-
-        ChessBoarderManager.Instance.SpwanChess(index, x, y, quaterionWhite);
-    }
-
 }

@@ -93,7 +93,7 @@ public class HostMatchGameBehavour : MonoBehaviour
 
         Debug.Log("Entering in CloseHostPanel");
 
-        MultiplayerButtonActionBehavour.Instance.ShowPublicGamePanel();
+        FindObjectOfType<MultiplayerButtonActionBehavour>().ShowPublicGamePanel();
 
         var client = GameObject.FindGameObjectWithTag("ClientWS");
 
@@ -137,13 +137,18 @@ public class HostMatchGameBehavour : MonoBehaviour
         //set preference
         BaseProfile baseProfile = Finder.FindGameProfile().GetComponent<BaseProfile>();
         string[] sprites = baseProfile._profilePicture.Split('%');
-  
+
+        //player One preference
         PlayerPrefs.SetString(PlayerPreferenceKey.PROFILE_ONE_KEY_AVATAR, sprites[1]);
         PlayerPrefs.SetString(PlayerPreferenceKey.PROFILE_ONE_KEY_FRAME, sprites[0]);
+        PlayerPrefs.SetString(PlayerPreferenceKey.PROFILE_ONE_KEY_NAME, baseProfile._nameProfile);
+        PlayerPrefs.SetString(PlayerPreferenceKey.PROFILE_ONE_KEY_NATIONALITY, baseProfile._nationality);
 
+        //player Two preference
         PlayerPrefs.SetString(PlayerPreferenceKey.PROFILE_TWO_KEY_AVATAR, avatarRoot);
         PlayerPrefs.SetString(PlayerPreferenceKey.PROFILE_TWO_KEY_FRAME, frameRoot);
-
+        PlayerPrefs.SetString(PlayerPreferenceKey.PROFILE_TWO_KEY_NAME, playerTwoInfo.name);
+        PlayerPrefs.SetString(PlayerPreferenceKey.PROFILE_TWO_KEY_NATIONALITY, playerTwoInfo.nationality);
     }
 
     private Toggle GetSelectedToggle(GameObject toggleGoup)

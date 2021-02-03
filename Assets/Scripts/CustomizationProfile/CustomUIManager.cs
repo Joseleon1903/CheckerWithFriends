@@ -1,9 +1,10 @@
-﻿using Assets.Scripts.Network.Model;
+﻿using Assets.Scripts.Json;
+using Assets.Scripts.Network.Model;
 using Assets.Scripts.Network.Service;
 using Assets.Scripts.Profile;
 using Assets.Scripts.Utils;
+using Proyecto26;
 using UnityEngine;
-using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -18,15 +19,15 @@ public class CustomUIManager : MonoBehaviour
 
     public enum AvatarKey
     {
-        LIGHT_BLUE_FEMALE_HERO = 1,
-        YELLOW_MALE_HERO = 2,
-        GRAY_MALE_HERO = 3,
-        LIGHT_BLUE_MALE_HERO= 4,
-        VIOLET_MALE_HERO = 5,
-        VIOLET_FEMALE_HERO = 6,
-        PURPLE_FEMALE_HERO = 7,
-        RED_FEMALE_HERO = 8,
-        YELLOW_FEMALE_HERO = 9
+        LIGHT_BLUE_FEMALE = 1,
+        YELLOW_MALE = 2,
+        GRAY_MALE = 3,
+        LIGHT_BLUE_MALE= 4,
+        PURPLE_FEMALE = 5,
+        RED_FEMALE = 6,
+        VIOLET_FEMALE = 7,
+        VIOLET_MALE = 8,
+        YELLOW_FEMALE = 9
     }
 
     public enum UserSelection
@@ -53,36 +54,18 @@ public class CustomUIManager : MonoBehaviour
     [SerializeField]
     private GameObject prefabGuestProfile;
 
+    private AvatarJson[] avatars;
+    private FrameJson[] frames;
+
     public void PressFrameButton(GameObject objectClick) {
 
         Debug.Log("Entering in method PressFrameButton");
         Debug.Log("Key " + objectClick.gameObject.name);
 
-        FrameKey frame = objectClick.GetComponent<FrameItem>().ItemKey;
-        Sprite sprite;
-        switch (frame)
-        {
-            case FrameKey.FRAME_BLUE:
-
-                sprite = frameDictionary["Frame_Blue"];
-
-                ModifyUserSelectionAvatar(sprite, UserSelection.FRAME);
-
-                break;
-            case FrameKey.FRAME_GREEN:
-                sprite = frameDictionary["Frame_Green"];
-
-                ModifyUserSelectionAvatar(sprite, UserSelection.FRAME);
-
-                break;
-            case FrameKey.FRAME_YELLOW:
-
-                sprite = frameDictionary["Frame_Yellow"];
-
-                ModifyUserSelectionAvatar(sprite, UserSelection.FRAME);
-
-                break;
-        }
+        int frame = (int)objectClick.GetComponent<FrameItem>().ItemKey;
+        string frameKey = EnumHelper.FindKeybyIdInDictionary(frame, frames);
+        Sprite sprite = frameDictionary[frameKey];
+        ModifyUserSelectionAvatar(sprite, UserSelection.FRAME);
 
     }
 
@@ -90,83 +73,12 @@ public class CustomUIManager : MonoBehaviour
     {
         Debug.Log("Entering in method PressHeroButton");
         Debug.Log("Key "+ objectClick.gameObject.name);
-
-        AvatarKey avatar = objectClick.GetComponent<HeroItem>().ItemKey;
-        Sprite sprite;
-        switch (avatar)
-        {
-            case AvatarKey.GRAY_MALE_HERO:
-
-                sprite = spriteDictionary["Gray_Male_Hero"];
-
-                ModifyUserSelectionAvatar(sprite, UserSelection.AVATAR);
-
-                break;
-            case AvatarKey.LIGHT_BLUE_FEMALE_HERO:
-
-                sprite = spriteDictionary["Blue_Female_Hero"];
-
-                ModifyUserSelectionAvatar(sprite, UserSelection.AVATAR);
-
-                break;
-            case AvatarKey.LIGHT_BLUE_MALE_HERO:
-
-                sprite = spriteDictionary["Light_Blue_Male_Hero"];
-
-                ModifyUserSelectionAvatar(sprite, UserSelection.AVATAR);
-
-                break;
-
-           case AvatarKey.PURPLE_FEMALE_HERO:
-
-                sprite = spriteDictionary["Purple_Female_Hero"];
-
-                ModifyUserSelectionAvatar(sprite, UserSelection.AVATAR);
-
-                break;
-
-            case AvatarKey.RED_FEMALE_HERO:
-
-                sprite = spriteDictionary["Red_Female_Hero"];
-
-                ModifyUserSelectionAvatar(sprite, UserSelection.AVATAR);
-
-                break;
-
-            case AvatarKey.VIOLET_FEMALE_HERO:
-
-                sprite = spriteDictionary["Violet_Female_Hero"];
-
-                ModifyUserSelectionAvatar(sprite, UserSelection.AVATAR);
-
-                break;
-
-            case AvatarKey.VIOLET_MALE_HERO:
-
-                sprite = spriteDictionary["Violet_Male_Hero"];
-
-                ModifyUserSelectionAvatar(sprite, UserSelection.AVATAR);
-
-                break;
-
-            case AvatarKey.YELLOW_FEMALE_HERO:
-
-                sprite = spriteDictionary["Yellow_Female_Hero"];
-
-                ModifyUserSelectionAvatar(sprite, UserSelection.AVATAR);
-
-                break;
-
-            case AvatarKey.YELLOW_MALE_HERO:
-
-                sprite = spriteDictionary["Yellow_Male_Hero"];
-
-                ModifyUserSelectionAvatar(sprite, UserSelection.AVATAR);
-
-                break;
-
-        }
-
+        int hero = (int)objectClick.GetComponent<HeroItem>().ItemKey;
+        Debug.Log("Hero id: "+ hero);
+        string heroKey = EnumHelper.FindKeybyIdInDictionary(hero, avatars);
+        Debug.Log("Hero key: " + heroKey);
+        Sprite sprite = spriteDictionary[heroKey];
+        ModifyUserSelectionAvatar(sprite, UserSelection.AVATAR);
     }
 
     private void ModifyUserSelectionAvatar(Sprite sprite, UserSelection selection ) {
@@ -189,8 +101,26 @@ public class CustomUIManager : MonoBehaviour
 
     private void Awake()
     {
-        //Validation Scene
-        Assert.IsNotNull(RestClientBehavour.Instance, "RestClientBehavour Instance is not present in the scene");
+        string avatarsJson = ResourcesUtil.FindStringJsonFileInResource(ResourcesUtil.JSON_AVATAR);
+
+        avatars = JsonHelper.ArrayFromJson<AvatarJson>(avatarsJson);
+
+        foreach (AvatarJson av in avatars) {
+
+            Sprite avatarSprite = ResourcesUtil.FindProfileSpriteInResource(av.avatarFileName);
+            spriteDictionary.Add(av.avatarKey, avatarSprite);
+        }
+
+        string frameJson = ResourcesUtil.FindStringJsonFileInResource(ResourcesUtil.JSON_FRAME);
+
+        frames = JsonHelper.ArrayFromJson<FrameJson>(frameJson);
+
+        foreach (FrameJson fr in frames)
+        {
+            Sprite avatarSprite = ResourcesUtil.FindProfileSpriteInResource(fr.frameFileName);
+            frameDictionary.Add(fr.frameKey, avatarSprite);
+        }
+
     }
 
     public void PressContinueButton() {
@@ -236,10 +166,10 @@ public class CustomUIManager : MonoBehaviour
             profile.GetComponent<GuestProfile>().ProfileAvatarSprite = avatarSprite.GetComponent<Image>().sprite;
             profile.GetComponent<GuestProfile>().ProfileFrameSprite = frameSprite.GetComponent<Image>().sprite;
 
+        }).Then( ()=> {
+            //fordware next scene
+            SceneManager.LoadSceneAsync("MainMenu");
         });
-
-        //fordware next scene
-        SceneManager.LoadSceneAsync("MainMenu");
 
     }
 

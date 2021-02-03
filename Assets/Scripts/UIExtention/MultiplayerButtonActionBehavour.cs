@@ -9,12 +9,6 @@ using Time = HostMatchGameBehavour.Time;
 
 public class MultiplayerButtonActionBehavour : MonoBehaviour
 {
-    public static MultiplayerButtonActionBehavour Instance;
-
-    private void Awake()
-    {
-        Instance = this;
-    }
 
     [Tooltip("Panel for join new private match")]
     [SerializeField] private GameObject panelJoin;
@@ -33,6 +27,7 @@ public class MultiplayerButtonActionBehavour : MonoBehaviour
 
     [Tooltip("Component for client web socket connection")]
     [SerializeField] private GameObject clientPrefab;
+
 
     public void InizilizedSingleClient() {
 

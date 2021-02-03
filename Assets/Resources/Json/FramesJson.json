@@ -1,0 +1,17 @@
+[
+    {
+      "frameId": 1,
+      "frameKey": "Frame_Blue",
+      "frameFileName": "Frame_Blue_Profile"
+    },
+    {
+      "frameId": 2,
+      "frameKey": "Frame_Green",
+      "frameFileName": "Frame_Green_Profile"
+    },
+    {
+      "frameId": 3,
+      "frameKey": "Frame_Yellow",
+      "frameFileName": "Frame_Yellow_Profile"
+    }
+]

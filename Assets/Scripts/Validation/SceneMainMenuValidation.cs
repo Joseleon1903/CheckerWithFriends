@@ -1,6 +1,4 @@
-﻿using Assets.Scripts.Profile;
-using UnityEngine;
-using UnityEngine.Assertions;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Camera))]
 public class SceneMainMenuValidation : MonoBehaviour
@@ -15,10 +13,18 @@ public class SceneMainMenuValidation : MonoBehaviour
 
     public void ValidationRequireObjectForMainMenuScene() {
 
-        // profile
-        BaseProfile profileBase = FindObjectOfType<BaseProfile>();
+        GameObject serverWS = GameObject.FindGameObjectWithTag("ServerWS");
 
-        Assert.IsNotNull(profileBase, "Profile Game object is requiere");
+        if (serverWS != null) {
+            DestroyImmediate(serverWS);
+        }
+
+        GameObject clientWS = GameObject.FindGameObjectWithTag("ClientWS");
+
+        if (clientWS != null)
+        {
+            DestroyImmediate(clientWS);
+        }
 
     }
     #endregion
