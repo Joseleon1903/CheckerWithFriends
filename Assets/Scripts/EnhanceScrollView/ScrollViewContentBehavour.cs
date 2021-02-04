@@ -31,19 +31,9 @@ public class ScrollViewContentBehavour : MonoBehaviour
         {
             action = actionButton;
         }
-        Debug.Log("Action Button : " + action.ToString());
-
         switch (action) {
 
             default:
-            case MainMenuActionType.ChessPlayButton:
-                
-                Debug.Log("Press Play ChessBehaviour");
-
-                SceneManager.LoadScene("ChessMultiplayerScene");
-
-                break;
-
             case MainMenuActionType.CheckerPlayButton:
 
                 Debug.Log("Press Play Checker");
@@ -56,13 +46,6 @@ public class ScrollViewContentBehavour : MonoBehaviour
             case MainMenuActionType.CheckerRulesButton:
 
                 Debug.Log("Press Rules Checker");
-
-
-                break;
-
-            case MainMenuActionType.ChessRulesButton:
-
-                Debug.Log("Press Rules ChessBehaviour");
 
 
                 break;

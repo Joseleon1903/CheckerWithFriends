@@ -58,25 +58,16 @@ public class CustomUIManager : MonoBehaviour
     private FrameJson[] frames;
 
     public void PressFrameButton(GameObject objectClick) {
-
-        Debug.Log("Entering in method PressFrameButton");
-        Debug.Log("Key " + objectClick.gameObject.name);
-
         int frame = (int)objectClick.GetComponent<FrameItem>().ItemKey;
         string frameKey = EnumHelper.FindKeybyIdInDictionary(frame, frames);
         Sprite sprite = frameDictionary[frameKey];
         ModifyUserSelectionAvatar(sprite, UserSelection.FRAME);
-
     }
 
     public void PressHeroButton(GameObject objectClick)
     {
-        Debug.Log("Entering in method PressHeroButton");
-        Debug.Log("Key "+ objectClick.gameObject.name);
         int hero = (int)objectClick.GetComponent<HeroItem>().ItemKey;
-        Debug.Log("Hero id: "+ hero);
         string heroKey = EnumHelper.FindKeybyIdInDictionary(hero, avatars);
-        Debug.Log("Hero key: " + heroKey);
         Sprite sprite = spriteDictionary[heroKey];
         ModifyUserSelectionAvatar(sprite, UserSelection.AVATAR);
     }
@@ -151,8 +142,6 @@ public class CustomUIManager : MonoBehaviour
         ProfileService serviceVersion = new ProfileService();
 
         serviceVersion.PostProfile(api, profileM).Then(response => {
-
-            Debug.Log("Registration fetch to local profile");
 
             GameObject profile = Finder.FindGameProfile();
 

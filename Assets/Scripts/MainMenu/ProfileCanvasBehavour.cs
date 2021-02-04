@@ -17,13 +17,11 @@ public class ProfileCanvasBehavour : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("Entering awake in profile canvas behavour");
         profile = Finder.FindGameProfile();
         string[] sprites = profile.GetComponent<BaseProfile>()._profilePicture.Split('%');
         string avatar = sprites[1];
         string frame = sprites[0];
         ProfileUtil.SetupProfileImageFromResources(avatar, frame, profileAvatarImage, profileFrameImage);
-
     }
 
     public void PressOptionMenu() {
@@ -40,5 +38,4 @@ public class ProfileCanvasBehavour : MonoBehaviour
     }
 
 
-   
 }

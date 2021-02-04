@@ -23,7 +23,6 @@ public class PlayerProfileAnimation : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("Setup profile player images");
         if (FindObjectOfType<ClientWSBehavour>() == null) {
             return;
         }
@@ -43,7 +42,6 @@ public class PlayerProfileAnimation : MonoBehaviour
         ProfileUtil.SetupProfileImageFromResources(avatar, frame, profileTwoAvatar, profileTwoFrame);
         profileTwoName.text = name;
     }
-
 
     private void OnEnable()
     {

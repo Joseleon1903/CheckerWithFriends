@@ -6,7 +6,7 @@
         public string operationCode= "";
         public string lobbyCode= "";
         public string gameType;
-        public string checketdMove;
+        public string switchPlayer;
         public string startPosX;
         public string startPosY;
 
@@ -29,7 +29,7 @@
                 this.operationCode = eData[1];
                 this.lobbyCode = eData[2];
                 this.gameType = eData[3];
-                this.checketdMove = eData[4];
+                this.switchPlayer = eData[4];
                 this.startPosX = eData[5];
                 this.startPosY = eData[6];
                 this.endPosX = eData[7];

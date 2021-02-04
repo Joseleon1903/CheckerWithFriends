@@ -53,6 +53,8 @@ public class CheckerEndGameBehavour : MonoBehaviour
     {
         remachPressCounter = 0;
 
+        SendGameOverVictoryMessage();
+
         LeanTween.scale(panelGameOver, Vector3.one, 1.8f).setEase(LeanTweenType.easeOutElastic);
 
         SetUpProfilePlayer();
@@ -65,7 +67,6 @@ public class CheckerEndGameBehavour : MonoBehaviour
 
     private void Start()
     {
-
     }
 
     public void SetUpProfilePlayer() 
@@ -121,7 +122,6 @@ public class CheckerEndGameBehavour : MonoBehaviour
     public void MainMenuButton() {
         SceneManager.LoadScene("MainMenu");
     }
-
 
     public void PlayAgainButton()
     {
@@ -183,4 +183,18 @@ public class CheckerEndGameBehavour : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
+    private void SendGameOverVictoryMessage() {
+        Debug.Log("Send message Victory Player");
+
+        ClientWSBehavour client = FindObjectOfType<ClientWSBehavour>();
+
+        if (client != null && CheckerGameManager.Instance.GameState.PlayerWin != CheckerGameManager.Instance.Player.Type) {
+
+            string lobbyCode = client.profile.lobbyCode;
+            string gameType = GameType.CHECKER.ToString().ToUpper();
+            string playerWin = CheckerGameManager.Instance.GameState.PlayerWin.ToString().ToUpper();
+            VictoryGameMessageReq victoryReq = new VictoryGameMessageReq(lobbyCode, gameType, playerWin);
+            client.Send(victoryReq.GetMessageText());
+        }
+    }
 }

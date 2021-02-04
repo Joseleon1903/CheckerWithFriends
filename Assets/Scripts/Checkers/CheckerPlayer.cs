@@ -1,9 +1,7 @@
 ﻿using Assets.Scripts.Checkers;
 using Assets.Scripts.General;
-using Assets.Scripts.Profile;
 using Assets.Scripts.Utils;
 using Assets.Scripts.WebSocket;
-using Assets.Scripts.WebSocket.Message;
 using UnityEngine;
 
 public enum PlayerType
@@ -35,13 +33,11 @@ public class CheckerPlayer : IClicker, IInputReceiver
     }
 
     private void LoadProfile() {
-        Debug.Log("Load Profile");
         clientSession = GameObject.FindObjectOfType<ClientWSBehavour>();
         type = PlayerType.P1;
         if (clientSession != null) {
             type = clientSession.profile.isHost ? PlayerType.P1 : PlayerType.P2;
         }
-        Debug.Log("End Load Profile");
     }
 
 
@@ -74,7 +70,6 @@ public class CheckerPlayer : IClicker, IInputReceiver
         {
 
             case InputActionType.GRAB_PIECE:
-                Debug.Log("Entering in player grab piece");
 
                 point = Finder.RayHitPointFromScreen(Input.mousePosition);
 
@@ -96,7 +91,6 @@ public class CheckerPlayer : IClicker, IInputReceiver
                 break;
 
             case InputActionType.CANCEL_PIECE:
-                Debug.Log("Entering in player cancel piece");
                 if (CheckersBoard.Instance.SelectedPiece != null)
                 {
                     //disable hight light piece
@@ -132,18 +126,16 @@ public class CheckerPlayer : IClicker, IInputReceiver
                 bool hasMove = CheckersBoard.Instance.TryMove(point.positionX, point.positionY,
                 nextPoint.positionX, nextPoint.positionY);
 
+                CheckersBoard.Instance.SendMovementMessage(point, nextPoint, hasMove);
+
                 if (hasMove) {
 
                     CheckersBoard.Instance.CheckVictory();
 
-                    CheckersBoard.Instance.SendMovementMessage(point, nextPoint);
-
                     CheckerGameManager.Instance.SwitchPlayer();
 
                 }
-
                 break;
-
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Assets.Script.WebSocket;
+using Assets.Scripts.Network.Service;
 using Assets.Scripts.Utils;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,8 +22,6 @@ class PublicGameBehavour: MonoBehaviour
 
     private void OnEnable()
     {
-        Debug.Log("On Enable Public game panel");
-
         GameObject[] element = GameObject.FindGameObjectsWithTag("Element");
 
         foreach (var ele in element) {
@@ -35,8 +34,6 @@ class PublicGameBehavour: MonoBehaviour
 
     public void PressRefreshButton() {
 
-        Debug.Log("Press reflesh Button");
-
         MatchPanelBehavour[] itemList = publicGamePanelContent.GetComponentsInChildren<MatchPanelBehavour>();
 
         foreach (var item in itemList) {
@@ -46,7 +43,6 @@ class PublicGameBehavour: MonoBehaviour
         PublicGameList.Clear();
 
         CheckServerPublic();
-
     }
 
     public IEnumerator RefreashAfterDelay(float delay) {
@@ -59,7 +55,6 @@ class PublicGameBehavour: MonoBehaviour
 
     public void RefreshPanelView() {
 
-        LoggerFile.Instance.DEBUG_LINE("Entering in RefreshPanelView");
         Debug.Log("Entering in RefreshPanelView");
 
         Component element = publicGamePanelContent.FindComponentInChildWithTag<Component>("Element");
@@ -70,12 +65,7 @@ class PublicGameBehavour: MonoBehaviour
             Instantiate(publicGameEmptyPrefab, publicGamePanelContent.transform);
         }
 
-        LoggerFile.Instance.DEBUG_LINE("Process Public game list");
-
         foreach (var item in PublicGameList) {
-
-            Debug.Log("Process id : " + item.id);
-            LoggerFile.Instance.DEBUG_LINE("Process Game id: " + item.id);
 
             var ItemPrefab = Instantiate(publicGameItemPrefab, publicGamePanelContent.transform);
 
@@ -91,8 +81,6 @@ class PublicGameBehavour: MonoBehaviour
     /// </summary>
     public void CheckServerPublic()
     {
-        Debug.Log("Entering method CheckServerPublic");
-
         SocketConfig config = FindObjectOfType<SocketConfig>();
 
         var api = RestClientBehavour.Instance.ApiBaseUrl +PublicLobbyService.GetPublicLobbyPath;
@@ -100,8 +88,6 @@ class PublicGameBehavour: MonoBehaviour
         PublicLobbyService serviceLobby = new PublicLobbyService();
 
         serviceLobby.GetPublicLobbys(api, 10).Then(response => {
-
-            Debug.Log("Response list size:" + response.Length);
 
             foreach (var item in response)
             {

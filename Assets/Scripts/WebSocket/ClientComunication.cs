@@ -58,17 +58,22 @@ namespace Assets.Scripts.WebSocket
         private void HandleMessage(string msg)
         {
             Debug.Log("Client: " + msg);
-
             DataMessageResp dataResp = new DataMessageResp(msg);
 
             if (string.Equals("102LB", dataResp.operationCode))
             {
                 if (GameType.CHECKER.ToString().ToUpper().Equals(dataResp.gameType.ToUpper())) {
+
                     CheckersBoard.Instance.TryMove(int.Parse(dataResp.startPosX), int.Parse(dataResp.startPosY),
                        int.Parse(dataResp.endPosX), int.Parse(dataResp.endPosY));
+
+                    if (dataResp.switchPlayer.Equals(EnumHelper.TRUE))
+                    {
+                        CheckerGameManager.Instance.SwitchPlayer();
+
+                    }
                 }
 
-                CheckerGameManager.Instance.SwitchPlayer();
                 return;
             }
 
@@ -119,6 +124,18 @@ namespace Assets.Scripts.WebSocket
             {
                 Debug.Log("Recive Rematch client request");
                 FindObjectOfType<CheckerEndGameBehavour>().ReciveRematchRequest(rematchDataResp.rematchCounter);
+            }
+
+            VictoryGameMessageResp victoryDataResp = new VictoryGameMessageResp(msg);
+
+            if (string.Equals("100GW", victoryDataResp.operationCode))
+            {
+                Debug.Log("Recive Victory client request");
+
+                PlayerType winPl = (victoryDataResp.playerWin.Equals(PlayerType.P1.ToString().ToUpper())) ?
+                    PlayerType.P1 : PlayerType.P2;
+                CheckerGameManager.Instance.GameState.Checkmate(winPl);
+                CanvasManagerUI.Instance.ShowGameOverCanvas();
             }
 
         }

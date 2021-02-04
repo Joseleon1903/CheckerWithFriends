@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
-
-namespace Assets.Scripts.WebSocket.Message
+﻿namespace Assets.Scripts.WebSocket.Message
 {
     public class VictoryGameMessageReq
     {
@@ -16,7 +13,7 @@ namespace Assets.Scripts.WebSocket.Message
         public VictoryGameMessageReq(string lobbyCode, string gametype, string playerWin)
         {
             this.origin = "CLIENT";
-            this.operationCode = "102PL";
+            this.operationCode = "100GW";
             this.lobbyCode = lobbyCode;
             this.gametype = gametype;
             this.playerWin = playerWin;

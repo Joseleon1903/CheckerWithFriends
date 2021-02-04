@@ -16,6 +16,10 @@ public class CheckerGameManager : Singleton<CheckerGameManager>
 
 	private CheckerPlayer player;
 
+	public CheckerPlayer Player
+	{
+		get { return player; }
+	}
 	public GameState GameState
 	{
 		get { return gameState; }
@@ -43,7 +47,7 @@ public class CheckerGameManager : Singleton<CheckerGameManager>
 		var client = FindObjectOfType<ClientWSBehavour>();
 		if (client != null)
 		{
-			StartOnlineGame(client);
+			StartOnlineGame();
 		}
 		else
 		{
@@ -53,7 +57,7 @@ public class CheckerGameManager : Singleton<CheckerGameManager>
 		CoolDownUtil.StartCoolDownPlayer(PlayerType.P1);
 	}
 
-	private void StartOnlineGame(ClientWSBehavour client) {
+	private void StartOnlineGame() {
 
 		player = new CheckerPlayer();
 

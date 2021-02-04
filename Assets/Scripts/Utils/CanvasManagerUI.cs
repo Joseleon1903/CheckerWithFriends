@@ -3,16 +3,6 @@ using UnityEngine;
 
 public class CanvasManagerUI : Singleton<CanvasManagerUI>
 {
-    private int x, y;
-
-    private bool isWhite;
-    public enum PieceOption
-    {
-        Bishop = 0,
-        Queen = 1,
-        Rook = 2,
-        Knight = 3
-    }
 
     [SerializeField] private GameObject AlertCanvas;
 
@@ -33,8 +23,6 @@ public class CanvasManagerUI : Singleton<CanvasManagerUI>
 
     public void StartGameCanvasView() {
 
-        Debug.Log("Initialize animation Player layout");
-
         playerControlCanvas.SetActive(true);
 
         ProfilePlayerCanvas.SetActive(true);
@@ -53,14 +41,6 @@ public class CanvasManagerUI : Singleton<CanvasManagerUI>
     }
 
     public void ShowGameOptionMenu() {
-        Debug.Log("Entering in method ShowGameOptionMenu");
         OptionCanvas.SetActive(true);
-    }
-
-    public void SetPiecePosition(bool white, int Posx, int Posy)
-    {
-        isWhite = white;
-        x = Posx;
-        y = Posy;
     }
 }

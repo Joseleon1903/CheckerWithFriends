@@ -5,7 +5,13 @@ namespace Assets.Scripts.Utils
 {
     public static class ComponentChildrenUtil
     {
-
+        /// <summary>
+        ///  method to search in component parent for a child using the tag
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="parent"></param>
+        /// <param name="tag"></param>
+        /// <returns></returns>
         public static T FindComponentInChildWithTag<T>(this GameObject parent, string tag) where T : Component
         {
             Transform t = parent.transform;
@@ -18,7 +24,14 @@ namespace Assets.Scripts.Utils
             }
             return null;
         }
-         
+
+        /// <summary>
+        ///  method to search in component parent all childs with the tag
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="parent"></param>
+        /// <param name="tag"></param>
+        /// <returns></returns>
         public static T[] FindComponentInChildsWithTag<T>(this GameObject parent, string tag) where T : Component
         {
             Transform t = parent.transform;
@@ -33,6 +46,13 @@ namespace Assets.Scripts.Utils
             return list.ToArray();
         }
 
+        /// <summary>
+        ///  method to search in component parent the child with the component name
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="parent"></param>
+        /// <param name="tag"></param>
+        /// <returns></returns>
         public static T FindComponentInChildWithName<T>(this GameObject parent, string name) where T : Component
         {
             Transform t = parent.transform;

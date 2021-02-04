@@ -1,6 +1,4 @@
-﻿using Assets.Scripts.Network.Service;
-using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class TestRestImplementation : MonoBehaviour
 {

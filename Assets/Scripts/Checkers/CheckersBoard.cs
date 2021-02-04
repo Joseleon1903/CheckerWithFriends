@@ -168,13 +168,13 @@ class CheckersBoard : Singleton<CheckersBoard>
         return true;
     }
 
-    public void SendMovementMessage(HitPoint initPos , HitPoint endPos)
+    public void SendMovementMessage(HitPoint initPos , HitPoint endPos, bool switchPlayer)
     { 
         //send movment to the server
         if (client != null) 
         {
             string lobbyCode = client.profile.lobbyCode;
-            string boolean = EnumHelper.FALSE;
+            string boolean = (switchPlayer) ? EnumHelper.TRUE : EnumHelper.FALSE;
             DataMessageReq dataReq = new DataMessageReq(lobbyCode,GameType.CHECKER.ToString().ToUpper(), boolean,
                 initPos.positionX.ToString(), initPos.positionY.ToString(), endPos.positionX.ToString(), 
                 endPos.positionY.ToString());
