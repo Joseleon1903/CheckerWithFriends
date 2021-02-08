@@ -1,79 +1,61 @@
 ﻿using Assets.Scripts.General;
-using Assets.Scripts.Profile;
 using UnityEngine;
 
-public class InputManager : Singleton<InputManager>
+namespace Assets.Scripts.Checkers
 {
-
-	public delegate void InputEventHandler(InputActionType actionType);
-	public static event InputEventHandler InputEvent;
-
-	public Vector2 mouseAxis;
-
-	public Vector2 MouseAxis
+	public class InputManager : Singleton<InputManager>
 	{
-		get { return mouseAxis; }
-	}
 
-	void Awake()
-	{
-		mouseAxis = new Vector2(0, 0);
-	}
+		public delegate void InputEventHandler(InputActionType actionType);
+		public static event InputEventHandler InputEvent;
 
-	void OnDisable()
-	{
-		InputEvent = null;
-	}
+		public Vector2 mouseAxis;
 
-	public void InvokeInputEvent(InputActionType actionType)
-	{
-		InputEvent(actionType);
-	}
-
-	void Update()
-	{
-		mouseAxis.x = Input.GetAxis("Mouse X");
-		mouseAxis.y = Input.GetAxis("Mouse Y");
-
-		if (InputEvent == null) return;
-
-		if (Input.GetMouseButtonDown(0))
+		public Vector2 MouseAxis
 		{
-			if (CheckerGameManager.Instance.GameState.IsWaiting)
+			get { return mouseAxis; }
+		}
+
+		void Awake()
+		{
+			mouseAxis = new Vector2(0, 0);
+		}
+
+		void OnDisable()
+		{
+			InputEvent = null;
+		}
+
+		public void InvokeInputEvent(InputActionType actionType)
+		{
+			InputEvent(actionType);
+		}
+
+		void Update()
+		{
+			mouseAxis.x = Input.GetAxis("Mouse X");
+			mouseAxis.y = Input.GetAxis("Mouse Y");
+
+			if (InputEvent == null) return;
+
+			if (Input.GetMouseButtonDown(0))
 			{
-				InputEvent(InputActionType.GRAB_PIECE);
+				if (CheckerGameManager.Instance.GameState.IsWaiting)
+				{
+					InputEvent(InputActionType.GRAB_PIECE);
+				}
+				else if (CheckerGameManager.Instance.GameState.IsHolding)
+				{
+					InputEvent(InputActionType.PLACE_PIECE);
+				}
 			}
-			else if (CheckerGameManager.Instance.GameState.IsHolding)
+
+			if (Input.GetMouseButtonUp(0))
 			{
-				InputEvent(InputActionType.PLACE_PIECE);
+				Debug.Log("Up button");
 			}
-		}
 
-		if (Input.GetMouseButtonUp(0))
-		{
-			Debug.Log("Up button");
-		}
-
-		//camera control
-		if (Input.GetAxis("Mouse ScrollWheel") > 0)
-		{
-			InputEvent(InputActionType.ZOOM_IN);
-		}
-
-		if (Input.GetAxis("Mouse ScrollWheel") < 0)
-		{
-			InputEvent(InputActionType.ZOOM_OUT);
-		}
-
-		if (Input.GetMouseButtonDown(2))
-		{
-			InputEvent(InputActionType.ROTATE);
-		}
-		else if (Input.GetMouseButtonUp(2))
-		{
-			InputEvent(InputActionType.STOP_ROTATE);
 		}
 
 	}
-
 }

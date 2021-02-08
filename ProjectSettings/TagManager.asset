@@ -16,6 +16,7 @@ TagManager:
   - Element
   - CheckerPiece
   - OnlinePlayer
+  - RailPoint
   layers:
   - Default
   - TransparentFX

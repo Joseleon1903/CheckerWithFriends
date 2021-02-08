@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Utils;
+using UnityEngine;
 
 public enum PlayMode { 
 
@@ -73,7 +74,7 @@ public class Rail : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        nodes = GetComponentsInChildren<Transform>();
+        nodes = ComponentChildrenUtil.FindComponentInChildsWithTag<Transform>(gameObject, "RailPoint");
     }
 
     public Vector3 PositionOnRail(int seg, float ratio , PlayMode mode) 

@@ -3,216 +3,218 @@ using Assets.Scripts.Utils;
 using Assets.Scripts.WebSocket;
 using UnityEngine;
 
-public class CheckerGameManager : Singleton<CheckerGameManager>
+namespace Assets.Scripts.Checkers
 {
-
-	[SerializeField]
-	private Camera mainCamera;
-
-	[SerializeField]
-	private LayerMask clickableMask;
-
-	private GameState gameState;
-
-	private CheckerPlayer player;
-
-	public CheckerPlayer Player
+	public class CheckerGameManager : Singleton<CheckerGameManager>
 	{
-		get { return player; }
-	}
-	public GameState GameState
-	{
-		get { return gameState; }
-	}
 
-	public LayerMask CLickableMask
-	{
-		get { return clickableMask; }
-	}
+		[SerializeField]
+		private LayerMask clickableMask;
 
-	public Camera MainCamera
-	{
-		get { return mainCamera; }
-	}
+		private GameState gameState;
 
-	void Awake()
-	{
-		_destroyOnLoad = destroyOnLoad;
-		gameState = new GameState();
-		
-	}
+		private CheckerPlayer player;
 
-	public void StartGame() {
-
-		var client = FindObjectOfType<ClientWSBehavour>();
-		if (client != null)
+		public CheckerPlayer Player
 		{
-			StartOnlineGame();
+			get { return player; }
 		}
-		else
+		public GameState GameState
 		{
-			StartOfflineGame();
-		}
-		CheckersBoard.Instance.isWhiteTurn = true;
-		CoolDownUtil.StartCoolDownPlayer(PlayerType.P1);
-	}
-
-	private void StartOnlineGame() {
-
-		player = new CheckerPlayer();
-
-		if (player.Type.Equals(PlayerType.P1)) {
-			player.EnableInput();
+			get { return gameState; }
 		}
 
-		CanvasManagerUI.Instance.ShowAlertText("Match Start");
-
-		CanvasManagerUI.Instance.StartGameCanvasView();
-	}
-
-	private void StartOfflineGame() {
-
-		Debug.Log("Entering in Start Offline Game ");
-
-		player = new CheckerPlayer(PlayerType.P1);
-		
-		player.EnableInput();
-
-		CanvasManagerUI.Instance.ShowAlertText("Match Start");
-
-		CanvasManagerUI.Instance.StartGameCanvasView();
-	}
-
-	public void SwitchPlayer()
-	{
-		var client = FindObjectOfType<ClientWSBehavour>();
-		if (client != null)
+		public LayerMask CLickableMask
 		{
-			SwitchPlayerOnlineGame();
+			get { return clickableMask; }
 		}
-		else 
+
+		void Awake()
 		{
-			SwitchPlayerOfflineGame();
+			_destroyOnLoad = destroyOnLoad;
+			gameState = new GameState();
+
 		}
-		
-	}
 
-	private void SwitchPlayerOnlineGame() {
-
-		Debug.Log("Entering in SwitchPlayerOnlineGame");
-
-		CheckersBoard.Instance.isWhiteTurn = !CheckersBoard.Instance.isWhiteTurn;
-
-		if (player.Type.Equals(PlayerType.P1) && CheckersBoard.Instance.isWhiteTurn) 
+		public void StartGame()
 		{
-			CheckersBoard.Instance.ShowAlertPlayerTurn(PlayerType.P1);
+
+			var client = FindObjectOfType<ClientWSBehavour>();
+			if (client != null)
+			{
+				StartOnlineGame();
+			}
+			else
+			{
+				StartOfflineGame();
+			}
+			CheckersBoard.Instance.isWhiteTurn = true;
 			CoolDownUtil.StartCoolDownPlayer(PlayerType.P1);
-			CoolDownUtil.ResetCoolDownPlayer(PlayerType.P2);
-			player.EnableInput();
 		}
 
-		if (player.Type.Equals(PlayerType.P1) && !CheckersBoard.Instance.isWhiteTurn) 
+		private void StartOnlineGame()
 		{
-			CheckersBoard.Instance.ShowAlertPlayerTurn(PlayerType.P2);
-			CoolDownUtil.StartCoolDownPlayer(PlayerType.P2);
-			CoolDownUtil.ResetCoolDownPlayer(PlayerType.P1);
-			player.DisableInput();
+
+			player = new CheckerPlayer();
+
+			if (player.Type.Equals(PlayerType.P1))
+			{
+				player.EnableInput();
+			}
+
+			CanvasManagerUI.Instance.ShowAlertText("Match Start");
+
+			CanvasManagerUI.Instance.StartGameCanvasView();
 		}
 
-		if (player.Type.Equals(PlayerType.P2) && !CheckersBoard.Instance.isWhiteTurn)
+		private void StartOfflineGame()
 		{
-			CheckersBoard.Instance.ShowAlertPlayerTurn(PlayerType.P2);
-			CoolDownUtil.StartCoolDownPlayer(PlayerType.P2);
-			CoolDownUtil.ResetCoolDownPlayer(PlayerType.P1);
-			player.EnableInput();
-		}
-		
-		if (player.Type.Equals(PlayerType.P2) && CheckersBoard.Instance.isWhiteTurn)
-		{
-			player.DisableInput();
-			CoolDownUtil.ResetCoolDownPlayer(PlayerType.P2);
-			CoolDownUtil.StartCoolDownPlayer(PlayerType.P1);
-			CheckersBoard.Instance.ShowAlertPlayerTurn(PlayerType.P1);
-		}
-		  
-		if (Instance.GameState.IsGameOver)
-		{
-			GameOver();
-			return;
-		}
 
-		Instance.GameState.Release();
+			Debug.Log("Entering in Start Offline Game ");
 
-		Debug.Log("Current player " + player.Type);
-	}
-
-	private void SwitchPlayerOfflineGame()
-	{
-		Debug.Log("Entering in SwitchPlayerOfflineGame");
-
-		if (player != null && player.Type == PlayerType.P1)
-		{
-			player = new CheckerPlayer(PlayerType.P2);
-			CoolDownUtil.ResetCoolDownPlayer(PlayerType.P1);
-			CoolDownUtil.StartCoolDownPlayer(PlayerType.P2);
-		}
-		else if (player != null && player.Type == PlayerType.P2) {
 			player = new CheckerPlayer(PlayerType.P1);
-			CoolDownUtil.ResetCoolDownPlayer(PlayerType.P2);
-			CoolDownUtil.StartCoolDownPlayer(PlayerType.P1);
+
+			player.EnableInput();
+
+			CanvasManagerUI.Instance.ShowAlertText("Match Start");
+
+			CanvasManagerUI.Instance.StartGameCanvasView();
 		}
 
-		if (Instance.GameState.IsGameOver) {
-			Invoke("GameOver", 2.0f);
-			return;
+		public void SwitchPlayer()
+		{
+			var client = FindObjectOfType<ClientWSBehavour>();
+			if (client != null)
+			{
+				SwitchPlayerOnlineGame();
+			}
+			else
+			{
+				SwitchPlayerOfflineGame();
+			}
+
 		}
 
-		CheckersBoard.Instance.isWhiteTurn = !CheckersBoard.Instance.isWhiteTurn;
+		private void SwitchPlayerOnlineGame()
+		{
 
-		Instance.GameState.Release();
+			Debug.Log("Entering in SwitchPlayerOnlineGame");
 
-		CheckersBoard.Instance.ShowAlertPlayerTurn(player.Type);
+			if (Instance.GameState.IsGameOver)
+			{
+				GameOver();
+				return;
+			}
 
-		//Start player Timer
+			CheckersBoard.Instance.isWhiteTurn = !CheckersBoard.Instance.isWhiteTurn;
 
-		Debug.Log("Current player "+ player.Type);
+			if (player.Type.Equals(PlayerType.P1) && CheckersBoard.Instance.isWhiteTurn)
+			{
+				CheckersBoard.Instance.ShowAlertPlayerTurn(PlayerType.P1);
+				CoolDownUtil.StartCoolDownPlayer(PlayerType.P1);
+				CoolDownUtil.ResetCoolDownPlayer(PlayerType.P2);
+				player.EnableInput();
+			}
+
+			if (player.Type.Equals(PlayerType.P1) && !CheckersBoard.Instance.isWhiteTurn)
+			{
+				CheckersBoard.Instance.ShowAlertPlayerTurn(PlayerType.P2);
+				CoolDownUtil.StartCoolDownPlayer(PlayerType.P2);
+				CoolDownUtil.ResetCoolDownPlayer(PlayerType.P1);
+				player.DisableInput();
+			}
+
+			if (player.Type.Equals(PlayerType.P2) && !CheckersBoard.Instance.isWhiteTurn)
+			{
+				CheckersBoard.Instance.ShowAlertPlayerTurn(PlayerType.P2);
+				CoolDownUtil.StartCoolDownPlayer(PlayerType.P2);
+				CoolDownUtil.ResetCoolDownPlayer(PlayerType.P1);
+				player.EnableInput();
+			}
+
+			if (player.Type.Equals(PlayerType.P2) && CheckersBoard.Instance.isWhiteTurn)
+			{
+				player.DisableInput();
+				CoolDownUtil.ResetCoolDownPlayer(PlayerType.P2);
+				CoolDownUtil.StartCoolDownPlayer(PlayerType.P1);
+				CheckersBoard.Instance.ShowAlertPlayerTurn(PlayerType.P1);
+			}
+
+			Instance.GameState.Release();
+
+			Debug.Log("Current player " + player.Type);
+		}
+
+		private void SwitchPlayerOfflineGame()
+		{
+			Debug.Log("Entering in SwitchPlayerOfflineGame");
+
+			if (player != null && player.Type == PlayerType.P1)
+			{
+				player = new CheckerPlayer(PlayerType.P2);
+				CoolDownUtil.ResetCoolDownPlayer(PlayerType.P1);
+				CoolDownUtil.StartCoolDownPlayer(PlayerType.P2);
+			}
+			else if (player != null && player.Type == PlayerType.P2)
+			{
+				player = new CheckerPlayer(PlayerType.P1);
+				CoolDownUtil.ResetCoolDownPlayer(PlayerType.P2);
+				CoolDownUtil.StartCoolDownPlayer(PlayerType.P1);
+			}
+
+			if (Instance.GameState.IsGameOver)
+			{
+				Invoke("GameOver", 2.0f);
+				return;
+			}
+
+			CheckersBoard.Instance.isWhiteTurn = !CheckersBoard.Instance.isWhiteTurn;
+
+			Instance.GameState.Release();
+
+			CheckersBoard.Instance.ShowAlertPlayerTurn(player.Type);
+
+			//Start player Timer
+
+			Debug.Log("Current player " + player.Type);
+		}
+
+		public void GameOver()
+		{
+			GameOverType gameoverType = Instance.GameState.GameOverType;
+
+			CanvasManagerUI.Instance.ShowAlertText($"Player {Instance.GameState.PlayerWin} Win the game");
+
+			switch (gameoverType)
+			{
+				case GameOverType.CHECKMATE:
+					if (Instance.GameState.PlayerWin == PlayerType.P2)
+					{
+						Debug.Log("CHECKMATE: player BLACK win");
+
+						CanvasManagerUI.Instance.ShowGameOverCanvas();
+					}
+					else if (Instance.GameState.PlayerWin == PlayerType.P1)
+					{
+						Debug.Log("CHECKMATE: player WHITE wins");
+						CanvasManagerUI.Instance.ShowGameOverCanvas();
+					}
+					break;
+
+				case GameOverType.OUT_OF_TIME:
+					if (Instance.GameState.PlayerWin == PlayerType.P1)
+					{
+						Debug.Log("OUT OF TIME: WHITE wins");
+						CanvasManagerUI.Instance.ShowGameOverCanvas();
+					}
+					else if (Instance.GameState.PlayerWin == PlayerType.P2)
+					{
+						Debug.Log("OUT OF TIME: BLACK wins");
+						CanvasManagerUI.Instance.ShowGameOverCanvas();
+					}
+					break;
+			}
+		}
+
 	}
-
-    public void GameOver()
-    {
-		GameOverType gameoverType = Instance.GameState.GameOverType;
-
-		CanvasManagerUI.Instance.ShowAlertText($"Player {Instance.GameState.PlayerWin} Win the game");
-
-		switch (gameoverType)
-        {
-            case GameOverType.CHECKMATE:
-                if (Instance.GameState.PlayerWin == PlayerType.P2)
-                {
-                    Debug.Log("CHECKMATE: player BLACK win");
-
-                    CanvasManagerUI.Instance.ShowGameOverCanvas();
-                }
-                else if (Instance.GameState.PlayerWin == PlayerType.P1)
-                {
-                    Debug.Log("CHECKMATE: player WHITE wins");
-                    CanvasManagerUI.Instance.ShowGameOverCanvas();
-                }
-                break;
-
-            case GameOverType.OUT_OF_TIME:
-                if (Instance.GameState.PlayerWin == PlayerType.P1)
-                {
-                    Debug.Log("OUT OF TIME: WHITE wins");
-					CanvasManagerUI.Instance.ShowGameOverCanvas();
-				}
-                else if (Instance.GameState.PlayerWin == PlayerType.P1)
-                {
-                    Debug.Log("OUT OF TIME: BLACK wins");
-					CanvasManagerUI.Instance.ShowGameOverCanvas();
-				}
-                break;
-        }
-    }
-
 }

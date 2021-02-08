@@ -1,4 +1,6 @@
-﻿namespace Assets.Scripts.Utils
+﻿using Assets.Scripts.Checkers;
+
+namespace Assets.Scripts.Utils
 {
 
 	public enum GameStateType
@@ -112,6 +114,7 @@
 		{
 			state = GameStateType.GAME_OVER;
 			gameOverType = GameOverType.OUT_OF_TIME;
+			playerWin = type;
 		}
 
 		public bool IsGameOver

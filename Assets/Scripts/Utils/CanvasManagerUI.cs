@@ -14,6 +14,15 @@ public class CanvasManagerUI : Singleton<CanvasManagerUI>
 
     [SerializeField] private GameObject OptionCanvas;
 
+    private void Awake()
+    {
+        AlertCanvas.SetActive(false);
+        playerControlCanvas.SetActive(false);
+        ProfilePlayerCanvas.SetActive(false);
+        EndGameCanvas.SetActive(false);
+        OptionCanvas.SetActive(false);
+    }
+
     private void Start()
     {
         playerControlCanvas.SetActive(false);

@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.WebSocket;
+﻿using Assets.Scripts.Checkers;
+using Assets.Scripts.WebSocket;
 using UnityEngine;
 
 public class Mover : MonoBehaviour
@@ -23,7 +24,7 @@ public class Mover : MonoBehaviour
     private void Start()
     {
         var client = FindObjectOfType<ClientWSBehavour>();
-        bool isWhite = (client != null) ? client.profile.isHost : true;
+        bool isWhite = (client != null) ? client.profile.isHost : false;
         InstanceRailForPlayer(isWhite);
     }
 

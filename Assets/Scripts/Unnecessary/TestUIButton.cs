@@ -1,6 +1,5 @@
-﻿using Assets.Scripts.Utils;
-using System.Collections;
-using System.Collections.Generic;
+﻿using Assets.Scripts.Checkers;
+using Assets.Scripts.Utils;
 using UnityEngine;
 
 public class TestUIButton : MonoBehaviour
@@ -30,7 +29,6 @@ public class TestUIButton : MonoBehaviour
             CheckerGameManager.Instance.GameState.Checkmate(PlayerType.P2);
             Debug.Log("Show Game Over Canvas");
             CanvasManagerUI.Instance.ShowGameOverCanvas();
-
         }
 
     }

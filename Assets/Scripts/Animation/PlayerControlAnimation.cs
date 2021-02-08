@@ -14,6 +14,15 @@ public class PlayerControlAnimation : MonoBehaviour
 
     private bool isSelected = false;
 
+    private CameraTargetOrientationScript CameraControls;
+
+    private void Awake()
+    {
+        CameraControls = FindObjectOfType<CameraTargetOrientationScript>();
+
+        CameraControls.enableRotation = false;
+    }
+
     private void OnEnable()
     {
         // final pos x = 100 , y = -130
@@ -22,6 +31,8 @@ public class PlayerControlAnimation : MonoBehaviour
         LeanTween.scale(panelObject, Vector3.one, 1.5f).setEase(LeanTweenType.easeOutElastic).setDelay(0.5f);
 
         isSelected = false;
+
+
     }
 
     private void OnDisable()
@@ -37,6 +48,7 @@ public class PlayerControlAnimation : MonoBehaviour
             background.color = redColorMat.color;
 
             //ability  player zoom en orbit
+            CameraControls.enableRotation = false;
 
         }
         else {
@@ -46,7 +58,7 @@ public class PlayerControlAnimation : MonoBehaviour
 
 
             //disable player zoom en orbit
-
+            CameraControls.enableRotation = true;
         }
         isSelected = !isSelected;
     }

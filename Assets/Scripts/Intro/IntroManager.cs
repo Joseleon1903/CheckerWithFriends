@@ -23,7 +23,6 @@ namespace Assets.Scripts.Intro
             SceneManager.LoadScene("ProfileCustomizationScene");
         
         }
-
         
     }
 }

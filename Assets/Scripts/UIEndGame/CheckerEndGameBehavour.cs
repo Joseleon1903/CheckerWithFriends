@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Utils;
+﻿using Assets.Scripts.Checkers;
+using Assets.Scripts.Utils;
 using Assets.Scripts.WebSocket;
 using Assets.Scripts.WebSocket.Message;
 using System.Collections;
@@ -51,6 +52,11 @@ public class CheckerEndGameBehavour : MonoBehaviour
 
     private void OnEnable()
     {
+
+        CoolDownUtil.ResetCoolDownPlayer(PlayerType.P1);
+
+        CoolDownUtil.ResetCoolDownPlayer(PlayerType.P2);
+
         remachPressCounter = 0;
 
         SendGameOverVictoryMessage();
@@ -169,11 +175,6 @@ public class CheckerEndGameBehavour : MonoBehaviour
 
     }
 
-    public void ShareButton() {
-        Debug.Log("Share Button Pressed");
-
-    }
-
     private IEnumerator Rematch(float delay)
     {
         yield return new WaitForSeconds(delay);
@@ -181,6 +182,12 @@ public class CheckerEndGameBehavour : MonoBehaviour
         Debug.Log("Start a rematch");
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void ShareButton()
+    {
+        Debug.Log("Share Button Pressed");
+
     }
 
     private void SendGameOverVictoryMessage() {
@@ -193,7 +200,8 @@ public class CheckerEndGameBehavour : MonoBehaviour
             string lobbyCode = client.profile.lobbyCode;
             string gameType = GameType.CHECKER.ToString().ToUpper();
             string playerWin = CheckerGameManager.Instance.GameState.PlayerWin.ToString().ToUpper();
-            VictoryGameMessageReq victoryReq = new VictoryGameMessageReq(lobbyCode, gameType, playerWin);
+            string gameoverType = CheckerGameManager.Instance.GameState.GameOverType.ToString().ToUpper();
+            VictoryGameMessageReq victoryReq = new VictoryGameMessageReq(lobbyCode, gameType, gameoverType, playerWin);
             client.Send(victoryReq.GetMessageText());
         }
     }

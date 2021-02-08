@@ -8,20 +8,24 @@
         private string lobbyCode;
 
         private string gametype;
+
+        public string gameOverType;
+
         private string playerWin;
 
-        public VictoryGameMessageReq(string lobbyCode, string gametype, string playerWin)
+        public VictoryGameMessageReq(string lobbyCode, string gametype,string gameOverType, string playerWin)
         {
             this.origin = "CLIENT";
             this.operationCode = "100GW";
             this.lobbyCode = lobbyCode;
             this.gametype = gametype;
+            this.gameOverType = gameOverType;
             this.playerWin = playerWin;
         }
 
         public string GetMessageText()
         {
-            return $"{origin}&{operationCode}&{lobbyCode}&{gametype}&{playerWin}";
+            return $"{origin}&{operationCode}&{lobbyCode}&{gametype}&{gameOverType}&{playerWin}";
         }
     }
 }

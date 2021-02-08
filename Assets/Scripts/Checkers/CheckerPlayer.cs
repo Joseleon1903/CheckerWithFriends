@@ -1,141 +1,148 @@
-﻿using Assets.Scripts.Checkers;
-using Assets.Scripts.General;
+﻿using Assets.Scripts.General;
 using Assets.Scripts.Utils;
 using Assets.Scripts.WebSocket;
 using UnityEngine;
 
-public enum PlayerType
+namespace Assets.Scripts.Checkers
 {
-    P1, P2
-}
-
-public class CheckerPlayer : IClicker, IInputReceiver
-{
-    private ClientWSBehavour clientSession;
-
-    private PlayerType type;
-
-    private HitPoint point;
-
-    public PlayerType Type
+    public enum PlayerType
     {
-        get { return type; }
+        P1, P2
     }
 
-    public CheckerPlayer() {
-        LoadProfile();
-    }
-
-    public CheckerPlayer(PlayerType typeIn)
+    public class CheckerPlayer : IClicker, IInputReceiver
     {
-        LoadProfile();
-        type = typeIn;
-    }
+        private ClientWSBehavour clientSession;
 
-    private void LoadProfile() {
-        clientSession = GameObject.FindObjectOfType<ClientWSBehavour>();
-        type = PlayerType.P1;
-        if (clientSession != null) {
-            type = clientSession.profile.isHost ? PlayerType.P1 : PlayerType.P2;
-        }
-    }
+        private PlayerType type;
 
+        private HitPoint point;
 
-    public bool Click(IClickable clickable)
-    {
-        if (clickable == null) return false;
-        return clickable.Inform<CheckerPlayer>(this);
-    }
-
-    public void DisableInput()
-    {
-        InputManager.InputEvent -= OnInputEvent;
-    }
-
-    public void EnableInput()
-    {
-        InputManager.InputEvent += OnInputEvent;
-    }
-    
-    void OnDisable()
-    {
-        DisableInput();
-    }
-
-    public void OnInputEvent(InputActionType action)
-    {
-        Debug.Log("Entering in OnInputEvent");
-
-        switch (action)
+        public PlayerType Type
         {
+            get { return type; }
+        }
 
-            case InputActionType.GRAB_PIECE:
+        public CheckerPlayer()
+        {
+            LoadProfile();
+        }
 
-                point = Finder.RayHitPointFromScreen(Input.mousePosition);
+        public CheckerPlayer(PlayerType typeIn)
+        {
+            LoadProfile();
+            type = typeIn;
+        }
 
-                if (point.positionX == -1) break;
+        private void LoadProfile()
+        {
+            clientSession = GameObject.FindObjectOfType<ClientWSBehavour>();
+            type = PlayerType.P1;
+            if (clientSession != null)
+            {
+                type = clientSession.profile.isHost ? PlayerType.P1 : PlayerType.P2;
+            }
+        }
 
-                CheckersBoard.Instance.SelectedPiece = CheckersBoard.Instance.pieces[point.positionX, point.positionY];
 
-                if (CheckersBoard.Instance.SelectedPiece == null) break;
+        public bool Click(IClickable clickable)
+        {
+            if (clickable == null) return false;
+            return clickable.Inform<CheckerPlayer>(this);
+        }
 
-                if (CheckersBoard.Instance.SelectedPiece != null)
-                {
-                    int currentX = point.positionX;
-                    int currentY = point.positionY;
-                    Debug.Log($"Hit Point X={currentX} , Y={currentY}");
-                    CheckersBoard.Instance.SelectPiece(currentX, currentY);
-                    CheckerGameManager.Instance.GameState.Grab();
-                }
+        public void DisableInput()
+        {
+            InputManager.InputEvent -= OnInputEvent;
+        }
 
-                break;
+        public void EnableInput()
+        {
+            InputManager.InputEvent += OnInputEvent;
+        }
 
-            case InputActionType.CANCEL_PIECE:
-                if (CheckersBoard.Instance.SelectedPiece != null)
-                {
-                    //disable hight light piece
-                    CheckersBoard.Instance.SelectedPiece.DisableOutline();
-                    CheckersBoard.Instance.SelectedPiece = null;
-                    HightLightTiled.Instance.HideHightLight();
-                }
-                CheckerGameManager.Instance.GameState.Cancel();
-                break;
+        void OnDisable()
+        {
+            DisableInput();
+        }
 
-            case InputActionType.PLACE_PIECE:
-                Debug.Log("Entering in player place piece");
+        public void OnInputEvent(InputActionType action)
+        {
+            Debug.Log("Entering in OnInputEvent");
 
-                HitPoint nextPoint = Finder.RayHitPointFromScreen(Input.mousePosition);
+            switch (action)
+            {
 
-                if (CheckersBoard.Instance.SelectedPiece == null || nextPoint.positionX == -1 || nextPoint.positionX == -1) {
-                    CheckerGameManager.Instance.GameState.Cancel();
-                    CheckersBoard.Instance.SelectedPiece.DisableOutline();
-                    CheckersBoard.Instance.SelectedPiece = null;
-                    HightLightTiled.Instance.HideHightLight();
+                case InputActionType.GRAB_PIECE:
+
+                    point = Finder.RayHitPointFromScreen(Input.mousePosition);
+
+                    if (point.positionX == -1) break;
+
+                    CheckersBoard.Instance.SelectedPiece = CheckersBoard.Instance.pieces[point.positionX, point.positionY];
+
+                    if (CheckersBoard.Instance.SelectedPiece == null) break;
+
+                    if (CheckersBoard.Instance.SelectedPiece != null)
+                    {
+                        int currentX = point.positionX;
+                        int currentY = point.positionY;
+                        Debug.Log($"Hit Point X={currentX} , Y={currentY}");
+                        CheckersBoard.Instance.SelectPiece(currentX, currentY);
+                        CheckerGameManager.Instance.GameState.Grab();
+                    }
+
                     break;
-                }
 
-                if (!CheckersBoard.Instance.SelectedPiece.ValidMove(CheckersBoard.Instance.pieces, point.positionX, point.positionY, nextPoint.positionX, nextPoint.positionY))
-                {
+                case InputActionType.CANCEL_PIECE:
+                    if (CheckersBoard.Instance.SelectedPiece != null)
+                    {
+                        //disable hight light piece
+                        CheckersBoard.Instance.SelectedPiece.DisableOutline();
+                        CheckersBoard.Instance.SelectedPiece = null;
+                        HightLightTiled.Instance.HideHightLight();
+                    }
                     CheckerGameManager.Instance.GameState.Cancel();
-                    CheckersBoard.Instance.SelectedPiece.DisableOutline();
-                    CheckersBoard.Instance.SelectedPiece = null;
-                    HightLightTiled.Instance.HideHightLight();
                     break;
-                }
 
-                bool hasMove = CheckersBoard.Instance.TryMove(point.positionX, point.positionY,
-                nextPoint.positionX, nextPoint.positionY);
+                case InputActionType.PLACE_PIECE:
+                    Debug.Log("Entering in player place piece");
 
-                CheckersBoard.Instance.SendMovementMessage(point, nextPoint, hasMove);
+                    HitPoint nextPoint = Finder.RayHitPointFromScreen(Input.mousePosition);
 
-                if (hasMove) {
+                    if (CheckersBoard.Instance.SelectedPiece == null || nextPoint.positionX == -1 || nextPoint.positionX == -1)
+                    {
+                        CheckerGameManager.Instance.GameState.Cancel();
+                        CheckersBoard.Instance.SelectedPiece.DisableOutline();
+                        CheckersBoard.Instance.SelectedPiece = null;
+                        HightLightTiled.Instance.HideHightLight();
+                        break;
+                    }
 
-                    CheckersBoard.Instance.CheckVictory();
+                    if (!CheckersBoard.Instance.SelectedPiece.ValidMove(CheckersBoard.Instance.pieces, point.positionX, point.positionY, nextPoint.positionX, nextPoint.positionY))
+                    {
+                        CheckerGameManager.Instance.GameState.Cancel();
+                        CheckersBoard.Instance.SelectedPiece.DisableOutline();
+                        CheckersBoard.Instance.SelectedPiece = null;
+                        HightLightTiled.Instance.HideHightLight();
+                        break;
+                    }
 
-                    CheckerGameManager.Instance.SwitchPlayer();
+                    bool hasMove = CheckersBoard.Instance.TryMove(point.positionX, point.positionY,
+                    nextPoint.positionX, nextPoint.positionY);
 
-                }
-                break;
+                    CheckersBoard.Instance.SendMovementMessage(point, nextPoint, hasMove);
+
+                    if (hasMove)
+                    {
+
+                        CheckersBoard.Instance.CheckVictory();
+
+                        CheckerGameManager.Instance.SwitchPlayer();
+
+                    }
+                    break;
+            }
         }
     }
 }

@@ -23,7 +23,7 @@
         private void ConvertMessage(string message)
         {
             string[] eData = message.Split('&');
-            if (eData.Length >= 6)
+            if (eData.Length >= 8)
             {
                 this.origin = eData[0];
                 this.operationCode = eData[1];

@@ -1,338 +1,347 @@
-﻿using Assets.Scripts.Checkers;
-using Assets.Scripts.General;
+﻿using Assets.Scripts.General;
 using Assets.Scripts.Utils;
 using Assets.Scripts.WebSocket;
 using Assets.Scripts.WebSocket.Message;
 using System.Collections.Generic;
 using UnityEngine;
 
-class CheckersBoard : Singleton<CheckersBoard>
+namespace Assets.Scripts.Checkers
 {
-    public CheckerPiece[,] pieces = new CheckerPiece[8, 8];
-
-    [Tooltip("Player White Piece")]
-    [SerializeField] private GameObject whitePiecePrefab;
-
-    [Tooltip("Player Black Piece")]
-    [SerializeField] private GameObject blackPiecePrefab;
-
-    [Tooltip("Player White Queen Piece")]
-    [SerializeField] private GameObject whiteQueenPiecePrefab;
-
-    [Tooltip("Player Black Queen Piece")]
-    [SerializeField] private GameObject blackQueenPiecePrefab;
-
-    public Vector3 pieceOffSet = new Vector3(0.5f, 0.1f, 0.5f);
-
-    public bool isWhiteTurn;
-
-    public CheckerPiece SelectedPiece { get; set; }
-
-    private List<CheckerPiece> forcedPieces;
-
-    private ClientWSBehavour client;
-
-    private void Start()
+    class CheckersBoard : Singleton<CheckersBoard>
     {
-        client = FindObjectOfType<ClientWSBehavour>();
+        public CheckerPiece[,] pieces = new CheckerPiece[8, 8];
 
-        isWhiteTurn = true;
-        forcedPieces = new List<CheckerPiece>();
-        GeneratedBoard();
-    }
+        [Tooltip("Player White Piece")]
+        [SerializeField] private GameObject whitePiecePrefab;
 
-    private void Update()
-    {
-        //DrawDebugBoard();
+        [Tooltip("Player Black Piece")]
+        [SerializeField] private GameObject blackPiecePrefab;
 
-        //UpdateMouseOver();
+        [Tooltip("Player White Queen Piece")]
+        [SerializeField] private GameObject whiteQueenPiecePrefab;
 
-        //// if it is my turn 
-        //if((isWhite) ? isWhiteTurn : !isWhiteTurn)
-        //{
-        //    int x = (int)mouseover.x;
-        //    int y = (int)mouseover.y;
+        [Tooltip("Player Black Queen Piece")]
+        [SerializeField] private GameObject blackQueenPiecePrefab;
 
-        //    if (selectedPiece != null) 
-        //    {
-        //        UpdatePieceDrag(selectedPiece);
-        //    }
+        public Vector3 pieceOffSet = new Vector3(0.5f, 0.1f, 0.5f);
 
+        public bool isWhiteTurn;
 
-        //    if (Input.GetMouseButtonDown(0)) 
-        //    {
-        //        // Debug.Log($"Down x:{x} y: {y}");
+        public CheckerPiece SelectedPiece { get; set; }
 
-        //        SelectPiece(x, y);
-        //    }
+        private List<CheckerPiece> forcedPieces;
 
-        //    if (Input.GetMouseButtonUp(0)) 
-        //    {
-        //        // Debug.Log($"Up x:{x} y: {y}");
+        private ClientWSBehavour client;
 
-        //        TryMove((int)startDrag.x, (int)startDrag.y, x, y);
-        //    }
-
-        //    if (selectedPiece !=  null) {
-        //        // highLight CheckerPiece
-        //        selectedPiece.EnableHightLight();
-        //    }
-        //}
-    }
-
-    public void SelectPiece(int x, int y)
-    {
-        CheckerPiece p = pieces[x, y];
-
-        if (p != null && p.IsWhite == isWhiteTurn)
+        private void Start()
         {
-            forcedPieces = ScanForPossibleMove(x,y);
+            client = FindObjectOfType<ClientWSBehavour>();
 
-            if (forcedPieces.Count == 0)
+            isWhiteTurn = true;
+            forcedPieces = new List<CheckerPiece>();
+            GeneratedBoard();
+        }
+
+        private void Update()
+        {
+            //DrawDebugBoard();
+
+            //UpdateMouseOver();
+
+            //// if it is my turn 
+            //if((isWhite) ? isWhiteTurn : !isWhiteTurn)
+            //{
+            //    int x = (int)mouseover.x;
+            //    int y = (int)mouseover.y;
+
+            //    if (selectedPiece != null) 
+            //    {
+            //        UpdatePieceDrag(selectedPiece);
+            //    }
+
+
+            //    if (Input.GetMouseButtonDown(0)) 
+            //    {
+            //        // Debug.Log($"Down x:{x} y: {y}");
+
+            //        SelectPiece(x, y);
+            //    }
+
+            //    if (Input.GetMouseButtonUp(0)) 
+            //    {
+            //        // Debug.Log($"Up x:{x} y: {y}");
+
+            //        TryMove((int)startDrag.x, (int)startDrag.y, x, y);
+            //    }
+
+            //    if (selectedPiece !=  null) {
+            //        // highLight CheckerPiece
+            //        selectedPiece.EnableHightLight();
+            //    }
+            //}
+        }
+
+        public void SelectPiece(int x, int y)
+        {
+            CheckerPiece p = pieces[x, y];
+
+            if (p != null && p.IsWhite == isWhiteTurn)
             {
-                SelectedPiece = p;
+                forcedPieces = ScanForPossibleMove(x, y);
 
-                //hightlight piece posible move 
-                bool[,] lightTiles = SelectedPiece.PossibleMove(pieces, x, y);
-
-                HightLightTiled.Instance.HightLight(lightTiles);
-
-                SelectedPiece.EnableOutline();
-
-            }
-            else {
-                //look for the piece under forces pieces list
-
-                if (forcedPieces.Find(fp=> fp == p ) ==  null)
-                    return;
-
-                SelectedPiece = p;
-                SelectedPiece.EnableOutline();
-            }              
-        }
-    }
-
-    public bool TryMove(int x1, int y1, int x2, int y2)
-    {
-        //multiplayer support
-        SelectedPiece = pieces[x1, y1];
-
-        if (SelectedPiece == null) 
-        {
-            return false;
-        }
-
-        MovePiece(SelectedPiece.gameObject, x2, y2);
-        pieces[x1, y1] = null;
-        pieces[x2, y2] = SelectedPiece;
-        HightLightTiled.Instance.HideHightLight();
-
-        //if this is a jump
-        if (Mathf.Abs(x2 - x1) == 2)
-        {
-            CheckerPiece p = pieces[(x1 + x2) / 2, (y1 + y2) / 2];
-            if (p != null)
-            {
-                pieces[(x1 + x2) / 2, (y1 + y2) / 2] = null;
-                DestroyImmediate(p.gameObject);
-            }
-            HightLightTiled.Instance.HideCaptureHightLight();
-            // validate if player can stil eat
-            forcedPieces = ScanForPossibleMove();
-        }
-
-        //promotion piece 
-        if (SelectedPiece != null)
-        {
-            if (SelectedPiece.IsWhite && !SelectedPiece.IsKing && y2 == 7)
-            {
-                DestroyImmediate(SelectedPiece.gameObject);
-                GeneratePiece(whiteQueenPiecePrefab, x2, y2);
-            }
-            else if (!SelectedPiece.IsWhite && !SelectedPiece.IsKing && y2 == 0)
-            {
-                DestroyImmediate(SelectedPiece.gameObject);
-                GeneratePiece(blackQueenPiecePrefab, x2, y2);
-            }
-        }
-       
-        Debug.Log("forcedPieces Count " + forcedPieces.Count);
-        if (forcedPieces.Count > 0)
-        {
-            return false;
-        }
-
-        SelectedPiece.DisableOutline();
-        SelectedPiece = null;
-
-        return true;
-    }
-
-    public void SendMovementMessage(HitPoint initPos , HitPoint endPos, bool switchPlayer)
-    { 
-        //send movment to the server
-        if (client != null) 
-        {
-            string lobbyCode = client.profile.lobbyCode;
-            string boolean = (switchPlayer) ? EnumHelper.TRUE : EnumHelper.FALSE;
-            DataMessageReq dataReq = new DataMessageReq(lobbyCode,GameType.CHECKER.ToString().ToUpper(), boolean,
-                initPos.positionX.ToString(), initPos.positionY.ToString(), endPos.positionX.ToString(), 
-                endPos.positionY.ToString());
-
-            client.Send(dataReq.GetMessageText());
-        }
-    }
-
-    public void CheckVictory()
-    {
-        bool hasWhite = true, hasBlack = true;
-
-        //check black player 2 winner
-        for (int i = 0; i < 8; i++)
-        {
-            for (int j = 0; j < 8; j++)
-            {
-                if (pieces[i, j] != null && pieces[i, j].IsWhite && (pieces[i, j].HasValidMove(pieces) 
-                    || pieces[i, j].IsForceToMove(pieces, i, j)))
+                if (forcedPieces.Count == 0)
                 {
-                    hasWhite = false;
+                    SelectedPiece = p;
+
+                    //hightlight piece posible move 
+                    bool[,] lightTiles = SelectedPiece.PossibleMove(pieces, x, y);
+
+                    HightLightTiled.Instance.HightLight(lightTiles);
+
+                    SelectedPiece.EnableOutline();
+
+                }
+                else
+                {
+                    //look for the piece under forces pieces list
+
+                    if (forcedPieces.Find(fp => fp == p) == null)
+                        return;
+
+                    SelectedPiece = p;
+                    SelectedPiece.EnableOutline();
                 }
             }
         }
 
-        if (hasWhite)
+        public bool TryMove(int x1, int y1, int x2, int y2)
         {
-            CheckerGameManager.Instance.GameState.Checkmate(PlayerType.P2);
+            //multiplayer support
+            SelectedPiece = pieces[x1, y1];
+
+            if (SelectedPiece == null)
+            {
+                return false;
+            }
+
+            MovePiece(SelectedPiece.gameObject, x2, y2);
+            pieces[x1, y1] = null;
+            pieces[x2, y2] = SelectedPiece;
+            HightLightTiled.Instance.HideHightLight();
+
+            //if this is a jump
+            if (Mathf.Abs(x2 - x1) == 2)
+            {
+                CheckerPiece p = pieces[(x1 + x2) / 2, (y1 + y2) / 2];
+                if (p != null)
+                {
+                    pieces[(x1 + x2) / 2, (y1 + y2) / 2] = null;
+                    DestroyImmediate(p.gameObject);
+                }
+                HightLightTiled.Instance.HideCaptureHightLight();
+                // validate if player can stil eat
+                forcedPieces = ScanForPossibleMove();
+            }
+
+            //promotion piece 
+            if (SelectedPiece != null)
+            {
+                if (SelectedPiece.IsWhite && !SelectedPiece.IsKing && y2 == 7)
+                {
+                    DestroyImmediate(SelectedPiece.gameObject);
+                    GeneratePiece(whiteQueenPiecePrefab, x2, y2);
+                }
+                else if (!SelectedPiece.IsWhite && !SelectedPiece.IsKing && y2 == 0)
+                {
+                    DestroyImmediate(SelectedPiece.gameObject);
+                    GeneratePiece(blackQueenPiecePrefab, x2, y2);
+                }
+            }
+
+            Debug.Log("forcedPieces Count " + forcedPieces.Count);
+            if (forcedPieces.Count > 0)
+            {
+                return false;
+            }
+
+            SelectedPiece.DisableOutline();
+            SelectedPiece = null;
+
+            return true;
         }
 
-        //check White player 1 winner
-        for (int i = 0; i < 8; i++)
+        public void SendMovementMessage(HitPoint initPos, HitPoint endPos, bool switchPlayer)
         {
-            for (int j = 0; j < 8; j++)
+            //send movment to the server
+            if (client != null)
             {
-                if (pieces[i, j] != null && !pieces[i, j].IsWhite && (pieces[i, j].HasValidMove(pieces)
-                    || pieces[i, j].IsForceToMove(pieces, i, j)))
-                {
-                    hasBlack = false;
-                }
+                string lobbyCode = client.profile.lobbyCode;
+                string boolean = (switchPlayer) ? EnumHelper.TRUE : EnumHelper.FALSE;
+                DataMessageReq dataReq = new DataMessageReq(lobbyCode, GameType.CHECKER.ToString().ToUpper(), boolean,
+                    initPos.positionX.ToString(), initPos.positionY.ToString(), endPos.positionX.ToString(),
+                    endPos.positionY.ToString());
+
+                client.Send(dataReq.GetMessageText());
             }
         }
 
-        if (hasBlack)
+        public void CheckVictory()
         {
-            CheckerGameManager.Instance.GameState.Checkmate(PlayerType.P1);
-        }
+            bool hasWhite = true, hasBlack = true;
 
-    }
-
-    private List<CheckerPiece> ScanForPossibleMove(int x, int y) {
-        bool[,]  tiles = pieces[x, y].PossibleEatMove(pieces, x, y);
-        HightLightTiled.Instance.HightLight(tiles);
-        return ScanForPossibleMove();
-    }
-
-    private List<CheckerPiece> ScanForPossibleMove() {
-
-        forcedPieces = new List<CheckerPiece>();
-        //check all pieces
-        for (int i =0; i < 8; i ++) 
-        {
-            for (int j =0; j < 8; j++) 
+            //check black player 2 winner
+            for (int i = 0; i < 8; i++)
             {
-                if (pieces[i,j] != null && pieces[i, j].IsWhite == isWhiteTurn) 
+                for (int j = 0; j < 8; j++)
                 {
-                    if (pieces[i, j].IsForceToMove(pieces, i, j)) {
-
-                        HightLightTiled.Instance.CaptureHightLight(pieces[i, j].ValidCapturePiece(pieces, i,j));
-                        forcedPieces.Add(pieces[i, j]);
+                    if (pieces[i, j] != null && pieces[i, j].IsWhite && (pieces[i, j].HasValidMove(pieces)
+                        || pieces[i, j].IsForceToMove(pieces, i, j)))
+                    {
+                        hasWhite = false;
                     }
                 }
             }
-        }
-        return forcedPieces;
-    }
 
-    private void GeneratedBoard() {
-
-        //Generate white team
-        for (int y = 0; y < 3; y++)
-        {
-            bool addRow = (y % 2 == 0);
-            // x < 8
-            for (int x = 0; x <8 ; x+=2)
+            if (hasWhite)
             {
-                GeneratePiece((addRow)? x: x+1, y);
+                CheckerGameManager.Instance.GameState.Checkmate(PlayerType.P2);
+            }
+
+            //check White player 1 winner
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    if (pieces[i, j] != null && !pieces[i, j].IsWhite && (pieces[i, j].HasValidMove(pieces)
+                        || pieces[i, j].IsForceToMove(pieces, i, j)))
+                    {
+                        hasBlack = false;
+                    }
+                }
+            }
+
+            if (hasBlack)
+            {
+                CheckerGameManager.Instance.GameState.Checkmate(PlayerType.P1);
+            }
+
+        }
+
+        private List<CheckerPiece> ScanForPossibleMove(int x, int y)
+        {
+            bool[,] tiles = pieces[x, y].PossibleEatMove(pieces, x, y);
+            HightLightTiled.Instance.HightLight(tiles);
+            return ScanForPossibleMove();
+        }
+
+        private List<CheckerPiece> ScanForPossibleMove()
+        {
+
+            forcedPieces = new List<CheckerPiece>();
+            //check all pieces
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    if (pieces[i, j] != null && pieces[i, j].IsWhite == isWhiteTurn)
+                    {
+                        if (pieces[i, j].IsForceToMove(pieces, i, j))
+                        {
+
+                            HightLightTiled.Instance.CaptureHightLight(pieces[i, j].ValidCapturePiece(pieces, i, j));
+                            forcedPieces.Add(pieces[i, j]);
+                        }
+                    }
+                }
+            }
+            return forcedPieces;
+        }
+
+        private void GeneratedBoard()
+        {
+
+            //Generate white team
+            for (int y = 0; y < 3; y++)
+            {
+                bool addRow = (y % 2 == 0);
+                // x < 8
+                for (int x = 0; x < 8; x += 2)
+                {
+                    GeneratePiece((addRow) ? x : x + 1, y);
+                }
+            }
+
+            //Generate black team
+            for (int y = 7; y > 4; y--)
+            {
+                bool addRow = (y % 2 == 0);
+                // x < 8
+                for (int x = 0; x < 8; x += 2)
+                {
+                    GeneratePiece((addRow) ? x : x + 1, y);
+                }
             }
         }
 
-        //Generate black team
-        for (int y = 7; y > 4; y--)
+        private void MovePiece(GameObject p, int x, int y)
         {
-            bool addRow = (y % 2 == 0);
-            // x < 8
-            for (int x = 0; x < 8; x += 2)
+            p.transform.position = (Vector3.right * x) + (Vector3.forward * y) + pieceOffSet;
+        }
+
+        private void GeneratePiece(int x, int y)
+        {
+            bool isWhitePiece = (y > 3) ? false : true;
+            GameObject go = Instantiate(isWhitePiece ? whitePiecePrefab : blackPiecePrefab) as GameObject;
+            go.transform.SetParent(transform);
+            CheckerPiece p = go.GetComponent<CheckerPiece>();
+            pieces[x, y] = p;
+            MovePiece(go, x, y);
+        }
+
+        private void GeneratePiece(GameObject prefab, int x, int y)
+        {
+            GameObject go = Instantiate(prefab);
+            go.transform.SetParent(transform);
+            CheckerPiece p = go.GetComponent<CheckerPiece>();
+            pieces[x, y] = p;
+            MovePiece(go, x, y);
+        }
+
+        public void ShowAlertPlayerTurn(PlayerType type)
+        {
+
+            if (type.Equals(PlayerType.P1))
             {
-                GeneratePiece((addRow) ? x : x + 1, y);
+                CanvasManagerUI.Instance.ShowAlertText("It's White player turn..");
+            }
+            else
+            {
+                CanvasManagerUI.Instance.ShowAlertText("It's Black player turn..");
+            }
+
+        }
+
+        private void DrawDebugBoard()
+        {
+            Vector3 startPoint = Vector3.zero;
+            Vector3 widthLine = Vector3.right * 8;
+            Vector3 heigthLine = Vector3.forward * 8;
+
+            for (int i = 0; i <= 8; i++)
+            {
+                Vector3 start = startPoint;
+                start = start + Vector3.forward * i;
+                Debug.DrawLine(start, start + widthLine);
+            }
+
+            for (int j = 0; j <= 8; j++)
+            {
+                Vector3 start = startPoint;
+                start = start + Vector3.right * j;
+                Debug.DrawLine(start, start + heigthLine);
             }
         }
-    }
 
-    private void MovePiece(GameObject p, int x, int y) 
-    {
-        p.transform.position = (Vector3.right * x) + (Vector3.forward * y) + pieceOffSet;
-    }
-
-    private void GeneratePiece(int x, int y)
-    {
-        bool isWhitePiece = (y > 3) ? false : true;
-        GameObject go = Instantiate(isWhitePiece ? whitePiecePrefab : blackPiecePrefab) as GameObject;
-        go.transform.SetParent(transform);
-        CheckerPiece p = go.GetComponent<CheckerPiece>();
-        pieces[x, y] = p;
-        MovePiece(go, x, y);
-    }
-
-    private void GeneratePiece(GameObject prefab, int x, int y)
-    {
-        GameObject go = Instantiate(prefab);
-        go.transform.SetParent(transform);
-        CheckerPiece p = go.GetComponent<CheckerPiece>();
-        pieces[x, y] = p;
-        MovePiece(go, x, y);
-    }
-
-    public void ShowAlertPlayerTurn(PlayerType type) {
-
-        if (type.Equals(PlayerType.P1))
-        {
-           CanvasManagerUI.Instance.ShowAlertText("It's White player turn..");
-        }
-        else {
-            CanvasManagerUI.Instance.ShowAlertText("It's Black player turn..");
-        }
-    
-    }
-
-    private void DrawDebugBoard()
-    {
-        Vector3 startPoint = Vector3.zero;
-        Vector3 widthLine = Vector3.right * 8;
-        Vector3 heigthLine = Vector3.forward * 8;
-
-        for (int i = 0; i <= 8; i++)
-        {
-            Vector3 start = startPoint;
-            start = start + Vector3.forward * i;
-            Debug.DrawLine(start, start + widthLine);
-        }
-
-        for (int j = 0; j <= 8; j++)
-        {
-            Vector3 start = startPoint;
-            start = start + Vector3.right * j;
-            Debug.DrawLine(start, start + heigthLine);
-        }
     }
 
 }
-

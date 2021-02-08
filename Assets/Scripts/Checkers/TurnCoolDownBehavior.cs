@@ -29,7 +29,8 @@ namespace Assets.Scripts.Checkers
                 //Reduce fill amount over 30 seconds
                 countDownImage.fillAmount += 1.0f / coolDownDuration * Time.deltaTime;
 
-                if (countDownImage.fillAmount == 1.0f) {
+                if (countDownImage.fillAmount == 1.0f && 
+                    CheckerGameManager.Instance.Player.Type.Equals(_player)) {
 
                     Debug.Log("Time Out Game Over");
                     if (_player.Equals(PlayerType.P1))
@@ -50,7 +51,6 @@ namespace Assets.Scripts.Checkers
 
 
         public void CountDownBegin() {
-            Debug.Log("Start player turn CountDown");
             coolingDown = true;
             countDownImage.fillAmount = 0f;
         }
