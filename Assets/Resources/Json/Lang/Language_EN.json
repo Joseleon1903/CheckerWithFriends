@@ -1,0 +1,15 @@
+{
+    "languageId": "EN",
+    "gameName": "CheckerWithFriends",
+
+    "languageKeys":[
+    {
+        "id": "loginWithFacebook",
+        "value": "Login with facebook"
+    },
+    {
+        "id": "loginWithGuest",
+        "value": "Login with guest"
+    }]
+
+}

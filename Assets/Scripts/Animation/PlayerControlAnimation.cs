@@ -14,13 +14,9 @@ public class PlayerControlAnimation : MonoBehaviour
 
     private bool isSelected = false;
 
-    private CameraTargetOrientationScript CameraControls;
-
     private void Awake()
     {
-        CameraControls = FindObjectOfType<CameraTargetOrientationScript>();
 
-        CameraControls.enableRotation = false;
     }
 
     private void OnEnable()
@@ -47,18 +43,11 @@ public class PlayerControlAnimation : MonoBehaviour
             Image background = cameraViewButton.GetComponent<Image>();
             background.color = redColorMat.color;
 
-            //ability  player zoom en orbit
-            CameraControls.enableRotation = false;
-
         }
         else {
 
             Image background = cameraViewButton.GetComponent<Image>();
             background.color = greenColorMat.color;
-
-
-            //disable player zoom en orbit
-            CameraControls.enableRotation = true;
         }
         isSelected = !isSelected;
     }

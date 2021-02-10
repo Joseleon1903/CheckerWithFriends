@@ -2,7 +2,6 @@
 
 namespace Assets.Script.WebSocket
 {
-
     public class GameClient
     {
         public string name;

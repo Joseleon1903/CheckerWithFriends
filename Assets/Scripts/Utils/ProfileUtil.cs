@@ -61,5 +61,11 @@ namespace Assets.Scripts.Utils
             profileFrame.GetComponent<Image>().sprite = frame;
         }
 
+        public static string GetCoinsGuestProfileDefaultValue()
+        {
+            string value = "600";
+            return value;
+          
+        }
     }
 }

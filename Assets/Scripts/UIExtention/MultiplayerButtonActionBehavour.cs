@@ -38,8 +38,6 @@ public class MultiplayerButtonActionBehavour : MonoBehaviour
 
     public void ShowJoinPrivatePanel() {
 
-        LoggerFile.Instance.DEBUG_LINE("Show join private game panel");
-
         if (FindObjectOfType<JoinPrivateMatchBehavour>() == null) {
             panelJoin = Instantiate(panelJoin);
         }
@@ -51,7 +49,7 @@ public class MultiplayerButtonActionBehavour : MonoBehaviour
 
     public void ShowHostPanel() {
 
-        LoggerFile.Instance.DEBUG_LINE("Show host game panel");
+        Debug.Log("Show host game panel");
 
         panelPublicGame.SetActive(false);
 
@@ -60,7 +58,7 @@ public class MultiplayerButtonActionBehavour : MonoBehaviour
         }
         panelHostGame.SetActive(true);
 
-        LoggerFile.Instance.DEBUG_LINE("create a server and client for host");
+        Debug.Log("create a server and client for host");
 
         Instantiate(serverPrefab);
 
@@ -69,7 +67,7 @@ public class MultiplayerButtonActionBehavour : MonoBehaviour
 
     public void ShowPublicGamePanel() {
 
-        LoggerFile.Instance.DEBUG_LINE("Show public game panel");
+        Debug.Log("Show public game panel");
 
         if (panelHostGame.activeSelf) {
             panelHostGame.SetActive(false);
@@ -89,7 +87,7 @@ public class MultiplayerButtonActionBehavour : MonoBehaviour
 
     public void ShowJoinPrivateGamePanel(PlayerInfo playerOnInfo) {
 
-        LoggerFile.Instance.DEBUG_LINE("Show client Join private game panel");
+        Debug.Log("Show client Join private game panel");
 
         panelJoin.SetActive(false);
 
@@ -104,8 +102,6 @@ public class MultiplayerButtonActionBehavour : MonoBehaviour
         if (string.Equals(map.ToUpper(), Map.Park.ToString().ToUpper())  && string.Equals(time.ToUpper(), Time.Day.ToString().ToUpper())
             && string.Equals(gameType.ToUpper(), GameType.CHECKER.ToString().ToUpper())) {
 
-            LoggerFile.Instance.DEBUG_LINE("Start game after delay Map: CheckerParkDayGameScene");
-
             StartCoroutine(LauncherNewSceneAfterTime("CheckerParkDayGameScene", 5.0f));
 
         }
@@ -113,7 +109,6 @@ public class MultiplayerButtonActionBehavour : MonoBehaviour
         else if (string.Equals(map.ToUpper(), Map.Park.ToString().ToUpper()) && string.Equals(time.ToUpper(), Time.Night.ToString().ToUpper())
             && string.Equals(gameType.ToUpper(), GameType.CHECKER.ToString().ToUpper()))
         {
-            LoggerFile.Instance.DEBUG_LINE("Start game after delay Map: CheckerParkNightGameScene");
 
             StartCoroutine(LauncherNewSceneAfterTime("CheckerParkNightGameScene", 5.0f));
         }
@@ -122,7 +117,6 @@ public class MultiplayerButtonActionBehavour : MonoBehaviour
         else if (string.Equals(map.ToUpper(), Map.City.ToString().ToUpper()) && string.Equals(time.ToUpper(), Time.Day.ToString().ToUpper())
             && string.Equals(gameType.ToUpper(), GameType.CHECKER.ToString().ToUpper()))
         {
-            LoggerFile.Instance.DEBUG_LINE("Start game after delay Map: CheckerCityDayScene");
 
             StartCoroutine(LauncherNewSceneAfterTime("CheckerCityDayScene", 5.0f));
         }
@@ -131,7 +125,6 @@ public class MultiplayerButtonActionBehavour : MonoBehaviour
         else if (string.Equals(map.ToUpper(), Map.City.ToString().ToUpper()) && string.Equals(time.ToUpper(), Time.Night.ToString().ToUpper())
             && string.Equals(gameType.ToUpper(), GameType.CHECKER.ToString().ToUpper()))
         {
-            LoggerFile.Instance.DEBUG_LINE("Start game after delay Map: CheckerCityNightScene"); 
 
             StartCoroutine(LauncherNewSceneAfterTime("CheckerCityNightScene", 5.0f));
         }

@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.Network.Service;
-using Proyecto26;
+﻿using Proyecto26;
 using RSG;
 using UnityEngine;
 

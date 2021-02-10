@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Profile;
 using Assets.Scripts.Utils;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ProfileCanvasBehavour : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class ProfileCanvasBehavour : MonoBehaviour
 
     [SerializeField] private GameObject profileFrameImage;
 
+    [SerializeField] private Text profileCoins;
+
     private GameObject profile;
 
     private void Awake()
@@ -22,6 +25,7 @@ public class ProfileCanvasBehavour : MonoBehaviour
         string avatar = sprites[1];
         string frame = sprites[0];
         ProfileUtil.SetupProfileImageFromResources(avatar, frame, profileAvatarImage, profileFrameImage);
+        profileCoins.text = profile.GetComponent<BaseProfile>()._playerCoins;
     }
 
     public void PressOptionMenu() {

@@ -24,8 +24,6 @@ public class JoinPrivateMatchBehavour : MonoBehaviour
 
     public void PressJoinPrivateButton() {
 
-        LoggerFile.Instance.DEBUG_LINE("Press Join private button");
-
         Debug.Log("Press Join private button");
 
         string lobbyCode = lobbyCodeInput.text;
@@ -34,13 +32,10 @@ public class JoinPrivateMatchBehavour : MonoBehaviour
 
             Debug.Log("Lobby code is required");
 
-            LoggerFile.Instance.DEBUG_LINE("Lobby Code is Requiere");
-
             return;
         }
 
         Debug.Log("try lobby connection");
-        LoggerFile.Instance.DEBUG_LINE("try lobby connection");
 
         var clientWs = FindObjectOfType<ClientWSBehavour>();
 

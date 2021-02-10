@@ -29,6 +29,8 @@ public class EnhanceScrollView : MonoBehaviour
     private float totalHorizontalWidth = 500.0f;
     // vertical fixed position value 
     public float yFixedPositionValue = 46.0f;
+    // horixontal fixed position value 
+    public float xFixedPositionValue = 0f;
 
     // Lerp duration
     public float lerpDuration = 0.2f;
@@ -180,7 +182,7 @@ public class EnhanceScrollView : MonoBehaviour
         for (int i = 0; i < listEnhanceItems.Count; i++)
         {
             EnhanceItem itemScript = listEnhanceItems[i];
-            float xValue = GetXPosValue(fValue, itemScript.CenterOffSet);
+            float xValue = GetXPosValue(fValue, itemScript.CenterOffSet) + xFixedPositionValue;
             float scaleValue = GetScaleValue(fValue, itemScript.CenterOffSet);
             float depthCurveValue = depthCurve.Evaluate(fValue + itemScript.CenterOffSet);
             itemScript.UpdateScrollViewItems(xValue, depthCurveValue, depthFactor, listEnhanceItems.Count, yFixedPositionValue, scaleValue);

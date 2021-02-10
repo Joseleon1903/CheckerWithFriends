@@ -30,4 +30,13 @@ public class ResourcesUtil
         return targetFile;
     }
 
+    public static string FindLanguageInResource(string languagekey)
+    {
+        string filePath = "Json/Lang/Language_" + languagekey;
+
+        TextAsset targetFile = Resources.Load<TextAsset>(filePath);
+
+        return targetFile.text;
+    }
+
 }

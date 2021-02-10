@@ -13,6 +13,7 @@ namespace Assets.Scripts.Network.Model
         public string lastTokenInfoString;
         public string profilePicture;
         public string creationDate;
+        public string playerCoins;
         public string gameName;
         public int totalCheckerGame;
         public int totalCheckerGameWin;
@@ -22,7 +23,7 @@ namespace Assets.Scripts.Network.Model
 
         public ProfileModel() { }
 
-        public ProfileModel(int id, string name, string email, string facebookId, string guestUserId, string lastTokenInfoString, string profilePicture,string nationality, string isGuest)
+        public ProfileModel(int id, string name, string email, string facebookId, string guestUserId, string lastTokenInfoString, string profilePicture, string playerCoins, string nationality, string isGuest)
         {
             this.id = id;
             this.name = name;
@@ -32,6 +33,7 @@ namespace Assets.Scripts.Network.Model
             this.lastTokenInfoString = lastTokenInfoString;
             this.profilePicture = profilePicture;
             this.creationDate = DateTime.Now.ToString("MM/dd/yyyy H:mm");
+            this.playerCoins = playerCoins;
             this.gameName = "CheckerWithFriends";
             this.totalCheckerGame = 0;
             this.totalCheckerGameWin = 0;

@@ -27,7 +27,7 @@ public class ProfileMultiplayerBehavour : MonoBehaviour
 
     public void PressBackButton() {
 
-        LoggerFile.Instance.DEBUG_LINE("Press Back Button");
+        Debug.Log("Press Back Button");
 
         SceneManager.LoadScene("MainMenu");
 

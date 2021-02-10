@@ -15,6 +15,7 @@ namespace Assets.Scripts.Profile
 		public string _lastTokenInfoString;
 		public string _profilePicture;
 		public string _cretionDate;
+		public string _playerCoins;
 		public int _totalCheckerGame;
 		public int _totalCheckerGameWin;
 		public string _language;
@@ -37,6 +38,7 @@ namespace Assets.Scripts.Profile
 				baseProfile._lastTokenInfoString = model.lastTokenInfoString;
 				baseProfile._profilePicture = model.profilePicture;
 				baseProfile._cretionDate = model.creationDate;
+				baseProfile._playerCoins = model.playerCoins;
 				baseProfile._totalCheckerGame = model.totalCheckerGame;
 				baseProfile._totalCheckerGameWin = model.totalCheckerGameWin;
 				baseProfile._language = model.language;

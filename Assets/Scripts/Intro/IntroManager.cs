@@ -11,12 +11,12 @@ namespace Assets.Scripts.Intro
 
         public void LoginGuestButton() {
 
-            LoggerFile.Instance.DEBUG_LINE("Entering in method LoginGuestButton");
+            Debug.Log("Entering in method LoginGuestButton");
 
             //instanciate a profile guest
             Instantiate(guestProfile);
 
-            LoggerFile.Instance.DEBUG_LINE("Load main scene");
+            Debug.Log("Load main scene");
 
             PlayerPrefs.SetString(PlayerPreferenceKey.GUEST_PROFILE_KEY, EnumHelper.TRUE);
 

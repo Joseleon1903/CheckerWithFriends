@@ -126,8 +126,8 @@ public class CustomUIManager : MonoBehaviour
             string guestid = "GUEST-"+ ProfileUtil.GenerateRandomCode(9);
 
             string profilePic = ProfilePictureString(avatarSprite, frameSprite);
-
-            profileM = new ProfileModel(0, name, "","", guestid,"", profilePic, "Dominican Republic",EnumHelper.TRUE);
+            string coins = ProfileUtil.GetCoinsGuestProfileDefaultValue();
+            profileM = new ProfileModel(0, name, "","", guestid,"", profilePic, coins, "Dominican Republic",EnumHelper.TRUE);
 
         }
         else if(EnumHelper.FALSE.Equals(PlayerPrefs.GetString(PlayerPreferenceKey.GUEST_PROFILE_KEY)))

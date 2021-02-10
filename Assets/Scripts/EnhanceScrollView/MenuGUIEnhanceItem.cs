@@ -22,7 +22,6 @@ public class MenuGUIEnhanceItem : EnhanceItem
         rawImage = GetComponent<RawImage>();
         uButton = GetComponent<Button>();
         uButton.onClick.AddListener(OnClickUGUIButton);
-
         Assert.IsNotNull<string>(TittleName);
         Assert.IsNotNull<string>(DescriptionName);
         Assert.IsNotNull<GameObject>(ContentView);

@@ -21,10 +21,17 @@ public class Mover : MonoBehaviour
 
     [SerializeField] private GameObject BlackPlayerRail;
 
+    private void Awake()
+    {
+        WhitePlayerRail.SetActive(false);
+        BlackPlayerRail.SetActive(false);
+    }
+
+
     private void Start()
     {
         var client = FindObjectOfType<ClientWSBehavour>();
-        bool isWhite = (client != null) ? client.profile.isHost : false;
+        bool isWhite = (client != null) ? client.profile.isHost : true;
         InstanceRailForPlayer(isWhite);
     }
 
