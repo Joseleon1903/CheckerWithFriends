@@ -10,8 +10,12 @@
     {
         "id": "loginWithGuest",
         "value": "Conectate como invitado"
-    }]
-
-
+    },
+     {
+        "id": "settingTittle",
+        "value": "Configuración"
+    }
+    
+    ]
 
 }

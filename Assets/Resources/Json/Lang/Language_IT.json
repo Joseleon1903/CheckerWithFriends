@@ -10,5 +10,11 @@
     {
         "id": "loginWithGuest",
         "value": "Connettiti como invitato"
-    }]
+    },
+    {
+        "id": "settingTittle",
+        "value": "Configurazione"
+    }
+    
+    ]
 }

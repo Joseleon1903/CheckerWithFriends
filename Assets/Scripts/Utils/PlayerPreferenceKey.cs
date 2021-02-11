@@ -24,7 +24,7 @@
         public static string PLAYER_GAME_LANGUAGE = "PLAYER_GAME_LANGUAGE";
 
         //Player Gameplay Setting
-        public static string PLAYER_GAME_SOUND = "TRUE";
-        public static string PLAYER_GAME_SOUND_EFFECT = "TRUE";
+        public static string PLAYER_GAME_SOUND = "PLAYER_GAME_SOUND";
+        public static string PLAYER_GAME_SOUND_EFFECT = "PLAYER_GAME_SOUND_EFFECT";
     }
 }

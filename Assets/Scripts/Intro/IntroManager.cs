@@ -1,5 +1,5 @@
 ﻿using Assets.Scripts.Utils;
-using UnityEngine;
+using UnityEngine; 
 using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.Intro
@@ -8,6 +8,12 @@ namespace Assets.Scripts.Intro
     {
 
         [SerializeField]private GameObject guestProfile;
+
+        private void Awake()
+        {
+            PlayerPrefs.SetString(PlayerPreferenceKey.PLAYER_GAME_SOUND, EnumHelper.TRUE);
+            PlayerPrefs.SetString(PlayerPreferenceKey.PLAYER_GAME_SOUND_EFFECT, EnumHelper.TRUE);
+        }
 
         public void LoginGuestButton() {
 

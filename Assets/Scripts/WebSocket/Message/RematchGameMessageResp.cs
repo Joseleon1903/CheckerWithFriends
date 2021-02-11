@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Assets.Scripts.WebSocket.Message
+﻿namespace Assets.Scripts.WebSocket.Message
 {
     class RematchGameMessageResp
     {

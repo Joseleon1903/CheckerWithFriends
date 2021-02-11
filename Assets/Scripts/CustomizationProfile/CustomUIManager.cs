@@ -128,7 +128,7 @@ public class CustomUIManager : MonoBehaviour
             string profilePic = ProfilePictureString(avatarSprite, frameSprite);
             string coins = ProfileUtil.GetCoinsGuestProfileDefaultValue();
             profileM = new ProfileModel(0, name, "","", guestid,"", profilePic, coins, "Dominican Republic",EnumHelper.TRUE);
-
+            PlayerPrefs.SetString(PlayerPreferenceKey.PLAYER_GAME_LANGUAGE, "EN");
         }
         else if(EnumHelper.FALSE.Equals(PlayerPrefs.GetString(PlayerPreferenceKey.GUEST_PROFILE_KEY)))
         {
@@ -150,6 +150,7 @@ public class CustomUIManager : MonoBehaviour
                 profile = Instantiate(prefabGuestProfile);
             }
 
+            profileM.id = response.id;
             profile = BaseProfile.FetchFromModel(profile, profileM);
 
             profile.GetComponent<GuestProfile>().ProfileAvatarSprite = avatarSprite.GetComponent<Image>().sprite;

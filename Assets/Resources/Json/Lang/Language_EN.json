@@ -10,6 +10,12 @@
     {
         "id": "loginWithGuest",
         "value": "Login with guest"
-    }]
+    },
+    {
+        "id": "settingTittle",
+        "value": "Setting"
+    }
+    
+    ]
 
 }

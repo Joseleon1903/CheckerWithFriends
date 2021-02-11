@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Profile;
+﻿using Assets.Scripts.MainMenu;
+using Assets.Scripts.Profile;
 using Assets.Scripts.Utils;
 using UnityEngine;
 using UnityEngine.UI;
@@ -31,7 +32,7 @@ public class ProfileCanvasBehavour : MonoBehaviour
     public void PressOptionMenu() {
         Debug.Log("Press option button");
 
-        Instantiate(optionMenu);
+        MainMenuUICanvasManager.Instance.ShowSettingCanvas();
     }
 
     public void PressProfileMenu()

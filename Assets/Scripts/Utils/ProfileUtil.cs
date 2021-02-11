@@ -1,4 +1,6 @@
-﻿using Assets.Scripts.Profile;
+﻿using Assets.Scripts.Network.Model;
+using Assets.Scripts.Profile;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -66,6 +68,30 @@ namespace Assets.Scripts.Utils
             string value = "600";
             return value;
           
+        }
+
+        public static ProfileModel GetProfileModel()
+        {
+            ProfileModel model = new ProfileModel();
+            BaseProfile profileBase = Finder.FindGameProfile().GetComponent<BaseProfile>();
+
+            model.id = profileBase.id;
+            model.name = profileBase._nameProfile;
+            model.email = profileBase._email;
+            model.facebookId = profileBase._facebookUserId;
+            model.guestUserId = profileBase._guestUserId;
+            model.lastTokenInfoString = profileBase._lastTokenInfoString;
+            model.profilePicture = profileBase._profilePicture;
+            model.creationDate = profileBase._cretionDate;
+            model.playerCoins = profileBase._playerCoins;
+            model.gameName = GameType.CHECKER.ToString().ToUpper();
+            model.totalCheckerGame = profileBase._totalCheckerGame;
+            model.totalCheckerGameWin = profileBase._totalCheckerGameWin;
+            model.language = PlayerPrefs.GetString(PlayerPreferenceKey.PLAYER_GAME_LANGUAGE);
+            model.nationality = profileBase._nationality;
+            model.isGuest = profileBase._isGuest ? EnumHelper.TRUE : EnumHelper.FALSE;
+
+            return model;
         }
     }
 }

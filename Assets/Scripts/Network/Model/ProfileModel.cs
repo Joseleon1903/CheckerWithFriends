@@ -5,7 +5,7 @@ namespace Assets.Scripts.Network.Model
     [Serializable]
     public class ProfileModel 
     {
-        public int id;
+        public long id;
         public string name;
         public string email;
         public string facebookId;
@@ -37,7 +37,7 @@ namespace Assets.Scripts.Network.Model
             this.gameName = "CheckerWithFriends";
             this.totalCheckerGame = 0;
             this.totalCheckerGameWin = 0;
-            this.language = "English";
+            this.language = "EN";
             this.nationality = nationality;
             this.isGuest = isGuest;
         }
