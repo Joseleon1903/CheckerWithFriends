@@ -26,5 +26,11 @@
         //Player Gameplay Setting
         public static string PLAYER_GAME_SOUND = "PLAYER_GAME_SOUND";
         public static string PLAYER_GAME_SOUND_EFFECT = "PLAYER_GAME_SOUND_EFFECT";
+
+
+        //player message panel key
+        public static string PLAYER_MESSAGE_PANEL_TITTLE = "PLAYER_MESSAGE_PANEL_TITTLE";
+        public static string PLAYER_MESSAGE_PANEL_TEXT = "PLAYER_MESSAGE_PANEL_TEXT";
+
     }
 }

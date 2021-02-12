@@ -127,7 +127,7 @@ public class CustomUIManager : MonoBehaviour
 
             string profilePic = ProfilePictureString(avatarSprite, frameSprite);
             string coins = ProfileUtil.GetCoinsGuestProfileDefaultValue();
-            profileM = new ProfileModel(0, name, "","", guestid,"", profilePic, coins, "Dominican Republic",EnumHelper.TRUE);
+            profileM = new ProfileModel(0, name, "","", guestid,"", profilePic, coins, "DOM",EnumHelper.TRUE);
             PlayerPrefs.SetString(PlayerPreferenceKey.PLAYER_GAME_LANGUAGE, "EN");
         }
         else if(EnumHelper.FALSE.Equals(PlayerPrefs.GetString(PlayerPreferenceKey.GUEST_PROFILE_KEY)))

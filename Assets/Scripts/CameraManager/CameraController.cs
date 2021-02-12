@@ -56,22 +56,6 @@ public class CameraController : MonoBehaviour
 		if (Input.GetMouseButtonUp(0)) { mouseClickjudge = false; }
 		if (mouseClickjudge) { transform.RotateAround(targetPos, Vector3.up, Input.GetAxis("Mouse X") * orbitSpeed); }
 
-		//if (transform.position.y < orbitAverange.MaxUp )
-		//{
-		//	if (Input.GetKey(KeyCode.W))
-		//	{
-		//		OrbitInDirection(Vector3.left);
-		//	}
-		//}
-
-		//if(transform.position.y > orbitAverange.MinDown)
-		//{
-		//	if (Input.GetKey(KeyCode.S))
-		//	{
-		//		OrbitInDirection(Vector3.right);
-		//	}
-		//}
-
     }
 
 	private void OrbitInDirection(Vector3 direction)

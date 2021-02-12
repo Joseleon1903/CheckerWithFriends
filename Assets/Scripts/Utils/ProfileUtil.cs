@@ -1,6 +1,5 @@
 ﻿using Assets.Scripts.Network.Model;
 using Assets.Scripts.Profile;
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
