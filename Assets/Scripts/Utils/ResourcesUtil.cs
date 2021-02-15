@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Json;
+using UnityEngine;
 
 public class ResourcesUtil
 {
@@ -6,6 +7,8 @@ public class ResourcesUtil
     public static string JSON_FRAME = "FramesJson";
 
     public static string JSON_NATIONALITY = "Flag/Nationality_Flag";
+
+    public static string JSON_RULES = "Rules/RulesInstruction";
 
     public static string MATERIAL_COLOR_GOLD = "Gold_Color";
     public static string MATERIAL_COLOR_RED = "Red_Color";

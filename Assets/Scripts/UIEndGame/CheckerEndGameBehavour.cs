@@ -195,8 +195,18 @@ public class CheckerEndGameBehavour : MonoBehaviour
 
         ClientWSBehavour client = FindObjectOfType<ClientWSBehavour>();
 
-        if (client != null && CheckerGameManager.Instance.GameState.PlayerWin != CheckerGameManager.Instance.Player.Type) {
+        if (client != null && CheckerGameManager.Instance.GameState.PlayerWin != CheckerGameManager.Instance.Player.Type)
+        {
 
+            string lobbyCode = client.profile.lobbyCode;
+            string gameType = GameType.CHECKER.ToString().ToUpper();
+            string playerWin = CheckerGameManager.Instance.GameState.PlayerWin.ToString().ToUpper();
+            string gameoverType = CheckerGameManager.Instance.GameState.GameOverType.ToString().ToUpper();
+            VictoryGameMessageReq victoryReq = new VictoryGameMessageReq(lobbyCode, gameType, gameoverType, playerWin);
+            client.Send(victoryReq.GetMessageText());
+        }
+        else if(CheckerGameManager.Instance.GameState.IsGameOver && CheckerGameManager.Instance.GameState.GameOverType.Equals(GameOverType.CHECKMATE) && CheckerGameManager.Instance.GameState.PlayerWin == CheckerGameManager.Instance.Player.Type)
+        {
             string lobbyCode = client.profile.lobbyCode;
             string gameType = GameType.CHECKER.ToString().ToUpper();
             string playerWin = CheckerGameManager.Instance.GameState.PlayerWin.ToString().ToUpper();

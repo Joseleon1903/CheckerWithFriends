@@ -4,5 +4,17 @@
     "flagKey": "DOM",
     "flagName": "Dominican Republic",
     "flagFileName": "Dominican-Republic-Flag"
+    },
+    {
+    "flagId": 2,
+    "flagKey": "FR",
+    "flagName": "French",
+    "flagFileName": "France-Flag"
+    },
+    {
+    "flagId": 3,
+    "flagKey": "UK",
+    "flagName": "United Kingdom",
+    "flagFileName": "United-Kingdom-Flag"
     }
 ]

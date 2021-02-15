@@ -1,0 +1,50 @@
+[
+    {
+      "ruleId": 1,
+      "ruleNumber": 1,
+      "ruleDescription": "The opponent with the darker pieces moves first.",
+      "ruleRootImage": "Image/Rule/nameImage"
+    },
+   {
+      "ruleId": 2,
+      "ruleNumber": 2,
+      "ruleDescription": "Pieces may only move one diagonal space forward (towards their opponents pieces) in the beginning of the game.",
+      "ruleRootImage": "Image/Rule/nameImage"
+    },
+   {
+      "ruleId": 3,
+      "ruleNumber": 3,
+      "ruleDescription": "Pieces must stay on the dark squares.",
+      "ruleRootImage": "Image/Rule/nameImage"
+    },
+    {
+      "ruleId": 4,
+      "ruleNumber": 4,
+      "ruleDescription": "To capture an opposing piece, <<jump>> over it by moving two diagonal spaces in the direction of the the opposing piece.",
+      "ruleRootImage": "Image/Rule/nameImage"
+    },
+    {
+      "ruleId": 5,
+      "ruleNumber": 5,
+      "ruleDescription": "A piece may jump forward over an opponent's pieces in multiple parts of the board to capture",
+      "ruleRootImage": "Image/Rule/nameImage"
+    },
+    {
+      "ruleId": 6,
+      "ruleNumber": 6,
+      "ruleDescription": "Keep in mind, the space on the other side of your opponent’s piece must be empty for you to capture it.",
+      "ruleRootImage": "Image/Rule/nameImage"
+    },
+    {
+      "ruleId": 7,
+      "ruleNumber": 7,
+      "ruleDescription": "If your piece reaches the last row on your opponent's side, you may re-take one of your captured pieces and <<crown>> the piece that made it to the Kings Row. Thereby making it a King Piece.'",
+      "ruleRootImage": "Image/Rule/nameImage"
+    },
+    {
+      "ruleId": 8,
+      "ruleNumber": 8,
+      "ruleDescription": "King pieces may still only move one space at a time during a non-capturing move. However, when capturing an opponent's piece(s) it may move diagonally forward or backwards.",
+      "ruleRootImage": "Image/Rule/nameImage"
+    }
+]

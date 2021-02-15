@@ -5,3 +5,10 @@
     FriendsButton = 5,
     None= 6
 }
+
+public enum MainMenuPanelType
+{
+    CheckerMultiplayer = 0,
+    CheckerRules = 1,
+    CheckerFriendsinvited = 2,
+}

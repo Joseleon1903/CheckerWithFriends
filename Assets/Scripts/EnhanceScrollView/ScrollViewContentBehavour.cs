@@ -1,65 +1,62 @@
 ﻿using Assets.Scripts.Utils;
-using Unity.Pandora.Core.Mobile.Animation.Tween;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ScrollViewContentBehavour : MonoBehaviour
 {
-    [SerializeField] private Text  scrolltittle;
 
-    [SerializeField] private Text scrolldescription; 
+    [SerializeField] private GameObject CheckerMultiplayerPanel;
+
+    [SerializeField] private GameObject CheckerRulesPanel;
+
+    [SerializeField] private GameObject CheckerInviteFriends;
+
 
     private MainMenuActionType actionButton;
 
 
-    public void RefreshContent(string tittle, string description, MainMenuActionType action) {
-        scrolltittle.text = tittle;
-        scrolldescription.text = description;
+    public void RefreshContent(Color color, MainMenuPanelType itemCard,  MainMenuActionType action) {
+
+        GetComponent<Image>().color = color;
         actionButton = action;
 
-        LeanTween.scale(gameObject, new Vector3(0.8f, 0.8f, 0.8f), 0f);
+        switch (itemCard) {
 
-        LeanTween.scale(gameObject, new Vector3(1f, 1f, 1f), 2f).setEase(LeanTweenType.easeOutBounce);
+            case MainMenuPanelType.CheckerMultiplayer:
 
-    }
+                Debug.Log("Entering in multiplayer game");
+                CheckerRulesPanel.SetActive(false);
+                CheckerInviteFriends.SetActive(false);
+                CheckerMultiplayerPanel.SetActive(true);
 
-    public void PressPlayButton(int menuAction) {
 
-        MainMenuActionType action = EnumHelper.GetEnumValue<MainMenuActionType>(menuAction);
-        if (menuAction == 6)
-        {
-            action = actionButton;
+                break;
+
+            case MainMenuPanelType.CheckerRules:
+
+                Debug.Log("Entering in Rules game");
+                CheckerRulesPanel.SetActive(true);
+                CheckerInviteFriends.SetActive(false);
+                CheckerMultiplayerPanel.SetActive(false);
+
+
+                break;
+
+            case MainMenuPanelType.CheckerFriendsinvited:
+
+                Debug.Log("Entering in Rules game");
+                CheckerRulesPanel.SetActive(false);
+                CheckerInviteFriends.SetActive(true);
+                CheckerMultiplayerPanel.SetActive(false);
+
+                break;
         }
-        switch (action) {
 
-            default:
-            case MainMenuActionType.CheckerPlayButton:
+        //LeanTween.scale(gameObject, new Vector3(0.8f, 0.8f, 0.8f), 0f);
 
-                Debug.Log("Press Play Checker");
+        //LeanTween.scale(gameObject, new Vector3(1f, 1f, 1f), 2f).setEase(LeanTweenType.easeOutBounce);
 
-                SceneManager.LoadScene("CheckerMultiplayerScene");
-
-
-                break;
-
-            case MainMenuActionType.CheckerRulesButton:
-
-                Debug.Log("Press Rules Checker");
-
-
-                break;
-
-            case MainMenuActionType.FriendsButton:
-
-                Debug.Log("Press Friends");
-
-
-                break;
-
-        }
-    
-    
     }
 
 }

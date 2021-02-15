@@ -12,7 +12,11 @@ public class MenuGUIEnhanceItem : EnhanceItem
 
     [SerializeField] private GameObject ContentView;
 
+    [SerializeField] private Material colorMaterialPanel;
+
     [SerializeField] private MainMenuActionType menuAction;
+
+    [SerializeField] private MainMenuPanelType menuPanel;
 
     private Button uButton;
     private RawImage rawImage;
@@ -30,10 +34,6 @@ public class MenuGUIEnhanceItem : EnhanceItem
     public void OnClickUGUIButton()
     {
         OnClickEnhanceItem();
-        Debug.Log("button name :"+ menuAction.ToString());
-
-        int option = (int)EnumHelper.GetEnumValue<MainMenuActionType>(menuAction.ToString());
-        ContentView.GetComponent<ScrollViewContentBehavour>().PressPlayButton(option);
     }
 
     // Set the item "depth" 2d or 3d
@@ -55,7 +55,7 @@ public class MenuGUIEnhanceItem : EnhanceItem
     }
 
     public void OnSelectItem() {
-        ContentView.GetComponent<ScrollViewContentBehavour>().RefreshContent(TittleName, DescriptionName, menuAction);
+        ContentView.GetComponent<ScrollViewContentBehavour>().RefreshContent(colorMaterialPanel.color, menuPanel, menuAction);
     }
 
 
