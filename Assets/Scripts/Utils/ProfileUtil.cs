@@ -1,5 +1,7 @@
-﻿using Assets.Scripts.Network.Model;
+﻿using Assets.Scripts.Json;
+using Assets.Scripts.Network.Model;
 using Assets.Scripts.Profile;
+using Proyecto26;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -91,6 +93,25 @@ namespace Assets.Scripts.Utils
             model.isGuest = profileBase._isGuest ? EnumHelper.TRUE : EnumHelper.FALSE;
 
             return model;
+        }
+
+        public static string GetNationalityName(string key)
+        {
+
+            string jsonNation = ResourcesUtil.FindStringJsonFileInResource(ResourcesUtil.JSON_NATIONALITY);
+
+            NationalityJson[] jsonArray = JsonHelper.ArrayFromJson<NationalityJson>(jsonNation);
+
+            foreach (NationalityJson j in jsonArray)
+            {
+
+                if (j.flagKey.Equals(key))
+                {
+
+                    return j.flagName;
+                }
+            }
+            return string.Empty;
         }
     }
 }

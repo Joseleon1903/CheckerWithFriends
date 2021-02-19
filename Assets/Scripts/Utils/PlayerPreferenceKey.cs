@@ -32,5 +32,14 @@
         public static string PLAYER_MESSAGE_PANEL_TITTLE = "PLAYER_MESSAGE_PANEL_TITTLE";
         public static string PLAYER_MESSAGE_PANEL_TEXT = "PLAYER_MESSAGE_PANEL_TEXT";
 
+        // lobby player key
+        public static string PLAYER_LOBBY_COIN_REWARD = "PLAYER_LOBBY_COIN_REWARD";
+        public static string PLAYER_LOBBY_TYPE = "PLAYER_LOBBY_TYPE";
+        public static string PLAYER_LOBBY_MAP = "PLAYER_LOBBY_MAP";
+        public static string PLAYER_LOBBY_TIME = "PLAYER_LOBBY_TIME";
+        public static string PLAYER_LOBBY_CODE = "PLAYER_LOBBY_CODE";
+        public static string PLAYER_LOBBY_GAME_TYPE = "PLAYER_LOBBY_GAME_TYPE";
+        public static string PLAYER_LOBBY_BET = "PLAYER_LOBBY_BET";
+
     }
 }

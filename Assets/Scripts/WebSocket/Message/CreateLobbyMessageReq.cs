@@ -14,9 +14,10 @@
         private string lobbyIdentifier;
         private string lobbyStatus;
         private string lobbyGameType;
+        private int lobbyCoinReward;
 
 
-        public CreateLobbyMessageReq(string lobbyType,string map, string time, string lobbyCode, int lobbyCapacity, string lobbyStatus, string gameType)
+        public CreateLobbyMessageReq(string lobbyType,string map, string time, string lobbyCode, int lobbyCapacity, string lobbyStatus, string gameType, int lobbyCoinReward)
         {
             this.origin = "SERVER";
             this.operationCode = "201LB";
@@ -28,10 +29,11 @@
             this.lobbyMap = map;
             this.lobbyTime = time;
             this.lobbyGameType = gameType;
+            this.lobbyCoinReward = lobbyCoinReward;
         }
 
         public string GetMessageText() {
-            return $"{origin}&{operationCode}&{lobbyType}&{lobbyCode}&{lobbyMap}&{lobbyTime}&{lobbyCapacity}&{lobbyGameType}&{lobbyIdentifier}&{lobbyStatus}";
+            return $"{origin}&{operationCode}&{lobbyType}&{lobbyCode}&{lobbyMap}&{lobbyTime}&{lobbyCapacity}&{lobbyGameType}&{lobbyIdentifier}&{lobbyStatus}&{lobbyCoinReward}";
         } 
 
     }

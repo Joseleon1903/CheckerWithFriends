@@ -66,7 +66,7 @@ public class ProfileOptionBehavour : MonoBehaviour
         }
 
         profileFlag.GetComponent<Image>().sprite = GetNationalitySprite(profile.GetComponent<BaseProfile>()._nationality);
-        nation = GetNationalityName(profile.GetComponent<BaseProfile>()._nationality);
+        nation = ProfileUtil.GetNationalityName(profile.GetComponent<BaseProfile>()._nationality);
         totChecker = "Total Checker Game: " + profile.GetComponent<BaseProfile>()._totalCheckerGame;
         totCheckerWin = "Total Checker Game Win: " + profile.GetComponent<BaseProfile>()._totalCheckerGameWin;
 
@@ -77,22 +77,6 @@ public class ProfileOptionBehavour : MonoBehaviour
         profileNationality.text = nation;
         TotalCheckerGame.text = totChecker;
         TotalCheckerGameWin.text = totCheckerWin;
-    }
-
-    private string GetNationalityName(string key) {
-
-        string jsonNation = ResourcesUtil.FindStringJsonFileInResource(ResourcesUtil.JSON_NATIONALITY);
-
-        NationalityJson[] jsonArray = JsonHelper.ArrayFromJson<NationalityJson>(jsonNation);
-
-        foreach (NationalityJson j in jsonArray) {
-
-            if (j.flagKey.Equals(key)) {
-
-                return j.flagName;
-            }
-        }
-        return string.Empty;
     }
 
     private Sprite GetNationalitySprite(string key)

@@ -1,25 +1,19 @@
 ﻿using Assets.Scripts.Utils;
 using Assets.Scripts.WebSocket;
-using Unity.Pandora.Core.Mobile.Animation.Tween;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class JoinPrivateMatchBehavour : MonoBehaviour
 {
-    [SerializeField] private GameObject joinPanel;
 
-    private InputField lobbyCodeInput;
+    [SerializeField] private InputField lobbyCodeInput;
 
-    private void Awake()
-    {
-        lobbyCodeInput = ComponentChildrenUtil.FindComponentInChildWithName<InputField>(joinPanel, "LobbyInputField");
-
-    }
+    [SerializeField] private GameObject lobbyErrorPanel;
 
     private void Start()
     {
         //Animation
-        LeanTween.scale(joinPanel, new Vector3(1f, 1f,1f), 1.5f).setEaseOutBounce();
+        //LeanTween.scale(joinPanel, new Vector3(1f, 1f,1f), 1.5f).setEaseOutBounce();
     }
 
     public void PressJoinPrivateButton() {
@@ -32,6 +26,8 @@ public class JoinPrivateMatchBehavour : MonoBehaviour
 
             Debug.Log("Lobby code is required");
 
+            lobbyErrorPanel.SetActive(true);
+
             return;
         }
 
@@ -43,7 +39,7 @@ public class JoinPrivateMatchBehavour : MonoBehaviour
 
         clientWs.profile.lobbyCode = lobbyCode;
 
-        clientWs.profile.name = FindObjectOfType<GuestProfile>().name;
+        clientWs.profile.name = PlayerPrefs.GetString(PlayerPreferenceKey.PROFILE_ONE_KEY_NAME);
 
         clientWs.ConnectToLobby(lobbyCode, "Private", "PL2");
 
@@ -54,7 +50,5 @@ public class JoinPrivateMatchBehavour : MonoBehaviour
         var client = GameObject.FindGameObjectWithTag("ClientWS");
 
         Destroy(client);
-
-        Destroy(gameObject);
     }
 }

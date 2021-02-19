@@ -84,7 +84,7 @@ namespace Assets.Scripts.WebSocket
 
                 if (FindObjectOfType<ServerBehavour>() != null) {
 
-                    FindObjectOfType<HostMatchGameBehavour>().ShowClientConnect(respR.playerTwo);
+                    FindObjectOfType<HostGameRoomBehavior>().AddOpponentPlayer(respR.playerTwo);
 
                     FindObjectOfType<ServerBehavour>().SendStartGameMessage();
                 }

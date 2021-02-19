@@ -34,32 +34,21 @@ namespace Assets.Scripts.WebSocket
 
         public void SendStartGameMessage()
         {
-            var hostPanel = FindObjectOfType<HostMatchGameBehavour>();
-            string gameType = hostPanel.HostGameTypeSelection;
-            string map = hostPanel.HostGameMapSelection;
-            string time = hostPanel.HostGameTimeSelection;
+            string gameType = PlayerPrefs.GetString(PlayerPreferenceKey.PLAYER_LOBBY_GAME_TYPE);
+            string map = PlayerPrefs.GetString(PlayerPreferenceKey.PLAYER_LOBBY_MAP);
+            string time = PlayerPrefs.GetString(PlayerPreferenceKey.PLAYER_LOBBY_TIME);
             StartGameMessageReq startRequest = new StartGameMessageReq(ServerLobbyCode, map, time, gameType);
             communication.SendRequest(startRequest.GetMessageText());
         }
 
-        public void CreateLobby(string map, string time, string type, string lobbyCode, string gameType)
+        public void CreateLobby(string map, string time, string type, string lobbyCode, string gameType, string lobbyCoinReward)
         {
-
+            int coinsValue = int.Parse(lobbyCoinReward);
             ServerLobbyCode = lobbyCode;
             string LobbyType = (type.Equals("Private")) ? LobbyCodeGenerator.LOBBY_PRIVATE : LobbyCodeGenerator.LOBBY_PUBLIC;
-            CreateLobbyMessageReq msg = new CreateLobbyMessageReq(LobbyType, map, time, ServerLobbyCode, 2, LobbyCodeGenerator.ONLINE_STATUS, gameType);
+            CreateLobbyMessageReq msg = new CreateLobbyMessageReq(LobbyType, map, time, ServerLobbyCode, 2, LobbyCodeGenerator.ONLINE_STATUS, gameType, coinsValue);
 
             messageQueue.Enqueue(msg.GetMessageText());
-
-            // update status message 
-            if (type.Equals("Private"))
-            {
-                FindObjectOfType<StatusPanelBehavour>().ChangeMessage("Code: " + ServerLobbyCode + "\n Wait for player");
-            }
-            else
-            {
-                FindObjectOfType<StatusPanelBehavour>().ChangeMessage("Wait for Player");
-            }
         }
 
 

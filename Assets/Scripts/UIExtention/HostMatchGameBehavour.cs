@@ -20,11 +20,9 @@ public class HostMatchGameBehavour : MonoBehaviour
         Night = 1
     }
 
-    [SerializeField] private GameObject HostGamePanel;
-
     [SerializeField] private GameObject HostMatchPanel;
 
-    [SerializeField] private GameObject PlayerLobbyContentPanel;
+    [SerializeField] private GameObject playerRoomPanel;
 
     [SerializeField] private GameObject MatchPanelPrefab;
 
@@ -38,6 +36,9 @@ public class HostMatchGameBehavour : MonoBehaviour
     [Tooltip("Match type toogle group")]
     [SerializeField] private GameObject typeGroup;
 
+    [Tooltip("Match bet toogle group")]
+    [SerializeField] private GameObject betGroup;
+
     public string HostGameMapSelection { get; private set; }
 
     public string HostGameTimeSelection { get; private set; }
@@ -46,15 +47,15 @@ public class HostMatchGameBehavour : MonoBehaviour
 
     private void OnEnable()
     {
-        HostGamePanel.SetActive(true);
-        HostMatchPanel.SetActive(true);
+        //HostGamePanel.SetActive(true);
+        //HostMatchPanel.SetActive(true);
     }
 
     public void PressHostGame() {
 
         Debug.Log("Entering in PressHostGame");
 
-        HostMatchPanel.SetActive(false);
+        //HostMatchPanel.SetActive(false);
 
         //LeanTween.moveX(HostGamePanel,550f, 1f).setEaseLinear();
 
@@ -81,39 +82,35 @@ public class HostMatchGameBehavour : MonoBehaviour
 
         HostGameTypeSelection = gameType;
 
-        FindObjectOfType<ServerBehavour>().CreateLobby(map.ToString(), time.ToString(), type, lobbyCode, gameType);
+        Toggle betSelected = GetSelectedToggle(betGroup);
+        string bet = betSelected.GetComponentInChildren<Text>().text;
 
-        //connect local client to lobby
+        FindObjectOfType<ServerBehavour>().CreateLobby(map.ToString(), time.ToString(), type, lobbyCode, gameType, bet);
 
-        StartCoroutine(ConnectLocalClientLobby(lobbyCode, type));
-        
+        PlayerPrefs.SetString(PlayerPreferenceKey.PLAYER_LOBBY_MAP, map.ToString());
+        PlayerPrefs.SetString(PlayerPreferenceKey.PLAYER_LOBBY_TIME, time.ToString());
+        PlayerPrefs.SetString(PlayerPreferenceKey.PLAYER_LOBBY_TYPE, type);
+        PlayerPrefs.SetString(PlayerPreferenceKey.PLAYER_LOBBY_GAME_TYPE, gameType);
+        PlayerPrefs.SetString(PlayerPreferenceKey.PLAYER_LOBBY_CODE, lobbyCode);
+        PlayerPrefs.SetString(PlayerPreferenceKey.PLAYER_LOBBY_BET, bet);
     }
 
-    public void PressCloseHostPanel() {
+    public void ShowRoomCreated() {
 
-        Debug.Log("Entering in CloseHostPanel");
+        gameObject.SetActive(false);
 
-        FindObjectOfType<MultiplayerButtonActionBehavour>().ShowPublicGamePanel();
-
-        var client = GameObject.FindGameObjectWithTag("ClientWS");
-
-        Destroy(client);
-
-        var server = GameObject.FindGameObjectWithTag("ServerWS");
-
-        Destroy(server);
-
+        playerRoomPanel.SetActive(true);
     }
 
     public void ShowClientConnect(PlayerInfo playerTwoInfo) {
 
-        var panel = ComponentChildrenUtil.FindComponentInChildWithName<Component>(PlayerLobbyContentPanel, "PlayerTwoPanel");
+        var panel = ComponentChildrenUtil.FindComponentInChildWithName<Component>(playerRoomPanel, "PlayerTwoPanel");
 
         if (panel != null) {
             Destroy(panel.gameObject);
         }
 
-        MatchPanelPrefab = Instantiate(MatchPanelPrefab, PlayerLobbyContentPanel.transform);
+        MatchPanelPrefab = Instantiate(MatchPanelPrefab, playerRoomPanel.transform);
 
         var playerName = ComponentChildrenUtil.FindComponentInChildWithName<Text>(MatchPanelPrefab, "PlayerName");
         playerName.text = playerTwoInfo.name;
@@ -160,20 +157,4 @@ public class HostMatchGameBehavour : MonoBehaviour
         }
         return null;
     }
-
-    IEnumerator ConnectLocalClientLobby(string lobbyCode, string type) {
-
-        yield return new WaitForSeconds(3);
-
-        var clientWS = FindObjectOfType<ClientWSBehavour>();
-
-        clientWS.profile.isHost = true;
-
-        clientWS.profile.lobbyCode = lobbyCode;
-
-        clientWS.profile.name = FindObjectOfType<GuestProfile>().name;
-
-        clientWS.ConnectToLobby(lobbyCode, type, "PL1");
-    }
-
 }

@@ -38,10 +38,6 @@ public class MultiplayerButtonActionBehavour : MonoBehaviour
 
     public void ShowJoinPrivatePanel() {
 
-        if (FindObjectOfType<JoinPrivateMatchBehavour>() == null) {
-            panelJoin = Instantiate(panelJoin);
-        }
-
         panelJoin.SetActive(true);
 
         Instantiate(clientPrefab);
@@ -51,11 +47,6 @@ public class MultiplayerButtonActionBehavour : MonoBehaviour
 
         Debug.Log("Show host game panel");
 
-        panelPublicGame.SetActive(false);
-
-        if (FindObjectOfType<HostMatchGameBehavour>() == null) {
-            panelHostGame = Instantiate(panelHostGame);
-        }
         panelHostGame.SetActive(true);
 
         Debug.Log("create a server and client for host");
@@ -133,8 +124,10 @@ public class MultiplayerButtonActionBehavour : MonoBehaviour
 
     private IEnumerator LauncherNewSceneAfterTime(string sceneName, float time) {
 
+        Debug.Log("Entering in caroutines LauncherNewSceneAfterTime");
         yield return new WaitForSeconds(time);
 
+        Debug.Log("Wait yime is finish star game scene");
         SceneManager.LoadSceneAsync(sceneName);
     }
 }

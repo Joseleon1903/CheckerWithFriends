@@ -991,7 +991,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3040160594914403357
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1086,7 +1086,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 827dc8d78d3756c4080de2d8c3a9a35d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HostGamePanel: {fileID: 3040160595016254662}
   HostMatchPanel: {fileID: 3040160595497463410}
   PlayerLobbyContentPanel: {fileID: 3040160594979786311}
   MatchPanelPrefab: {fileID: 3881087873112963256, guid: e3927622f0940354ea654f0802666af3,
@@ -1094,6 +1093,7 @@ MonoBehaviour:
   MapDowpDown: {fileID: 3040160595568382025}
   TimeDowpDown: {fileID: 3040160595918329815}
   typeGroup: {fileID: 3040160596279229267}
+  betGroup: {fileID: 0}
 --- !u!1 &3040160594916049396
 GameObject:
   m_ObjectHideFlags: 0

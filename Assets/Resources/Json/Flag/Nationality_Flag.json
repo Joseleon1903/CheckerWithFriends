@@ -16,5 +16,29 @@
     "flagKey": "UK",
     "flagName": "United Kingdom",
     "flagFileName": "United-Kingdom-Flag"
+    },
+    {
+    "flagId": 4,
+    "flagKey": "ES",
+    "flagName": "Spain",
+    "flagFileName": "Spain-Flag"
+    },
+    {
+    "flagId": 5,
+    "flagKey": "PT",
+    "flagName": "Portugal",
+    "flagFileName": "Portugal-Flag"
+    },
+     {
+    "flagId": 6,
+    "flagKey": "MX",
+    "flagName": "Mexico",
+    "flagFileName": "Mexico-Flag"
+    },
+     {
+    "flagId": 7,
+    "flagKey": "BR",
+    "flagName": "Brazil",
+    "flagFileName": "Brazil-Flag"
     }
 ]

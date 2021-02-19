@@ -6,9 +6,6 @@ using UnityEngine.UI;
 
 public class ProfileCanvasBehavour : MonoBehaviour
 {
-
-    [SerializeField] private GameObject optionMenu;
-
     [SerializeField] private GameObject profileMenu;
 
     [SerializeField] private GameObject profileAvatarImage;

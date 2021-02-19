@@ -9,7 +9,7 @@ public class StatusPanelBehavour : MonoBehaviour
 
     private float lastAlert;
 
-    private void Awake()
+    private void OnEnable()
     {
         alertText = GetComponentInChildren<Text>();
         canvasGroup = GetComponent<CanvasGroup>();

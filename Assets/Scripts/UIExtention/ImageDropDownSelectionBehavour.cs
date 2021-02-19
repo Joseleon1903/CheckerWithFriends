@@ -16,11 +16,13 @@ public class ImageDropDownSelectionBehavour : MonoBehaviour
 
     [SerializeField] private Sprite[] optionImage;
 
-    private void Awake()
+    private void Start()
     {
         int defaultIndex = (int)EnumHelper.GetEnumValue<SelectionIndex>(SelectionIndex.Element0.ToString());
         Sprite defaultImage = optionImage[defaultIndex];
-        selectImage.sprite = defaultImage;
+        if (selectImage != null) {
+            selectImage.sprite = defaultImage;
+        }
     }
 
     public void OnValueChange(Dropdown change) {

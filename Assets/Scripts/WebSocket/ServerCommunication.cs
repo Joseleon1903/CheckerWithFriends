@@ -42,8 +42,6 @@ namespace Assets.Scripts.WebSocket
                 HandleMessage(msg);
             }
 
-
-
         }
 
         /// <summary>
@@ -61,7 +59,7 @@ namespace Assets.Scripts.WebSocket
 
                 Debug.Log("Lobby success created");
 
-                //FindObjectOfType<MultiplayerManager>().CreateLocalClient();
+                FindObjectOfType<HostMatchGameBehavour>().ShowRoomCreated();
 
             }
 
