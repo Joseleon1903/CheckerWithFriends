@@ -56,10 +56,24 @@ namespace Assets.Scripts.WebSocket
 
             if ("OK".Equals(response.result))
             {
-
                 Debug.Log("Lobby success created");
 
-                FindObjectOfType<HostMatchGameBehavour>().ShowRoomCreated();
+                var clientWS = FindObjectOfType<ClientWSBehavour>();
+                if (clientWS != null && clientWS.profile.isHost)
+                {
+                    FindObjectOfType<HostMatchGameBehavour>().ShowRoomCreated();
+                }
+                else 
+                {
+                    MultiplayerButtonActionBehavour actionButtons = FindObjectOfType<MultiplayerButtonActionBehavour>();
+
+                    if (actionButtons != null) {
+
+                        actionButtons.AddPendingMatch();
+                    }
+
+                }
+
 
             }
 

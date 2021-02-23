@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 public class ProfileMultiplayerBehavour : MonoBehaviour
 {
-
     private GameObject profile;
 
     [SerializeField] private Text playerCoins;
@@ -18,14 +17,9 @@ public class ProfileMultiplayerBehavour : MonoBehaviour
 
         profile = Finder.FindGameProfile();
 
-        //playerCoins.text = profile.GetComponent<BaseProfile>()._playerCoins;
-    }
-
-    private void Start()
-    {
+        playerCoins.text = profile.GetComponent<BaseProfile>()._playerCoins;
 
     }
-
 
     public void PressBackButton() {
 

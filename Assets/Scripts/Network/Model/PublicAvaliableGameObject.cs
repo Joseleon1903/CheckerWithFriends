@@ -21,9 +21,11 @@ public class PublicAvaliableGameObject : IComparable<PublicAvaliableGameObject>
 
     public string lobbyTime;
 
+    public string lobbyBet;
+
     public string gameLobby;
 
-    public PublicAvaliableGameObject(int id, string type, string lobbyCode, int capacity, int playerCount, string sessionIdentifier, string status, string lobbyMap, string lobbyTime, string gameLobby)
+    public PublicAvaliableGameObject(int id, string type, string lobbyCode, int capacity, int playerCount, string sessionIdentifier, string status, string lobbyMap, string lobbyTime, string lobbyBet, string gameLobby)
     {
         this.id = id;
         this.type = type;
@@ -34,6 +36,7 @@ public class PublicAvaliableGameObject : IComparable<PublicAvaliableGameObject>
         this.status = status;
         this.lobbyMap = lobbyMap;
         this.lobbyTime = lobbyTime;
+        this.lobbyBet = lobbyBet;
         this.gameLobby = gameLobby;
     }
 

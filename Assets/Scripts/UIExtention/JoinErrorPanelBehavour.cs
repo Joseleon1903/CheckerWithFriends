@@ -9,26 +9,16 @@ public class JoinErrorPanelBehavour : MonoBehaviour
 
     private float lastAlert;
 
-    private bool isShow;
-
     private void OnEnable()
     {
         canvasGroup = GetComponent<CanvasGroup>();
         label = GetComponentInChildren<Text>();
-        isShow = true;
-        canvasGroup.alpha = 1;
-    }
-
-    void Start()
-    {
-        lastAlert = Time.time;
     }
 
     void Update()
     {
 
-
-        if (Time.time - lastAlert > 0.1f && isShow)
+        if (Time.time - lastAlert > 0.1f)
         {
             canvasGroup.alpha = 2 - ((Time.time - lastAlert) - 0.1f);
             if (Time.time - lastAlert > 2f)
@@ -36,13 +26,12 @@ public class JoinErrorPanelBehavour : MonoBehaviour
                 gameObject.SetActive(false);
             }
         }
-
     }
 
-    public void ShowAlert()
+    public void ChangeMessage(string message)
     {
-
-
-
+        label.text = message;
+        lastAlert = Time.time;
+        canvasGroup.alpha = 1;
     }
 }

@@ -15,27 +15,30 @@ public class MatchPanelBehavour : MonoBehaviour
 
     [SerializeField] private Text TimeText;
 
-    [SerializeField] private Text PlayersText;
+    [SerializeField] private Text LobbyBet;
 
-    [SerializeField] private Sprite[] mapTextureList;
+    [SerializeField] private Text PlayersText;
 
     [SerializeField] private Button JoinButton;
 
     public delegate void OnPressJoinPublicGame(string lobbyCode);
 
-
-    public void  SetupItem(string map, string time, string player, string session, string lobbyCode) {
+    public void  SetupItem(string map, string time,string bet,  string player, string session, string lobbyCode) {
 
         OnPressJoinPublicGame joinMethod = new OnPressJoinPublicGame(PressJoinPublicGame);
 
-        if (map.ToUpper().Equals("PARK")) {
-            MapImage.sprite = mapTextureList[0];
+        if (map.ToUpper().Equals("CITY")) 
+        {
+            Sprite sprite = ResourcesUtil.FindMapSpriteInResource(HostMatchGameBehavour.Map.City);
+            MapImage.sprite = sprite;
+        }
+        else if (map.ToUpper().Equals("PARK")) 
+        {
+            Sprite sprite = ResourcesUtil.FindMapSpriteInResource(HostMatchGameBehavour.Map.Park);
+            MapImage.sprite = sprite;
         }
 
-        if (map.ToUpper().Equals("CITY"))
-        {
-            MapImage.sprite = mapTextureList[1];
-        }
+        LobbyBet.text = bet;
 
         MapText.text = map;
 
@@ -58,7 +61,6 @@ public class MatchPanelBehavour : MonoBehaviour
         FindObjectOfType<MultiplayerButtonActionBehavour>().InizilizedSingleClient();
 
         StartCoroutine(Join(lobbyCode));
-
     }
 
     private  IEnumerator Join(string lobbyCode)
@@ -75,7 +77,7 @@ public class MatchPanelBehavour : MonoBehaviour
 
         if (clientWs != null)
         {
-            clientWs.ConnectToLobby(lobbyCode, "Public", "PL2");
+            clientWs.ConnectToLobby(lobbyCode, "Public","PL2");
         }
     }
 

@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Json;
 using UnityEngine;
+using static HostMatchGameBehavour;
 
 public class ResourcesUtil
 {
@@ -31,6 +32,29 @@ public class ResourcesUtil
         string filePath = "Sprites/Profile/" + spriteName;
 
         Sprite targetFile = Resources.Load<Sprite>(filePath);
+
+        return targetFile;
+    }
+
+    public static Sprite FindMapSpriteInResource(Map mapType)
+    {
+        string root = string.Empty;
+
+        switch (mapType) {
+
+            case Map.City:
+
+                root = "Sprites/Map/City-Map";
+
+                break;
+
+            case Map.Park:
+                root = "Sprites/Map/Park-Map";
+
+                break;
+        }
+
+        Sprite targetFile = Resources.Load<Sprite>(root);
 
         return targetFile;
     }

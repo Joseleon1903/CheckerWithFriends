@@ -156,6 +156,11 @@ public class CustomUIManager : MonoBehaviour
             profile.GetComponent<GuestProfile>().ProfileAvatarSprite = avatarSprite.GetComponent<Image>().sprite;
             profile.GetComponent<GuestProfile>().ProfileFrameSprite = frameSprite.GetComponent<Image>().sprite;
 
+            string[] sprites = profileM.profilePicture.Split('%');
+
+            PlayerPrefs.SetString(PlayerPreferenceKey.PROFILE_ONE_KEY_AVATAR, sprites[1]);
+            PlayerPrefs.SetString(PlayerPreferenceKey.PROFILE_ONE_KEY_FRAME, sprites[0]);
+
         }).Then( ()=> {
             //fordware next scene
             SceneManager.LoadSceneAsync("MainMenu");

@@ -37,40 +37,64 @@ public class HostGameRoomBehavior : MonoBehaviour
     private void OnEnable()
     {
 
-        string serverLobbyCode = PlayerPrefs.GetString(PlayerPreferenceKey.PLAYER_LOBBY_CODE);
-        string type = PlayerPrefs.GetString(PlayerPreferenceKey.PLAYER_LOBBY_TYPE);
-
-        playerTwoPanel.SetActive(false);
-
         var clientWS = FindObjectOfType<ClientWSBehavour>();
 
-        clientWS.profile.isHost = true;
+        if (clientWS.profile.isHost)
+        {
+            Debug.Log("Entering in HostGameRoomBehavior Join match like host");
 
-        clientWS.profile.lobbyCode = serverLobbyCode;
+            string serverLobbyCode = PlayerPrefs.GetString(PlayerPreferenceKey.PLAYER_LOBBY_CODE);
+            string type = PlayerPrefs.GetString(PlayerPreferenceKey.PLAYER_LOBBY_TYPE);
 
-        clientWS.profile.name = FindObjectOfType<GuestProfile>().name;
+            playerTwoPanel.SetActive(false);
 
-        clientWS.ConnectToLobby(serverLobbyCode, type, "PL1");
+            clientWS.profile.isHost = true;
 
-        string map = PlayerPrefs.GetString(PlayerPreferenceKey.PLAYER_LOBBY_MAP);
-        string time = PlayerPrefs.GetString(PlayerPreferenceKey.PLAYER_LOBBY_TIME);
-        string bet = PlayerPrefs.GetString(PlayerPreferenceKey.PLAYER_LOBBY_BET);
+            clientWS.profile.lobbyCode = serverLobbyCode;
 
-        string description = $"Game Map: {map} , Game Time: {time} , lobby type: {type} , Bet: {bet}";
+            clientWS.profile.name = FindObjectOfType<GuestProfile>().name;
 
-        lobbyDescription.text = description;
+            clientWS.ConnectToLobby(serverLobbyCode, type, "PL1");
 
-        BaseProfile profile = Finder.FindGameProfile().GetComponent<BaseProfile>();
+            string map = PlayerPrefs.GetString(PlayerPreferenceKey.PLAYER_LOBBY_MAP);
+            string time = PlayerPrefs.GetString(PlayerPreferenceKey.PLAYER_LOBBY_TIME);
+            string bet = PlayerPrefs.GetString(PlayerPreferenceKey.PLAYER_LOBBY_BET);
 
-        string hostFrame = PlayerPrefs.GetString(PlayerPreferenceKey.PROFILE_ONE_KEY_FRAME);
-        string hostAvater = PlayerPrefs.GetString(PlayerPreferenceKey.PROFILE_ONE_KEY_AVATAR); ;
-        string hostName = profile._nameProfile;
-        string hostId = (profile._isGuest) ? profile._guestUserId : profile._facebookUserId;
-        string hostNationality = ProfileUtil.GetNationalityName(profile._nationality); 
-        ProfileUtil.SetupProfileImageFromResources(hostAvater, hostFrame, playerOneAvatar, playerOneFrame);
-        playerOneName.text = hostName;
-        playerOneId.text = hostId;
-        playerOneNationality.text = hostNationality;
+            string description = $"Game Map: {map} , Game Time: {time} , lobby type: {type} , Bet: {bet}";
+
+            lobbyDescription.text = description;
+
+            BaseProfile profile = Finder.FindGameProfile().GetComponent<BaseProfile>();
+
+            string hostFrame = PlayerPrefs.GetString(PlayerPreferenceKey.PROFILE_ONE_KEY_FRAME);
+            string hostAvater = PlayerPrefs.GetString(PlayerPreferenceKey.PROFILE_ONE_KEY_AVATAR); ;
+            string hostName = profile._nameProfile;
+            string hostId = (profile._isGuest) ? profile._guestUserId : profile._facebookUserId;
+            string hostNationality = ProfileUtil.GetNationalityName(profile._nationality);
+            ProfileUtil.SetupProfileImageFromResources(hostAvater, hostFrame, playerOneAvatar, playerOneFrame);
+            playerOneName.text = hostName;
+            playerOneId.text = hostId;
+            playerOneNationality.text = hostNationality;
+        }
+
+    }
+
+    public void SetupJoiningPlayer(PlayerInfo playerOneInfo, PlayerInfo playerTwoInfo)
+    {
+        string[] sprite = playerOneInfo.picture.Split('%');
+        string frameRoot = sprite[0];
+        string avatarRoot = sprite[1];
+
+        ProfileUtil.SetupProfileImageFromResources(avatarRoot, frameRoot, playerOneAvatar, playerOneFrame);
+
+        PlayerPrefs.SetString(PlayerPreferenceKey.PROFILE_ONE_KEY_AVATAR, avatarRoot);
+        PlayerPrefs.SetString(PlayerPreferenceKey.PROFILE_ONE_KEY_FRAME, frameRoot);
+
+        playerOneName.text = playerOneInfo.name;
+        playerOneId.text = playerOneInfo.playerId;
+        playerOneNationality.text = ProfileUtil.GetNationalityName(playerTwoInfo.nationality);
+
+        AddOpponentPlayer(playerTwoInfo);
 
     }
 
@@ -85,6 +109,9 @@ public class HostGameRoomBehavior : MonoBehaviour
         string avatarRoot = sprite[1];
 
         ProfileUtil.SetupProfileImageFromResources(avatarRoot, frameRoot, playerTwoFrame, playerTwoAvatar);
+
+        PlayerPrefs.SetString(PlayerPreferenceKey.PROFILE_TWO_KEY_AVATAR, avatarRoot);
+        PlayerPrefs.SetString(PlayerPreferenceKey.PROFILE_TWO_KEY_FRAME, frameRoot);
 
         playerTwoName.text = playerTwoInfo.name;
         playerTwoId.text = playerTwoInfo.playerId;

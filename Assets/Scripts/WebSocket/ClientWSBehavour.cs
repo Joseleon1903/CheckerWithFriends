@@ -53,9 +53,9 @@ namespace Assets.Scripts.WebSocket
 
             BaseProfile profile = FindObjectOfType<BaseProfile>();
 
-            string playerName= profile._nameProfile;
+            string playerName = profile._nameProfile;
             string playerId = (profile._isGuest) ? profile._guestUserId : profile._facebookUserId;
-            string playerNationality= profile._nationality;
+            string playerNationality = profile._nationality;
 
             ConnectToLobbyReq request = new ConnectToLobbyReq(LobbyType, lobbyCode, playerCode,  playerName, playerId, playerNationality);
 

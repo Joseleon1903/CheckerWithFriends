@@ -19,18 +19,10 @@ public class MessagePanelBehavour : MonoBehaviour
         messageText.GetComponent<Text>().text = message;
     }
 
-    void Start()
-    {
-
-
-        
-    }
-
-
     public void CloseButton() {
         Debug.Log("method CloseButton press");
+        PlayerPrefs.SetString(PlayerPreferenceKey.PLAYER_MESSAGE_PANEL_TITTLE, string.Empty);
+        PlayerPrefs.SetString(PlayerPreferenceKey.PLAYER_MESSAGE_PANEL_TEXT, string.Empty);
         Destroy(gameObject);
     }
-
-  
 }

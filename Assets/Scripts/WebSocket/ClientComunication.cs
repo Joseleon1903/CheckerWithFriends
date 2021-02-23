@@ -59,6 +59,18 @@ namespace Assets.Scripts.WebSocket
         private void HandleMessage(string msg)
         {
             Debug.Log("Client: " + msg);
+
+            ErrorMessageResp errorM = new ErrorMessageResp(msg);
+
+            if (errorM.error.Equals("ERROR") && errorM.codeError.Equals("BADLOBBYCODE")) {
+                errorM.ExecuteBadLobbyCodeError();
+            }
+
+            if (errorM.error.Equals("ERROR") && errorM.codeError.Equals("FULLLOBBYCODE"))
+            {
+                errorM.ExecuteFullLobbyCodeError();
+            }
+
             DataMessageResp dataResp = new DataMessageResp(msg);
 
             if (string.Equals("102LB", dataResp.operationCode))
@@ -82,7 +94,9 @@ namespace Assets.Scripts.WebSocket
 
             if (string.Equals("LOBBYREADY", respR.result)) {
 
-                if (FindObjectOfType<ServerBehavour>() != null) {
+                ClientWSBehavour client = FindObjectOfType<ClientWSBehavour>();
+
+                if (client.profile.isHost) {
 
                     FindObjectOfType<HostGameRoomBehavior>().AddOpponentPlayer(respR.playerTwo);
 
@@ -91,7 +105,7 @@ namespace Assets.Scripts.WebSocket
                 else
                 {
                     FindObjectOfType<MultiplayerButtonActionBehavour>().HidePublicGamePanel();
-                    FindObjectOfType<MultiplayerButtonActionBehavour>().ShowJoinPrivateGamePanel(respR.playerOne);
+                    FindObjectOfType<MultiplayerButtonActionBehavour>().ShowJoinPrivateGamePanel(respR.playerOne, respR.playerTwo);
                 }
 
                 return;
@@ -104,7 +118,7 @@ namespace Assets.Scripts.WebSocket
                 Debug.Log("Lobby is full Start the game");
 
                 //Load Lobby
-                FindObjectOfType<MultiplayerButtonActionBehavour>().StartGame(resp.map, resp.time, resp.gameType);
+                FindObjectOfType<SocketConfig>().StartGame(resp.map, resp.time, resp.gameType);
 
                 return;
             

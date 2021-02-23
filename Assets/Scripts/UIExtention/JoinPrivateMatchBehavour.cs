@@ -15,7 +15,7 @@ public class JoinPrivateMatchBehavour : MonoBehaviour
         //Animation
         //LeanTween.scale(joinPanel, new Vector3(1f, 1f,1f), 1.5f).setEaseOutBounce();
     }
-
+     
     public void PressJoinPrivateButton() {
 
         Debug.Log("Press Join private button");
@@ -26,7 +26,7 @@ public class JoinPrivateMatchBehavour : MonoBehaviour
 
             Debug.Log("Lobby code is required");
 
-            lobbyErrorPanel.SetActive(true);
+            ShowErrorPanel("Lobby code is required");
 
             return;
         }
@@ -42,6 +42,16 @@ public class JoinPrivateMatchBehavour : MonoBehaviour
         clientWs.profile.name = PlayerPrefs.GetString(PlayerPreferenceKey.PROFILE_ONE_KEY_NAME);
 
         clientWs.ConnectToLobby(lobbyCode, "Private", "PL2");
+
+    }
+
+
+    public void ShowErrorPanel(string text) {
+        Debug.Log("Entering in method ShowErrorPanel");
+
+        lobbyErrorPanel.SetActive(true);
+
+        lobbyErrorPanel.GetComponent<JoinErrorPanelBehavour>().ChangeMessage(text);
 
     }
 

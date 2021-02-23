@@ -2,7 +2,6 @@
 using Assets.Scripts.Utils;
 using Assets.Scripts.WebSocket;
 using Assets.Scripts.WebSocket.Message;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 

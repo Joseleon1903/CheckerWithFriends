@@ -1,11 +1,7 @@
-﻿using Assets.Scripts.Utils;
-using Assets.Scripts.WebSocket;
+﻿using Assets.Scripts.WebSocket;
 using Assets.Scripts.WebSocket.Message;
-using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using static HostMatchGameBehavour;
-using Time = HostMatchGameBehavour.Time;
+using UnityEngine.UI;
 
 public class MultiplayerButtonActionBehavour : MonoBehaviour
 {
@@ -19,21 +15,28 @@ public class MultiplayerButtonActionBehavour : MonoBehaviour
     [Tooltip("Panel see public match")]
     [SerializeField] private GameObject panelPublicGame;
 
-    [Tooltip("Panel prepered join private match")]
-    [SerializeField] private GameObject clientMatchJoinPanel;
-
-    [Tooltip("Component for Host web socket connection")]
-    [SerializeField] private GameObject serverPrefab;
-
     [Tooltip("Component for client web socket connection")]
     [SerializeField] private GameObject clientPrefab;
 
+    [Tooltip("Component for counter match pending to update")]
+    [SerializeField] private GameObject pendingCounter;
+
+    [Tooltip("Component for player room panel")]
+    [SerializeField] private GameObject playerRoomPanel;
+
+    private int counterPendingNumber = 0;
 
     public void InizilizedSingleClient() {
 
         if (FindObjectOfType<ClientWSBehavour>() == null) {
             Instantiate(clientPrefab);
         }
+
+    }
+
+    private void OnEnable()
+    {
+        counterPendingNumber = 0;
     }
 
     public void ShowJoinPrivatePanel() {
@@ -51,8 +54,6 @@ public class MultiplayerButtonActionBehavour : MonoBehaviour
 
         Debug.Log("create a server and client for host");
 
-        Instantiate(serverPrefab);
-
         Instantiate(clientPrefab);
     }
 
@@ -69,6 +70,8 @@ public class MultiplayerButtonActionBehavour : MonoBehaviour
         if (panelPublicGame.activeSelf) {
             FindObjectOfType<PublicGameBehavour>().PressRefreshButton();
         }
+
+        ResetPendingMatch();
     }
 
     public void HidePublicGamePanel() {
@@ -76,58 +79,27 @@ public class MultiplayerButtonActionBehavour : MonoBehaviour
         panelPublicGame.SetActive(false);
     }
 
-    public void ShowJoinPrivateGamePanel(PlayerInfo playerOnInfo) {
+    public void ShowJoinPrivateGamePanel(PlayerInfo playerOneInfo, PlayerInfo playerTwoInfo) {
 
         Debug.Log("Show client Join private game panel");
 
-        panelJoin.SetActive(false);
+        playerRoomPanel.SetActive(true);
 
-        clientMatchJoinPanel = Instantiate(clientMatchJoinPanel);
-
-        clientMatchJoinPanel.GetComponent<HostMatchJoinBehavour>().SetUpView(playerOnInfo);
+        playerRoomPanel.GetComponent<HostGameRoomBehavior>().SetupJoiningPlayer(playerOneInfo, playerTwoInfo);
     }
 
-    public void StartGame(string map, string time, string gameType) {
+    internal void AddPendingMatch()
+    {
+        counterPendingNumber++;
 
-        // Game In Scene Checker - Park - Day
-        if (string.Equals(map.ToUpper(), Map.Park.ToString().ToUpper())  && string.Equals(time.ToUpper(), Time.Day.ToString().ToUpper())
-            && string.Equals(gameType.ToUpper(), GameType.CHECKER.ToString().ToUpper())) {
+        pendingCounter.SetActive(true);
 
-            StartCoroutine(LauncherNewSceneAfterTime("CheckerParkDayGameScene", 5.0f));
-
-        }
-        // Game In Scene Checker - Park - Night
-        else if (string.Equals(map.ToUpper(), Map.Park.ToString().ToUpper()) && string.Equals(time.ToUpper(), Time.Night.ToString().ToUpper())
-            && string.Equals(gameType.ToUpper(), GameType.CHECKER.ToString().ToUpper()))
-        {
-
-            StartCoroutine(LauncherNewSceneAfterTime("CheckerParkNightGameScene", 5.0f));
-        }
-
-        // Game In Scene Checker - City - Day
-        else if (string.Equals(map.ToUpper(), Map.City.ToString().ToUpper()) && string.Equals(time.ToUpper(), Time.Day.ToString().ToUpper())
-            && string.Equals(gameType.ToUpper(), GameType.CHECKER.ToString().ToUpper()))
-        {
-
-            StartCoroutine(LauncherNewSceneAfterTime("CheckerCityDayScene", 5.0f));
-        }
-
-        // Game In Scene Checker - City - Night
-        else if (string.Equals(map.ToUpper(), Map.City.ToString().ToUpper()) && string.Equals(time.ToUpper(), Time.Night.ToString().ToUpper())
-            && string.Equals(gameType.ToUpper(), GameType.CHECKER.ToString().ToUpper()))
-        {
-
-            StartCoroutine(LauncherNewSceneAfterTime("CheckerCityNightScene", 5.0f));
-        }
-
+        pendingCounter.GetComponentInChildren<Text>().text = counterPendingNumber+"";
     }
 
-    private IEnumerator LauncherNewSceneAfterTime(string sceneName, float time) {
-
-        Debug.Log("Entering in caroutines LauncherNewSceneAfterTime");
-        yield return new WaitForSeconds(time);
-
-        Debug.Log("Wait yime is finish star game scene");
-        SceneManager.LoadSceneAsync(sceneName);
+    internal void ResetPendingMatch()
+    {
+        pendingCounter.SetActive(false);
     }
+
 }
