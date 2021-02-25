@@ -1237,9 +1237,21 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3465466873261325336, guid: cace351d86291184fb728727f74e4f12,
         type: 3}
+      propertyPath: messagePanel
+      value: 
+      objectReference: {fileID: 2880635546023222328, guid: c98ee92beacf8ed4bad3aa68a624e381,
+        type: 3}
+    - target: {fileID: 3465466873261325336, guid: cace351d86291184fb728727f74e4f12,
+        type: 3}
       propertyPath: destroyOnLoad
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3465466873261325336, guid: cace351d86291184fb728727f74e4f12,
+        type: 3}
+      propertyPath: messageCanvas
+      value: 
+      objectReference: {fileID: 2880635546023222328, guid: c98ee92beacf8ed4bad3aa68a624e381,
+        type: 3}
     - target: {fileID: 3465466873261325337, guid: cace351d86291184fb728727f74e4f12,
         type: 3}
       propertyPath: m_Name

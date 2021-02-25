@@ -16,14 +16,14 @@ public class SceneMainMenuValidation : MonoBehaviour
         GameObject serverWS = GameObject.FindGameObjectWithTag("ServerWS");
 
         if (serverWS != null) {
-            DestroyImmediate(serverWS);
+            Destroy(serverWS, 1.0f);
         }
 
         GameObject clientWS = GameObject.FindGameObjectWithTag("ClientWS");
 
         if (clientWS != null)
         {
-            DestroyImmediate(clientWS);
+            Destroy(clientWS);
         }
 
     }

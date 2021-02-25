@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Utils;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MessagePanelBehavour : MonoBehaviour
@@ -19,10 +20,21 @@ public class MessagePanelBehavour : MonoBehaviour
         messageText.GetComponent<Text>().text = message;
     }
 
+
+
     public void CloseButton() {
         Debug.Log("method CloseButton press");
         PlayerPrefs.SetString(PlayerPreferenceKey.PLAYER_MESSAGE_PANEL_TITTLE, string.Empty);
         PlayerPrefs.SetString(PlayerPreferenceKey.PLAYER_MESSAGE_PANEL_TEXT, string.Empty);
+
+        string actionplus  = PlayerPrefs.GetString(PlayerPreferenceKey.PLAYER_MESSAGE_PANEL_ACTION);
+        PlayerPrefs.SetString(PlayerPreferenceKey.PLAYER_MESSAGE_PANEL_ACTION, string.Empty);
+
+        if (actionplus.Equals(PlayerPreferenceKey.MESSAGE_ACTION_MAINMENU)) {
+
+            SceneManager.LoadScene("MainMenu");
+        }
+
         Destroy(gameObject);
     }
 }

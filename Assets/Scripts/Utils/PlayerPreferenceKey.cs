@@ -31,6 +31,9 @@
         //player message panel key
         public static string PLAYER_MESSAGE_PANEL_TITTLE = "PLAYER_MESSAGE_PANEL_TITTLE";
         public static string PLAYER_MESSAGE_PANEL_TEXT = "PLAYER_MESSAGE_PANEL_TEXT";
+        public static string PLAYER_MESSAGE_PANEL_ACTION = "PLAYER_MESSAGE_PANEL_ACTION";
+
+        public static string MESSAGE_ACTION_MAINMENU = "MESSAGE_ACTION_MAINMENU";
 
         // lobby player key
         public static string PLAYER_LOBBY_COIN_REWARD = "PLAYER_LOBBY_COIN_REWARD";

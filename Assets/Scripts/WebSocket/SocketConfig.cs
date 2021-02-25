@@ -39,6 +39,10 @@ namespace Assets.Script.WebSocket
 
         private void Start()
         {
+            InitServerConnection();
+        }
+
+        public void InitServerConnection() {
             Instantiate(serverClientPrefab);
         }
 
@@ -119,7 +123,6 @@ namespace Assets.Script.WebSocket
 
 
         public void ShowMessageError() {
-
             Instantiate(messageErrorPrefab);
         }
 

@@ -130,7 +130,11 @@ namespace Assets.Scripts.WebSocket
 
                 Debug.Log("Lost connection of player");
 
-                SceneManager.LoadScene("MainMenu");
+                PlayerPrefs.SetString(PlayerPreferenceKey.PLAYER_MESSAGE_PANEL_TITTLE, "Lost connection error");
+                PlayerPrefs.SetString(PlayerPreferenceKey.PLAYER_MESSAGE_PANEL_TEXT, "Your opponent lost connection to the server");
+                PlayerPrefs.SetString(PlayerPreferenceKey.PLAYER_MESSAGE_PANEL_ACTION, PlayerPreferenceKey.MESSAGE_ACTION_MAINMENU);
+                FindObjectOfType<SocketConfig>().ShowMessageError();
+                
             }
 
             RematchGameMessageResp rematchDataResp = new RematchGameMessageResp(msg);

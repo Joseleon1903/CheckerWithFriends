@@ -14755,8 +14755,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HostMatchPanel: {fileID: 3836108619549105830}
   playerRoomPanel: {fileID: 2306351253717503757}
-  MatchPanelPrefab: {fileID: 3881087873112963256, guid: e3927622f0940354ea654f0802666af3,
-    type: 3}
   MapDowpDown: {fileID: 3836108619484733597}
   TimeDowpDown: {fileID: 985411228}
   typeGroup: {fileID: 394939715}

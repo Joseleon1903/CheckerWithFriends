@@ -8,6 +8,8 @@ public class RestClientBehavour : MonoBehaviour
     [SerializeField]
     private string hostPort = string.Empty;
 
+    [SerializeField] private GameObject messageCanvas;
+
     public string ApiBaseUrl { get{ return GetApi(); } }
 
     [SerializeField]
@@ -66,4 +68,8 @@ public class RestClientBehavour : MonoBehaviour
         return api;
     }
 
+
+    public void ShowMessageError() {
+        Instantiate(messageCanvas);
+    }
 }

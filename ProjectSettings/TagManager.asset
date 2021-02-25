@@ -5,10 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Tiled
-  - TopView
   - FreeView
-  - DefaultViewB
-  - DefaultViewW
   - Timer
   - Profile
   - ClientWS
@@ -17,6 +14,8 @@ TagManager:
   - CheckerPiece
   - OnlinePlayer
   - RailPoint
+  - AvatarButton
+  - FrameButton
   layers:
   - Default
   - TransparentFX

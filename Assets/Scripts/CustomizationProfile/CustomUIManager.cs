@@ -52,6 +52,12 @@ public class CustomUIManager : MonoBehaviour
     private GameObject frameSprite;
 
     [SerializeField]
+    private Material selectionMaterial;
+
+    [SerializeField]
+    private Material defaultMaterial;
+
+    [SerializeField]
     private GameObject prefabGuestProfile;
 
     private AvatarJson[] avatars;
@@ -62,6 +68,8 @@ public class CustomUIManager : MonoBehaviour
         string frameKey = EnumHelper.FindKeybyIdInDictionary(frame, frames);
         Sprite sprite = frameDictionary[frameKey];
         ModifyUserSelectionAvatar(sprite, UserSelection.FRAME);
+
+        ModifySelectionButton(UserSelection.FRAME, frame);
     }
 
     public void PressHeroButton(GameObject objectClick)
@@ -70,7 +78,55 @@ public class CustomUIManager : MonoBehaviour
         string heroKey = EnumHelper.FindKeybyIdInDictionary(hero, avatars);
         Sprite sprite = spriteDictionary[heroKey];
         ModifyUserSelectionAvatar(sprite, UserSelection.AVATAR);
+
+        ModifySelectionButton(UserSelection.AVATAR, hero);
     }
+
+    public void ModifySelectionButton(UserSelection selection,int itemkey) {
+
+        if (selection.Equals(UserSelection.AVATAR)) {
+
+            GameObject[] sceneButton = GameObject.FindGameObjectsWithTag("AvatarButton");
+
+            foreach (GameObject item in sceneButton)
+            {
+
+                if ((int)item.GetComponent<HeroItem>().ItemKey == itemkey)
+                {
+
+                    item.GetComponent<Image>().color = selectionMaterial.color;
+                }
+                else 
+                {
+                    item.GetComponent<Image>().color = defaultMaterial.color;
+
+                }
+            }
+        }
+
+        if (selection.Equals(UserSelection.FRAME))
+        {
+            GameObject[] sceneButton = GameObject.FindGameObjectsWithTag("FrameButton");
+
+            foreach (GameObject item in sceneButton)
+            {
+
+                if ((int)item.GetComponent<FrameItem>().ItemKey == itemkey)
+                {
+
+                    item.GetComponent<Image>().color = selectionMaterial.color;
+                }
+                else
+                {
+                    item.GetComponent<Image>().color = defaultMaterial.color;
+
+                }
+            }
+
+
+        }
+    }
+
 
     private void ModifyUserSelectionAvatar(Sprite sprite, UserSelection selection ) {
 
