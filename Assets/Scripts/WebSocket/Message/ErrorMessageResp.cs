@@ -45,10 +45,7 @@ namespace Assets.Scripts.WebSocket.Message
             PlayerPrefs.SetString(PlayerPreferenceKey.PLAYER_MESSAGE_PANEL_TEXT, "The lobby you are trying to access is full or is no longer available, try again.");
 
             GameObject.FindObjectOfType<SocketConfig>().ShowMessageError();
-
-
         }
-
 
 
     }

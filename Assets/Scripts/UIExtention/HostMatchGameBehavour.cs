@@ -1,8 +1,7 @@
 ﻿using Assets.Script.WebSocket;
-using Assets.Scripts.Profile;
 using Assets.Scripts.Utils;
+using Assets.Scripts.Validation;
 using Assets.Scripts.WebSocket;
-using Assets.Scripts.WebSocket.Message;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,7 +12,6 @@ public class HostMatchGameBehavour : MonoBehaviour
         Park = 0,
         City = 1
     }
-
     public enum Time
     {
         Day = 0,
@@ -56,6 +54,23 @@ public class HostMatchGameBehavour : MonoBehaviour
 
         Debug.Log("Entering in PressHostGame");
 
+        // Validate player bet lobby create
+
+        Toggle betSelected = GetSelectedToggle(betGroup);
+        string bet = betSelected.GetComponentInChildren<Text>().text;
+
+        CreateLobbyValidation validation = new CreateLobbyValidation();
+
+        if (!validation.ValidateLobbyEnoughMoney(bet)) {
+            Debug.Log("Entering in full lobby error");
+            PlayerPrefs.SetString(PlayerPreferenceKey.PLAYER_MESSAGE_PANEL_TITTLE, "Create lobby error");
+            PlayerPrefs.SetString(PlayerPreferenceKey.PLAYER_MESSAGE_PANEL_TEXT, "Your profile don't have enought money for create this lobby");
+
+            FindObjectOfType<SocketConfig>().ShowMessageError();
+
+            return;
+        }
+
         //HostMatchPanel.SetActive(false);
 
         //LeanTween.moveX(HostGamePanel,550f, 1f).setEaseLinear();
@@ -82,9 +97,6 @@ public class HostMatchGameBehavour : MonoBehaviour
         string gameType = "CHECKER";
 
         HostGameTypeSelection = gameType;
-
-        Toggle betSelected = GetSelectedToggle(betGroup);
-        string bet = betSelected.GetComponentInChildren<Text>().text;
 
         FindObjectOfType<ServerBehavour>().CreateLobby(map.ToString(), time.ToString(), type, lobbyCode, gameType, bet);
 

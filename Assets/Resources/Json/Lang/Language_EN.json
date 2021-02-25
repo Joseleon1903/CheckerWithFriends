@@ -14,8 +14,104 @@
     {
         "id": "settingTittle",
         "value": "Setting"
+    },
+    {
+        "id": "CreateProfileTittle",
+        "value": "Create your profile picture"
+    },
+    {
+        "id": "ChosseAvatarSubTittle_1",
+        "value": "Chosse an hero"
+    },
+    {
+        "id": "ChosseFrameSubTittle_2",
+        "value": "Chosse a frame"
+    },
+    {
+        "id": "Continue_text_label",
+        "value": "Continue"
+    },
+    {
+        "id": "MultiplayerTittle",
+        "value": "Checker Multimplayer Games"
+    },
+    {
+        "id": "MultiplayerHostButton",
+        "value": "Host game"
+    },
+    {
+        "id": "MultiplayerJoinPrivateButton",
+        "value": "Join private game"
+    },
+    {
+        "id": "MultiplayerUpadeteLobbysButton",
+        "value": "Update public games"
+    },
+    {
+        "id": "MultiplayerPublicGamesTittle",
+        "value": "Public Games Rooms"
+    },
+    {
+        "id": "MultiplayerHostGamePanelTittle",
+        "value": "Create Room"
+    },
+    {
+        "id": "MultiplayerHostGameMapSubTittle",
+        "value": "Choose a map"
+    },
+    {
+        "id": "MultiplayerHostGameTimeSubTittle",
+        "value": "Choose a time"
+    },
+    {
+        "id": "MultiplayerHostGameLobbyTypeSubTittle",
+        "value": "Lobby Type"
+    },
+    {
+        "id": "MultiplayerHostGameLobbyCheckPublic",
+        "value": "Public"
+    },
+    {
+        "id": "MultiplayerHostGameLobbyCheckPrivate",
+        "value": "Private"
+    },
+    {
+        "id": "MultiplayerHostGameLobbyBetSubTittle",
+        "value": "Bet"
+    },
+    {
+        "id": "MultiplayerHostGameLobbyCreateButton",
+        "value": "Create"
+    },
+    {
+        "id": "MultiplayerHostGameLobbyCloseButton",
+        "value": "Close"
+    },
+    {
+        "id": "MultiplayerHostGameRoomPanelTittle",
+        "value": "Lobby Room"
+    },
+    {
+        "id": "MultiplayerHostGameRoomCloseButton",
+        "value": "Close Room"
+    },
+    {
+        "id": "MultiplayerJoinPrivateGameTittle",
+        "value": "Join private game"
+    },
+    {
+        "id": "MultiplayerJoinPrivateGamePlaceHolder",
+        "value": "Enter private lobby code"
+    },
+    {
+        "id": "MultiplayerJoinPrivateButton",
+        "value": "Join to lobby"
+    },
+    {
+        "id": "MultiplayerCloseJoinPrivateButton",
+        "value": "Close"
     }
-    
+
     ]
 
 }

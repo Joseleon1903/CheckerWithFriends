@@ -11,10 +11,107 @@
         "id": "loginWithGuest",
         "value": "Conectate como invitado"
     },
-     {
+    {
         "id": "settingTittle",
         "value": "Configuración"
+    },
+    {
+        "id": "CreateProfileTittle",
+        "value": "Crea tu foto de perfil"
+    },
+    {
+        "id": "ChosseAvatarSubTittle_1",
+        "value": "Elige tu eroe"
+    },
+    {
+        "id": "ChosseFrameSubTittle_2",
+        "value": "Elige tu fondo"
+    },
+    {
+        "id": "Continue_text_label",
+        "value": "Continuar"
+    },
+    {
+        "id": "MultiplayerTittle",
+        "value": "Jugar dama multijugador"
+    },
+    {
+        "id": "MultiplayerHostButton",
+        "value": "Crea una partida"
+    },
+    {
+        "id": "MultiplayerJoinPrivateButton",
+        "value": "Unete a partida privada"
+    },
+    {
+        "id": "MultiplayerUpadeteLobbysButton",
+        "value": "Actualiza partida publicas"
+    },
+    {
+        "id": "MultiplayerPublicGamesTittle",
+        "value": "Partidas publicas"
+    },
+    {
+        "id": "MultiplayerHostGamePanelTittle",
+        "value": "Crea una partida"
+    },
+    {
+        "id": "MultiplayerHostGameMapSubTittle",
+        "value": "Elige un mapa"
+    },
+    {
+        "id": "MultiplayerHostGameTimeSubTittle",
+        "value": "Elije la hora"
+    },
+    {
+        "id": "MultiplayerHostGameLobbyTypeSubTittle",
+        "value": "Tipo de partida"
+    },
+    {
+        "id": "MultiplayerHostGameLobbyCheckPublic",
+        "value": "Publica"
+    },
+    {
+        "id": "MultiplayerHostGameLobbyCheckPrivate",
+        "value": "Privada"
+    },
+    {
+        "id": "MultiplayerHostGameLobbyBetSubTittle",
+        "value": "Apuesta"
+    },
+    {
+        "id": "MultiplayerHostGameLobbyCreateButton",
+        "value": "Crear"
+    },
+    {
+        "id": "MultiplayerHostGameLobbyCloseButton",
+        "value": "Cerrar"
+    },
+    {
+        "id": "MultiplayerHostGameRoomPanelTittle",
+        "value": "Partida"
+    },
+    {
+        "id": "MultiplayerHostGameRoomCloseButton",
+        "value": "Cerrar partida"
+    },
+    {
+        "id": "MultiplayerJoinPrivateGameTittle",
+        "value": "Unete a partida privada"
+    },
+    {
+        "id": "MultiplayerJoinPrivateGamePlaceHolder",
+        "value": "Escribe aqui el codigo de la partida"
+    },
+    {
+        "id": "MultiplayerJoinPrivateButton",
+        "value": "Unete a la partida"
+    },
+    {
+        "id": "MultiplayerCloseJoinPrivateButton",
+        "value": "Cierra"
     }
+
     
     ]
 
