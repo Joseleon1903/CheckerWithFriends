@@ -17,6 +17,9 @@ namespace Assets.Scripts.Checkers
         [SerializeField]
         protected bool isKing;
 
+        [SerializeField]
+        protected GameObject floatingMessage;
+
         protected Outline outline;
 
         public bool IsWhite { get { return isWhite; } }
@@ -36,6 +39,21 @@ namespace Assets.Scripts.Checkers
         public virtual void DisableOutline()
         {
             outline.eraseRenderer = true;
+        }
+
+        public virtual void ShowPieceMessage(string messageIn) {
+
+            if (GetComponentInChildren<PieceFloatingText>( true) == null) {
+                var message = Instantiate(floatingMessage, transform.position, Quaternion.identity, transform);
+                message.GetComponent<TextMesh>().text = messageIn;
+            }
+        }
+
+        public virtual void ShowPromotedPieceMessage()
+        {
+            var message = Instantiate(floatingMessage, transform.position, Quaternion.identity, transform);
+            message.GetComponent<TextMesh>().color = Color.yellow;
+            message.GetComponent<TextMesh>().text = "Queen promoted piece";
         }
 
     }

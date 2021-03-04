@@ -8,8 +8,8 @@ public class TestmessageCanvas : MonoBehaviour
 
     private void Start()
     {
-        PlayerPrefs.SetString(PlayerPreferenceKey.PLAYER_MESSAGE_PANEL_TITTLE, "Internet Connection Error");
-        PlayerPrefs.SetString(PlayerPreferenceKey.PLAYER_MESSAGE_PANEL_TEXT, "An error has been verified trying to connect with the server, please validate your internet connection");
+        //PlayerPrefs.SetString(PlayerPreferenceKey.PLAYER_MESSAGE_PANEL_TITTLE, "Internet Connection Error");
+        //PlayerPrefs.SetString(PlayerPreferenceKey.PLAYER_MESSAGE_PANEL_TEXT, "An error has been verified trying to connect with the server, please validate your internet connection");
     }
        
 

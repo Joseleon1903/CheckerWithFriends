@@ -11,6 +11,7 @@
         public static string PROFILE_ONE_KEY_NATIONALITY        = "PROFILE_ONE_KEY_NATIONALITY";
         public static string PROFILE_ONE_KEY_COUNTER_WON        = "PROFILE_ONE_KEY_COUNTER_WON";
         public static string PROFILE_ONE_KEY_COUNTER_COIN       = "PROFILE_ONE_KEY_COUNTER_COIN";
+        public static string PROFILE_ONE_KEY_PLAYER_ID          = "PROFILE_ONE_KEY_PLAYER_ID";
 
         //Player Two keys
         public static string PROFILE_TWO_KEY_AVATAR       = "PROFILE_TWO_KEY_AVATAR";
@@ -19,6 +20,8 @@
         public static string PROFILE_TWO_KEY_NATIONALITY  = "PROFILE_TWO_KEY_NATIONALITY";
         public static string PROFILE_TWO_KEY_COUNTER_WON  = "PROFILE_TWO_KEY_COUNTER_WON";
         public static string PROFILE_TWO_KEY_COUNTER_COIN = "PROFILE_TWO_KEY_COUNTER_COIN";
+        public static string PROFILE_TWO_KEY_PLAYER_ID    = "PROFILE_ONE_KEY_PLAYER_ID";
+
 
         //Player Game Language Key
         public static string PLAYER_GAME_LANGUAGE = "PLAYER_GAME_LANGUAGE";

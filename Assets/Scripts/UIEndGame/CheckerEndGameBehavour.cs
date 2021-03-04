@@ -64,15 +64,12 @@ public class CheckerEndGameBehavour : MonoBehaviour
         LeanTween.scale(panelGameOver, Vector3.one, 1.8f).setEase(LeanTweenType.easeOutElastic);
 
         SetUpProfilePlayer();
+
     }
 
     public void ShowCanvas() {
         Debug.Log("Show Canvas method execute");
         gameObject.SetActive(true);
-    }
-
-    private void Start()
-    {
     }
 
     public void SetUpProfilePlayer() 
@@ -202,7 +199,12 @@ public class CheckerEndGameBehavour : MonoBehaviour
             string gameType = GameType.CHECKER.ToString().ToUpper();
             string playerWin = CheckerGameManager.Instance.GameState.PlayerWin.ToString().ToUpper();
             string gameoverType = CheckerGameManager.Instance.GameState.GameOverType.ToString().ToUpper();
-            VictoryGameMessageReq victoryReq = new VictoryGameMessageReq(lobbyCode, gameType, gameoverType, playerWin);
+
+            string playerOneId = PlayerPrefs.GetString(PlayerPreferenceKey.PROFILE_ONE_KEY_PLAYER_ID);
+
+            string playerTwoId = PlayerPrefs.GetString(PlayerPreferenceKey.PROFILE_TWO_KEY_PLAYER_ID);
+
+            VictoryGameMessageReq victoryReq = new VictoryGameMessageReq(lobbyCode, gameType, gameoverType, playerWin, playerOneId, playerTwoId);
             client.Send(victoryReq.GetMessageText());
         }
         else if(CheckerGameManager.Instance.GameState.IsGameOver && CheckerGameManager.Instance.GameState.GameOverType.Equals(GameOverType.CHECKMATE) && CheckerGameManager.Instance.GameState.PlayerWin == CheckerGameManager.Instance.Player.Type)
@@ -211,8 +213,15 @@ public class CheckerEndGameBehavour : MonoBehaviour
             string gameType = GameType.CHECKER.ToString().ToUpper();
             string playerWin = CheckerGameManager.Instance.GameState.PlayerWin.ToString().ToUpper();
             string gameoverType = CheckerGameManager.Instance.GameState.GameOverType.ToString().ToUpper();
-            VictoryGameMessageReq victoryReq = new VictoryGameMessageReq(lobbyCode, gameType, gameoverType, playerWin);
+
+            string playerOneId = PlayerPrefs.GetString(PlayerPreferenceKey.PROFILE_ONE_KEY_PLAYER_ID);
+
+            string playerTwoId = PlayerPrefs.GetString(PlayerPreferenceKey.PROFILE_TWO_KEY_PLAYER_ID);
+
+            VictoryGameMessageReq victoryReq = new VictoryGameMessageReq(lobbyCode, gameType, gameoverType, playerWin, playerOneId, playerTwoId);
+
             client.Send(victoryReq.GetMessageText());
         }
     }
+
 }

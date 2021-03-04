@@ -150,11 +150,13 @@ namespace Assets.Scripts.Checkers
                 {
                     DestroyImmediate(SelectedPiece.gameObject);
                     GeneratePiece(whiteQueenPiecePrefab, x2, y2);
+                    pieces[x2, y2].ShowPromotedPieceMessage();
                 }
                 else if (!SelectedPiece.IsWhite && !SelectedPiece.IsKing && y2 == 0)
                 {
                     DestroyImmediate(SelectedPiece.gameObject);
                     GeneratePiece(blackQueenPiecePrefab, x2, y2);
+                    pieces[x2, y2].ShowPromotedPieceMessage();
                 }
             }
 
@@ -248,7 +250,11 @@ namespace Assets.Scripts.Checkers
                         if (pieces[i, j].IsForceToMove(pieces, i, j))
                         {
 
-                            HightLightTiled.Instance.CaptureHightLight(pieces[i, j].ValidCapturePiece(pieces, i, j));
+                            bool[,] validCapture = pieces[i, j].ValidCapturePiece(pieces, i, j);
+                            HightLightTiled.Instance.CaptureHightLight(validCapture);
+
+                            ShowForceCapureMessage(validCapture);
+
                             forcedPieces.Add(pieces[i, j]);
                         }
                     }
@@ -319,6 +325,20 @@ namespace Assets.Scripts.Checkers
                 CanvasManagerUI.Instance.ShowAlertText("It's Black player turn..");
             }
 
+        }
+
+        private void ShowForceCapureMessage(bool[,] validCapturePosition) {
+
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    if (validCapturePosition[i, j] == true)
+                    {
+                        pieces[i, j].ShowPieceMessage("Capture constraint");
+                    }
+                }
+            }
         }
 
         private void DrawDebugBoard()

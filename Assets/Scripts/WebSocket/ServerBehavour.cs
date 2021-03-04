@@ -12,6 +12,10 @@ namespace Assets.Scripts.WebSocket
 
         public string ServerLobbyCode;
 
+        private bool isPlayerHost = false;
+
+        public bool IsPlayerHost { get { return isPlayerHost; } }
+
         private Queue<string> messageQueue;
 
         private void Start()
@@ -43,6 +47,7 @@ namespace Assets.Scripts.WebSocket
 
         public void CreateLobby(string map, string time, string type, string lobbyCode, string gameType, string lobbyCoinReward)
         {
+            isPlayerHost = true;
             int coinsValue = int.Parse(lobbyCoinReward);
             ServerLobbyCode = lobbyCode;
             string LobbyType = (type.Equals("Private")) ? LobbyCodeGenerator.LOBBY_PRIVATE : LobbyCodeGenerator.LOBBY_PUBLIC;

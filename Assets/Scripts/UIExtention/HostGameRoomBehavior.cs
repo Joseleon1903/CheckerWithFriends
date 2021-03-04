@@ -89,6 +89,7 @@ public class HostGameRoomBehavior : MonoBehaviour
 
         PlayerPrefs.SetString(PlayerPreferenceKey.PROFILE_ONE_KEY_AVATAR, avatarRoot);
         PlayerPrefs.SetString(PlayerPreferenceKey.PROFILE_ONE_KEY_FRAME, frameRoot);
+        PlayerPrefs.SetString(PlayerPreferenceKey.PROFILE_ONE_KEY_PLAYER_ID, playerOneInfo.playerId);
 
         playerOneName.text = playerOneInfo.name;
         playerOneId.text = playerOneInfo.playerId;
@@ -112,6 +113,7 @@ public class HostGameRoomBehavior : MonoBehaviour
 
         PlayerPrefs.SetString(PlayerPreferenceKey.PROFILE_TWO_KEY_AVATAR, avatarRoot);
         PlayerPrefs.SetString(PlayerPreferenceKey.PROFILE_TWO_KEY_FRAME, frameRoot);
+        PlayerPrefs.SetString(PlayerPreferenceKey.PROFILE_TWO_KEY_PLAYER_ID, playerTwoInfo.playerId);
 
         playerTwoName.text = playerTwoInfo.name;
         playerTwoId.text = playerTwoInfo.playerId;

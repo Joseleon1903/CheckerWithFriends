@@ -96,6 +96,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWhite: 0
   isKing: 0
+  floatingMessage: {fileID: 6260013025984148937, guid: b6653c7edeaf6f04f89afb5aa265a257,
+    type: 3}
 --- !u!114 &-8655130082625308438
 MonoBehaviour:
   m_ObjectHideFlags: 0
