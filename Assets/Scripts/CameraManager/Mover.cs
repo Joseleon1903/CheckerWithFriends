@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Checkers;
+using Assets.Scripts.Utils;
 using Assets.Scripts.WebSocket;
 using UnityEngine;
 
@@ -31,7 +32,16 @@ public class Mover : MonoBehaviour
     private void Start()
     {
         var client = FindObjectOfType<ClientWSBehavour>();
-        bool isWhite = (client != null) ? client.profile.isHost : true;
+        bool isWhite = (client != null) ? client.profile.isHost : false;
+
+        if (isWhite)
+        {
+            PlayerPrefs.SetString(PlayerPreferenceKey.CURRENT_SESSION_PLAYER, PlayerType.P1.ToString());
+        }
+        else 
+        {
+            PlayerPrefs.SetString(PlayerPreferenceKey.CURRENT_SESSION_PLAYER, PlayerType.P2.ToString());
+        }
         InstanceRailForPlayer(isWhite);
     }
 

@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Outliner;
+using Assets.Scripts.Utils;
 using UnityEngine;
 
 namespace Assets.Scripts.Checkers
@@ -43,15 +44,29 @@ namespace Assets.Scripts.Checkers
 
         public virtual void ShowPieceMessage(string messageIn) {
 
+            Quaternion orientation = Quaternion.identity;
+
+            if (PlayerPrefs.GetString(PlayerPreferenceKey.CURRENT_SESSION_PLAYER).Equals(PlayerType.P2.ToString()))
+            {
+                orientation = Quaternion.Euler(0, -180, 0);
+            }
+
             if (GetComponentInChildren<PieceFloatingText>( true) == null) {
-                var message = Instantiate(floatingMessage, transform.position, Quaternion.identity, transform);
+                var message = Instantiate(floatingMessage, transform.position, orientation, transform);
                 message.GetComponent<TextMesh>().text = messageIn;
             }
         }
 
         public virtual void ShowPromotedPieceMessage()
         {
-            var message = Instantiate(floatingMessage, transform.position, Quaternion.identity, transform);
+            Quaternion orientation = Quaternion.identity;
+
+            if (PlayerPrefs.GetString(PlayerPreferenceKey.CURRENT_SESSION_PLAYER).Equals(PlayerType.P2.ToString()))
+            {
+                orientation = Quaternion.Euler(0, -180, 0);
+            }
+
+            var message = Instantiate(floatingMessage, transform.position, orientation, transform);
             message.GetComponent<TextMesh>().color = Color.yellow;
             message.GetComponent<TextMesh>().text = "Queen promoted piece";
         }

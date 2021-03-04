@@ -13,6 +13,8 @@
         public static string PROFILE_ONE_KEY_COUNTER_COIN       = "PROFILE_ONE_KEY_COUNTER_COIN";
         public static string PROFILE_ONE_KEY_PLAYER_ID          = "PROFILE_ONE_KEY_PLAYER_ID";
 
+        public static string CURRENT_SESSION_PLAYER             = "CURRENT_SESSION_PLAYER";
+
         //Player Two keys
         public static string PROFILE_TWO_KEY_AVATAR       = "PROFILE_TWO_KEY_AVATAR";
         public static string PROFILE_TWO_KEY_FRAME        = "PROFILE_TWO_KEY_FRAME";
