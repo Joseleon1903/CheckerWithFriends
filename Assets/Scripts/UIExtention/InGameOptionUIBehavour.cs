@@ -26,7 +26,7 @@ namespace Assets.Scripts.UIExtention
 
         public void PressExitGameButton()
         {
-            SceneManager.LoadScene("MainMenu");
+            SceneLoaderController.Instance.LoadSceneWithTransition("MainMenu", 4.0f);
         }
 
     }

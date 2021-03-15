@@ -123,7 +123,7 @@ public class CheckerEndGameBehavour : MonoBehaviour
     }
 
     public void MainMenuButton() {
-        SceneManager.LoadScene("MainMenu");
+        SceneLoaderController.Instance.LoadSceneWithTransition("MainMenu", 4.0f);
     }
 
     public void PlayAgainButton()
@@ -178,7 +178,7 @@ public class CheckerEndGameBehavour : MonoBehaviour
 
         Debug.Log("Start a rematch");
 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneLoaderController.Instance.LoadSceneWithTransition(SceneManager.GetActiveScene().name, 4.0f);
     }
 
     public void ShareButton()

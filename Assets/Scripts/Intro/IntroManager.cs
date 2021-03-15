@@ -26,8 +26,9 @@ namespace Assets.Scripts.Intro
 
             PlayerPrefs.SetString(PlayerPreferenceKey.GUEST_PROFILE_KEY, EnumHelper.TRUE);
 
-            SceneManager.LoadScene("ProfileCustomizationScene");
-        
+            //SceneManager.LoadScene("ProfileCustomizationScene");
+
+            SceneLoaderController.Instance.LoadSceneWithTransition("ProfileCustomizationScene", 2.0f);
         }
         
     }

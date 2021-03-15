@@ -12,6 +12,6 @@ public class CheckerGameMultiplayerManager : MonoBehaviour
 
     public void PressPlayButton() {
         Debug.Log("Entering in method PressPlayButton");
-        SceneManager.LoadScene("CheckerMultiplayerScene");
+        SceneLoaderController.Instance.LoadSceneWithTransition("CheckerMultiplayerScene", 4.0f);
     }
 }

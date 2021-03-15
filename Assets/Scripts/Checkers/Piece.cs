@@ -42,7 +42,7 @@ namespace Assets.Scripts.Checkers
             outline.eraseRenderer = true;
         }
 
-        public virtual void ShowPieceMessage(string messageIn) {
+        public virtual void ShowPieceMessage(string messageIn, bool includeActive) {
 
             Quaternion orientation = Quaternion.identity;
 
@@ -51,7 +51,7 @@ namespace Assets.Scripts.Checkers
                 orientation = Quaternion.Euler(0, -180, 0);
             }
 
-            if (GetComponentInChildren<PieceFloatingText>( true) == null) {
+            if (GetComponentInChildren<PieceFloatingText>(includeActive) == null) {
                 var message = Instantiate(floatingMessage, transform.position, orientation, transform);
                 message.GetComponent<TextMesh>().text = messageIn;
             }

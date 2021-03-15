@@ -141,8 +141,11 @@ namespace Assets.Scripts.Checkers
 			}
 
 			Instance.GameState.Release();
+			//reset ate piece counter 
 
 			Debug.Log("Current player " + player.Type);
+			//reset ate piece counter 
+			CheckersBoard.Instance.ResetAteMove();
 		}
 
 		private void SwitchPlayerOfflineGame()
@@ -174,8 +177,8 @@ namespace Assets.Scripts.Checkers
 
 			CheckersBoard.Instance.ShowAlertPlayerTurn(player.Type);
 
-			//Start player Timer
-
+			//reset ate piece counter 
+			CheckersBoard.Instance.ResetAteMove();
 			Debug.Log("Current player " + player.Type);
 		}
 

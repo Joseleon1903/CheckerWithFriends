@@ -27,6 +27,8 @@ namespace Assets.Scripts.Checkers
 
         public bool isWhiteTurn;
 
+        private List<Vector2> atePieceCounter;
+
         public CheckerPiece SelectedPiece { get; set; }
 
         private List<CheckerPiece> forcedPieces;
@@ -40,6 +42,8 @@ namespace Assets.Scripts.Checkers
             isWhiteTurn = true;
             forcedPieces = new List<CheckerPiece>();
             GeneratedBoard();
+
+            atePieceCounter = new List<Vector2>();
         }
 
         private void Update()
@@ -136,7 +140,22 @@ namespace Assets.Scripts.Checkers
                 if (p != null)
                 {
                     pieces[(x1 + x2) / 2, (y1 + y2) / 2] = null;
-                    DestroyImmediate(p.gameObject);
+                    atePieceCounter.Add(new Vector2((x1 + x2) / 2, (y1 + y2) / 2));
+
+                    float delayDestroy = 0.0f;
+                    //dobble eat message 
+                    if (atePieceCounter.Count == 2) {
+                        p.ShowPieceMessage("Double eat", false);
+                        delayDestroy += 1.2f;
+                    }
+                    //Multiple eat message 
+                    else if (atePieceCounter.Count > 3) {
+                        p.ShowPieceMessage("Multiple eat", false);
+                        delayDestroy += 1.2f;
+                    }
+
+                    Destroy(p.gameObject, delayDestroy);
+
                 }
                 HightLightTiled.Instance.HideCaptureHightLight();
                 // validate if player can stil eat
@@ -335,10 +354,14 @@ namespace Assets.Scripts.Checkers
                 {
                     if (validCapturePosition[i, j] == true)
                     {
-                        pieces[i, j].ShowPieceMessage("Capture constraint");
+                        pieces[i, j].ShowPieceMessage("Capture constraint", true);
                     }
                 }
             }
+        }
+
+        public void ResetAteMove() {
+            atePieceCounter.Clear();
         }
 
         private void DrawDebugBoard()

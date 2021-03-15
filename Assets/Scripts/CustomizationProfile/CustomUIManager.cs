@@ -219,7 +219,7 @@ public class CustomUIManager : MonoBehaviour
 
         }).Then( ()=> {
             //fordware next scene
-            SceneManager.LoadSceneAsync("MainMenu");
+            SceneLoaderController.Instance.LoadSceneWithTransition("MainMenu", 4.0f);
         });
 
     }

@@ -88,7 +88,7 @@ namespace Assets.Scripts.WebSocket
             {
                 Debug.Log("Connection is Dead ");
 
-                SceneManager.LoadScene("MainMenu");
+                SceneLoaderController.Instance.LoadSceneWithTransition("MainMenu", 4.0f);
 
             }
             else

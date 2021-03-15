@@ -25,7 +25,7 @@ public class ProfileMultiplayerBehavour : MonoBehaviour
 
         Debug.Log("Press Back Button");
 
-        SceneManager.LoadScene("MainMenu");
+        SceneLoaderController.Instance.LoadSceneWithTransition("MainMenu", 4.0f);
 
         if (FindObjectOfType<ClientWSBehavour>() != null) {
             var client = FindObjectOfType<ClientWSBehavour>();

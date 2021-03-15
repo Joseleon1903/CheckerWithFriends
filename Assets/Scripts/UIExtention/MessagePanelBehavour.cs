@@ -32,7 +32,7 @@ public class MessagePanelBehavour : MonoBehaviour
 
         if (actionplus.Equals(PlayerPreferenceKey.MESSAGE_ACTION_MAINMENU)) {
 
-            SceneManager.LoadScene("MainMenu");
+            SceneLoaderController.Instance.LoadSceneWithTransition("MainMenu", 4.0f);
         }
 
         Destroy(gameObject);
