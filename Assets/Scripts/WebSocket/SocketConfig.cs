@@ -118,7 +118,7 @@ namespace Assets.Script.WebSocket
             yield return new WaitForSeconds(time);
 
             Debug.Log("Wait yime is finish star game scene");
-            SceneLoaderController.Instance.LoadSceneWithTransition("MainMenu", 4.0f);
+            SceneLoaderController.Instance.LoadSceneWithTransition(sceneName, 4.0f);
         }
 
         public void ShowMessageError() {

@@ -1675,7 +1675,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 334, y: 0}
-  m_SizeDelta: {x: 255, y: 441}
+  m_SizeDelta: {x: 350, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &572009235
 MonoBehaviour:
@@ -1771,7 +1771,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 668f0e2e14ca13d4c8266598730cabdc, type: 3}
+  m_Texture: {fileID: 2800000, guid: b52b86adcf491784c913d2cb1e0067a2, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -2560,7 +2560,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: d02d17f3400c45748acf2806db5792f7, type: 3}
+  m_Texture: {fileID: 2800000, guid: 51cf48a812a5a1141ab94726d54c638a, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -2592,7 +2592,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 333, y: 0}
-  m_SizeDelta: {x: 255, y: 441}
+  m_SizeDelta: {x: 350, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &987226428
 GameObject:
@@ -3205,7 +3205,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 334, y: 0}
-  m_SizeDelta: {x: 255, y: 441}
+  m_SizeDelta: {x: 350, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1279731429
 MonoBehaviour:
@@ -3300,7 +3300,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 8d21cc45fb40d9741b87b7136acd8b17, type: 3}
+  m_Texture: {fileID: 2800000, guid: 4cdc8fbd49379064f838036e3d224310, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
